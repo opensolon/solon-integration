@@ -13,7 +13,7 @@
   <dependency>
 	    <groupId>org.noear</groupId>
 	    <artifactId>drools-solon-plugin</artifactId>
-	    <version>1.0.0</version>
+	    <version>1.0.1</version>
   </dependency>
   ```
   
