@@ -6,7 +6,7 @@
 
     <groupId>org.noear</groupId>
     <artifactId>nami-springboot-starter</artifactId>
-    <version>1.8.0</version>
+    <version>1.7.1</version>
 
     <packaging>jar</packaging>
 
