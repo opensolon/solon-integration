@@ -20,5 +20,6 @@
     <modules>
         <module>drools-solon-plugin</module>
         <module>pulsar2-solon-plugin</module>
+        <module>nami-springboot-starter</module>
     </modules>
 </project>
