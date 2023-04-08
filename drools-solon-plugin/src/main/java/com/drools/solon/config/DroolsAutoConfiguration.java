@@ -25,10 +25,10 @@ public class DroolsAutoConfiguration {
 
     @Bean
     @Condition(onMissingBean = KieTemplate.class)
-    public KieTemplate kieTemplate(@Inject("${spring.drools}") DroolsProperties droolsProperties) {
+    public KieTemplate kieTemplate(@Inject("${solon.drools}") DroolsProperties droolsProperties) {
         String path = droolsProperties.getPath();
         if(Utils.isBlank(path)){
-            throw new IllegalArgumentException("Please set base path(spring.drools.path = xxx).");
+            throw new IllegalArgumentException("Please set base path(solon.drools.path = xxx).");
         }
         KieTemplate kieTemplate = new KieTemplate();
         kieTemplate.setPath(droolsProperties.getPath());

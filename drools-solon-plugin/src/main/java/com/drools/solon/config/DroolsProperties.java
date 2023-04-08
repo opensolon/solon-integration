@@ -5,8 +5,6 @@ package com.drools.solon.config;
  * @date 2019/9/26 16:26
  * @since 1.0.0
  */
-//@Inject("${spring.drools}")
-//@Configuration
 public class DroolsProperties {
 
     /**

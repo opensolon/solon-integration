@@ -19,26 +19,26 @@
   
 - 2）在配置文件中指定规则文件的路径
 
-  ```xml
+  ```properties
   ################## 必填属性 ##################
   # 指定规则文件目录，会自动扫描该目录下所有规则文件，决策表，以及CSV文件
   # 支持classpath资源目录，如：classpath:drools/**/*.drl
   # win 系统注意使用反斜杠，如：C:\\DRL\\
   # linux 系统注意使用斜杠，如：/usr/local/drl/
-  spring.drools.path = C:\\DRL\\
+  solon.drools.path = C:\\DRL\\
   ################## 可选属性 ##################
   # 也可以指定全局的mode，选择stream或cloud（默认stream模式）
-  spring.drools.mode = stream
+  solon.drools.mode = stream
   # 自动更新，on 或 off（默认开启）
-  spring.drools.auto-update = on
+  solon.drools.auto-update = on
   # 指定规则文件自动更新的周期，单位秒（默认30秒扫描偶一次）
-  spring.drools.update = 10
+  solon.drools.update = 10
   # 规则监听日志，on 或 off（默认开启）
-  spring.drools.listener = on
+  solon.drools.listener = on
   # 开启 drl 语法检查，on 或 off（默认关闭）
-  spring.drools.verify = off
+  solon.drools.verify = off
   # 指定规则文件的字符集（默认 UTF-8）
-  spring.drools.charset = GBK
+  solon.drools.charset = GBK
   ```
   
 - 3）使用注解方式引入KieTemplate
