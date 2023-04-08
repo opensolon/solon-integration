@@ -50,7 +50,4 @@ Solon
 
 <hr />
 
-
-# solon-integration
-
-Solon 非标准化集成项目。
+本项目为，主仓库之外的其它集成项目。
