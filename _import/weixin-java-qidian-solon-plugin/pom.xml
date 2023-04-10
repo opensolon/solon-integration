@@ -5,7 +5,7 @@
     <groupId>org.noear</groupId>
     <artifactId>solon-parent</artifactId>
     <version>2.2.11-SNAPSHOT</version>
-    <relativePath>../../solon-parent/pom.xml</relativePath>
+    <relativePath />
   </parent>
 
   <artifactId>weixin-java-qidian-solon-plugin</artifactId>

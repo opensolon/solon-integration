@@ -13,7 +13,6 @@
 
   <artifactId>drools-solon-plugin</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.1</version>
 
   <properties>
     <!--<hw-drools.version>8.36.0.Final</hw-drools.version>--><!--至少jdk11-->

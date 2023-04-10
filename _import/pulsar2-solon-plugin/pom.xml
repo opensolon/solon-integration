@@ -13,7 +13,6 @@
 
   <artifactId>pulsar2-solon-plugin</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.0</version>
 
   <properties>
     <bcpkix-jdk15on.version>1.70</bcpkix-jdk15on.version>
