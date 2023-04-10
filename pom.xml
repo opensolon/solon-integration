@@ -16,15 +16,17 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>drools-solon-plugin</module>
-        <module>pulsar2-solon-plugin</module>
-        <module>nami-springboot-starter</module>
+        <module>_export/nami-springboot-starter</module>
+        <module>_export/solon-springboot-starter</module>
 
-        <module>weixin-java-cp-solon-plugin</module>
-        <module>weixin-java-miniapp-solon-plugin</module>
-        <module>weixin-java-mp-solon-plugin</module>
-        <module>weixin-java-open-solon-plugin</module>
-        <module>weixin-java-pay-solon-plugin</module>
-        <module>weixin-java-qidian-solon-plugin</module>
+        <module>_import/drools-solon-plugin</module>
+        <module>_import/pulsar2-solon-plugin</module>
+
+        <module>_import/weixin-java-cp-solon-plugin</module>
+        <module>_import/weixin-java-miniapp-solon-plugin</module>
+        <module>_import/weixin-java-mp-solon-plugin</module>
+        <module>_import/weixin-java-open-solon-plugin</module>
+        <module>_import/weixin-java-pay-solon-plugin</module>
+        <module>_import/weixin-java-qidian-solon-plugin</module>
     </modules>
 </project>
