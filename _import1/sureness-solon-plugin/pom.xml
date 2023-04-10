@@ -11,13 +11,20 @@
         <relativePath />
     </parent>
 
-    <artifactId>activiti-solon-plugin</artifactId>
+    <artifactId>sureness-solon-plugin</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.usthe.sureness</groupId>
+            <artifactId>sureness-core</artifactId>
+            <version>1.0.6</version>
         </dependency>
     </dependencies>
 

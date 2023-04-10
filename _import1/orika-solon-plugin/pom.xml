@@ -11,14 +11,23 @@
         <relativePath />
     </parent>
 
-    <artifactId>activiti-solon-plugin</artifactId>
+    <artifactId>orika-solon-plugin</artifactId>
     <packaging>jar</packaging>
+
+    <properties>
+        <orika.version>1.5.4</orika.version>
+    </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon</artifactId>
         </dependency>
+        <!--orika-->
+        <dependency>
+            <groupId>ma.glasnost.orika</groupId>
+            <artifactId>orika-core</artifactId>
+            <version>${orika.version}</version>
+        </dependency>
     </dependencies>
-
 </project>

@@ -11,8 +11,9 @@
         <relativePath />
     </parent>
 
-    <artifactId>activiti-solon-plugin</artifactId>
+    <artifactId>dynamic-tp-solon-plugin</artifactId>
     <packaging>jar</packaging>
+
 
     <dependencies>
         <dependency>
