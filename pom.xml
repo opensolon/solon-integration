@@ -4,22 +4,27 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.noear</groupId>
+    <parent>
+        <groupId>org.noear</groupId>
+        <artifactId>solon-parent</artifactId>
+        <version>2.2.11-SNAPSHOT</version>
+        <relativePath />
+    </parent>
+
+    <groupId>org.noear.bundle</groupId>
     <artifactId>solon-integration</artifactId>
-    <version>dev</version>
     <packaging>pom</packaging>
-
-    <name>_root</name>
-    <description>Java project for solon</description>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    </properties>
 
     <modules>
         <module>drools-solon-plugin</module>
         <module>pulsar2-solon-plugin</module>
         <module>nami-springboot-starter</module>
+
+        <module>weixin-java-cp-solon-plugin</module>
+        <module>weixin-java-miniapp-solon-plugin</module>
+        <module>weixin-java-mp-solon-plugin</module>
+        <module>weixin-java-open-solon-plugin</module>
+        <module>weixin-java-pay-solon-plugin</module>
+        <module>weixin-java-qidian-solon-plugin</module>
     </modules>
 </project>
