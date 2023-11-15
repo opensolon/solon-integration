@@ -7,41 +7,15 @@
     <parent>
         <groupId>org.noear</groupId>
         <artifactId>solon-parent</artifactId>
-        <version>2.2.11-SNAPSHOT</version>
+        <version>2.6.0</version>
         <relativePath />
     </parent>
 
-    <groupId>org.noear.bundle</groupId>
+    <groupId>org.noear</groupId>
     <artifactId>solon-integration</artifactId>
     <packaging>pom</packaging>
 
     <modules>
-        <module>_export/nami-springboot-starter</module>
-        <module>_export/solon-springboot-starter</module>
-
-        <module>_import1/captcha-solon-plugin</module>
-        <module>_import1/cron4j-solon-plugin</module>
-        <module>_import1/hasor-solon-plugin</module>
-        <module>_import1/hasordb-solon-plugin</module>
-        <module>_import1/jap-ids-solon-plugin</module>
-        <module>_import1/jap-solon-plugin</module>
-        <module>_import1/luffy-solon-plugin</module>
-        <module>_import1/orika-solon-plugin</module>
-        <module>_import1/powerjob-solon-plugin</module>
-        <module>_import1/quartz-solon-plugin</module>
-        <module>_import1/sureness-solon-plugin</module>
-        <module>_import1/vaptcha-solon-plugin</module>
-
-        <module>_import2/drools-solon-plugin</module>
-        <module>_import2/easypoi-solon-plugin</module>
-        <module>_import2/easypoi-web-solon</module>
-        <module>_import2/easypoi-wps-solon</module>
-        <module>_import2/pulsar2-solon-plugin</module>
-        <module>_import2/weixin-java-cp-solon-plugin</module>
-        <module>_import2/weixin-java-miniapp-solon-plugin</module>
-        <module>_import2/weixin-java-mp-solon-plugin</module>
-        <module>_import2/weixin-java-open-solon-plugin</module>
-        <module>_import2/weixin-java-pay-solon-plugin</module>
-        <module>_import2/weixin-java-qidian-solon-plugin</module>
+        <module>__release</module>
     </modules>
 </project>
