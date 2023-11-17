@@ -3,10 +3,13 @@ package org.noear.solon.extend.luffy.impl;
 import org.noear.luffy.model.AFileModel;
 import org.noear.solon.Solon;
 import org.noear.solon.Utils;
+import org.noear.solon.core.util.IoUtil;
 import org.noear.solon.core.util.ResourceUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -56,6 +59,16 @@ public class JtResouceLoaderClass implements JtResouceLoader {
     }
 
     protected String fileContentGet(String path) throws IOException {
-        return ResourceUtil.getResourceAsString("luffy/" + path, Solon.encoding());
+        URL url = ResourceUtil.getResource("luffy/" + path);
+
+        File file = new File(url.getFile());
+
+        if (file.exists() && file.isFile()) {
+            try (InputStream in = url.openStream()) {
+                return IoUtil.transferToString(in, Solon.encoding());
+            }
+        } else {
+            return null;
+        }
     }
 }

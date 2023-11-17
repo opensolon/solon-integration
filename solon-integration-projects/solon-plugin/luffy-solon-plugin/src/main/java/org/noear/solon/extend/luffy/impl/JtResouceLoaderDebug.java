@@ -67,7 +67,7 @@ public class JtResouceLoaderDebug implements JtResouceLoader {
         } else {
             File file = new File(_baseDir, path);
 
-            if (file.exists()) {
+            if (file.exists() && file.isFile()) {
                 try {
                     try (InputStream ins = new FileInputStream(file)) {
                         return IoUtil.transferToString(ins, Solon.encoding());
