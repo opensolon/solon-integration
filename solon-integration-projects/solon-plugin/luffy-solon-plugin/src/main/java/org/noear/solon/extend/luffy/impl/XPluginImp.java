@@ -1,5 +1,8 @@
 package org.noear.solon.extend.luffy.impl;
 
+import org.noear.luffy.dso.JtFun;
+import org.noear.luffy.dso.JtUtil;
+import org.noear.solon.Solon;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.Plugin;
 
@@ -10,6 +13,9 @@ import org.noear.solon.core.Plugin;
 public class XPluginImp implements Plugin {
     @Override
     public void start(AppContext context) {
+        Solon.app().sharedAdd("XFun", JtFun.g);
+        Solon.app().sharedAdd("XUtil", JtUtil.g);
+
         JtRun.init();
 
         JtRun.xfunInit();

@@ -21,15 +21,15 @@ import java.util.concurrent.CompletableFuture;
 public class JtRun {
     private static CompletableFuture<Integer> initFuture = new CompletableFuture<>();
 
-    private static final JtResouceLoaderManager resouceLoader = new JtResouceLoaderManager();
+    private static final JtFunctionLoaderManager resouceLoader = new JtFunctionLoaderManager();
     private static JtExecutorAdapter jtAdapter;
 
     public static void init() {
         if (jtAdapter == null) {
-            resouceLoader.add(0, new JtResouceLoaderClass());
+            resouceLoader.add(0, new JtFunctionLoaderClasspath());
 
             //添加外部扩展的资源加载器
-            Solon.context().subBeansOfType(JtResouceLoader.class, bean -> {
+            Solon.context().subBeansOfType(JtFunctionLoader.class, bean -> {
                 resouceLoader.add(0, bean);
             });
 
@@ -42,7 +42,7 @@ public class JtRun {
     /**
      * 获取资源加载器（可以清空并替换为数据库的）
      * */
-    public static JtResouceLoaderManager getResouceLoader() {
+    public static JtFunctionLoaderManager getResouceLoader() {
         return resouceLoader;
     }
 

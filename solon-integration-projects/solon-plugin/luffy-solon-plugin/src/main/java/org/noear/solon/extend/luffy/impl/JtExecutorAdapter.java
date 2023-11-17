@@ -25,15 +25,15 @@ public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
     private String _defaultExecutor;
     private String _defLogTag;
 
-    private JtResouceLoader forDebug;
-    private JtResouceLoader forRelease;
+    private JtFunctionLoader forDebug;
+    private JtFunctionLoader forRelease;
 
 
-    public JtExecutorAdapter(JtResouceLoader resouceLoader) {
+    public JtExecutorAdapter(JtFunctionLoader resouceLoader) {
         _defaultExecutor = JtMapping.getActuator("");
         _defLogTag = "luffy";
 
-        forDebug = new JtResouceLoaderDebug();
+        forDebug = new JtFunctionLoaderDebug();
         forRelease = resouceLoader;
     }
 

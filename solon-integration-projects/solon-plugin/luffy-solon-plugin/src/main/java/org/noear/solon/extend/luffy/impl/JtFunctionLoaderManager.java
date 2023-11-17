@@ -9,10 +9,10 @@ import java.util.List;
  * @author noear
  * @since 2.6
  */
-public class JtResouceLoaderManager implements JtResouceLoader {
-    private final List<JtResouceLoader> resouceLoaders = new ArrayList<>();
+public class JtFunctionLoaderManager implements JtFunctionLoader {
+    private final List<JtFunctionLoader> resouceLoaders = new ArrayList<>();
 
-    public void add(int index, JtResouceLoader resouceLoader) {
+    public void add(int index, JtFunctionLoader resouceLoader) {
         resouceLoaders.add(index, resouceLoader);
     }
 
@@ -23,7 +23,7 @@ public class JtResouceLoaderManager implements JtResouceLoader {
     @Override
     public AFileModel fileGet(String path) throws Exception {
         AFileModel aFile = null;
-        for (JtResouceLoader rl : resouceLoaders) {
+        for (JtFunctionLoader rl : resouceLoaders) {
             aFile = rl.fileGet(path);
 
             if (aFile != null) {

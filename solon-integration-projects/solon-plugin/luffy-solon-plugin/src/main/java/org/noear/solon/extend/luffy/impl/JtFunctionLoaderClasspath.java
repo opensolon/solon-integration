@@ -14,10 +14,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
+ * 函数加载器 - 资源目录实现
+ *
  * @author noear
  * @since 1.3
  */
-public class JtResouceLoaderClass implements JtResouceLoader {
+public class JtFunctionLoaderClasspath implements JtFunctionLoader {
 
     private final Map<String, AFileModel> fileCached = new LinkedHashMap<>();
 

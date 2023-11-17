@@ -14,16 +14,18 @@ import java.io.InputStream;
 import java.net.URI;
 
 /**
+ * 函数加载器 - 资源目录实现(调试模式)
+ *
  * @author noear
  * @since 1.3
  */
-public class JtResouceLoaderDebug implements JtResouceLoader {
-    static final Logger log = LoggerFactory.getLogger(JtResouceLoaderDebug.class);
+public class JtFunctionLoaderDebug implements JtFunctionLoader {
+    static final Logger log = LoggerFactory.getLogger(JtFunctionLoaderDebug.class);
 
     private String _baseUri = "/luffy/";
     private File _baseDir;
 
-    public JtResouceLoaderDebug() {
+    public JtFunctionLoaderDebug() {
         String rootdir = ResourceUtil.getResource("/").toString().replace("target/classes/", "");
 
         if (rootdir.startsWith("file:")) {

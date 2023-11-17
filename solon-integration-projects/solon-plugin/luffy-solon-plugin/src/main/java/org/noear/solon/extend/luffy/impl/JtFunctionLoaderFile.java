@@ -10,22 +10,23 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
 
 /**
+ * 函数加载器 -外部文件实现
+ *
  * @author noear
  * @since 1.3
  */
-public class JtResouceLoaderFile implements JtResouceLoader {
-    static final Logger log = LoggerFactory.getLogger(JtResouceLoaderFile.class);
+public class JtFunctionLoaderFile implements JtFunctionLoader {
+    static final Logger log = LoggerFactory.getLogger(JtFunctionLoaderFile.class);
 
     private File _baseDir;
 
-    public JtResouceLoaderFile() {
+    public JtFunctionLoaderFile() {
         this("./luffy/");
     }
 
-    public JtResouceLoaderFile(String baseDir) {
+    public JtFunctionLoaderFile(String baseDir) {
         _baseDir = new File(baseDir);
         if (!_baseDir.exists()) {
             _baseDir.mkdir();

@@ -3,11 +3,11 @@ package org.noear.solon.extend.luffy.impl;
 import org.noear.luffy.model.AFileModel;
 
 /**
- * 资源加载器
+ * 函数加载器
  *
  * @author noear
  * @since 1.3
  */
-public interface JtResouceLoader {
+public interface JtFunctionLoader {
     AFileModel fileGet(String path) throws Exception;
 }
