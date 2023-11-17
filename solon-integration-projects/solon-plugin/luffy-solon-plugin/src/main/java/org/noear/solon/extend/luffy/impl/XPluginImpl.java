@@ -10,7 +10,7 @@ import org.noear.solon.core.Plugin;
  * @author noear
  * @since 1.3
  */
-public class XPluginImp implements Plugin {
+public class XPluginImpl implements Plugin {
     @Override
     public void start(AppContext context) {
         Solon.app().sharedAdd("XFun", JtFun.g);

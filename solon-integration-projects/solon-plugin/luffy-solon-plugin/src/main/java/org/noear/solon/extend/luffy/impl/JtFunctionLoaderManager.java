@@ -12,10 +12,16 @@ import java.util.List;
 public class JtFunctionLoaderManager implements JtFunctionLoader {
     private final List<JtFunctionLoader> resouceLoaders = new ArrayList<>();
 
+    /**
+     * 添加
+     * */
     public void add(int index, JtFunctionLoader resouceLoader) {
         resouceLoaders.add(index, resouceLoader);
     }
 
+    /**
+     * 清空
+     * */
     public void clear(){
         resouceLoaders.clear();
     }
