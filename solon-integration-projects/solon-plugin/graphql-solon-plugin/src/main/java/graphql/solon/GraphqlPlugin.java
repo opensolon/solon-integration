@@ -7,6 +7,7 @@ import graphql.solon.annotation.QueryMappingAnnoHandler;
 import graphql.solon.annotation.SchemaMapping;
 import graphql.solon.annotation.SchemaMappingAnnoHandler;
 import graphql.solon.config.GraphqlConfiguration;
+import graphql.solon.controller.GraphiqlController;
 import graphql.solon.controller.GraphqlController;
 import graphql.solon.event.AppLoadEndEventListener;
 import graphql.solon.event.DefaultCprResolverEventListener;
@@ -62,6 +63,7 @@ public class GraphqlPlugin implements Plugin {
             context.beanMake(DefaultCprResolverEventListener.class);
             context.beanMake(DefaultRwConfigurerCollectEventListener.class);
             context.beanMake(GraphqlConfiguration.class);
+            context.beanMake(GraphiqlController.class);
             context.beanMake(GraphqlController.class);
         });
 

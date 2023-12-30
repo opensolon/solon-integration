@@ -34,6 +34,18 @@
             <groupId>com.graphql-java-kickstart</groupId>
             <artifactId>graphql-java-tools</artifactId>
             <version>${graphql-java-tools.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>graphql-java</artifactId>
+                    <groupId>com.graphql-java</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon.view.thymeleaf</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>

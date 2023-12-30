@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            height: 100%;
+            margin: 0;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        #graphiql {
+            height: 100vh;
+        }
+    </style>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/graphiql/graphiql.min.css" />
+</head>
+
+<body>
+<div id="graphiql">Loading...</div>
+<script src="https://unpkg.com/graphiql/graphiql.min.js" type="application/javascript"></script>
+<script>
+    const params = new URLSearchParams(window.location.search);
+
+    const path = params.get("path") || "/graphql";
+    const url = `${location.protocol}//${location.host}${path}`;
+
+    const wsPath = params.get("wsPath") || "/graphql";
+    const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const subscriptionUrl = `${wsProtocol}//${location.host}${wsPath}`;
+
+    const gqlFetcher = GraphiQL.createFetcher({
+        url,
+        subscriptionUrl,
+    });
+
+    ReactDOM.render(
+        React.createElement(GraphiQL, {
+            fetcher: gqlFetcher,
+            defaultVariableEditorOpen: true,
+            headerEditorEnabled: true,
+            shouldPersistHeaders: true
+        }),
+        document.getElementById('graphiql'),
+    );
+</script>
+</body>
+</html>
