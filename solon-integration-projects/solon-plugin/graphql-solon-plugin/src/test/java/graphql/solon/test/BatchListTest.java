@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.iterableWithSize;
 import static org.hamcrest.Matchers.nullValue;
 
+import demo.App;
 import demo.course.entity.Course;
 import java.io.IOException;
 import java.util.List;
@@ -16,7 +17,6 @@ import org.noear.solon.core.util.ResourceUtil;
 import org.noear.solon.test.HttpTester;
 import org.noear.solon.test.SolonJUnit5Extension;
 import org.noear.solon.test.SolonTest;
-import test.App;
 
 /**
  * 测试批量查询

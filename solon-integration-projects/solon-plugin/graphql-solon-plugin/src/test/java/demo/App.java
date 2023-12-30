@@ -1,4 +1,4 @@
-package test;
+package demo;
 
 import org.noear.solon.Solon;
 import org.noear.solon.annotation.Import;
