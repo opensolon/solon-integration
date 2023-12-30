@@ -39,7 +39,7 @@ public class BatchListTest extends HttpTester {
         String json = param.toJson();
 
         String content = path("/graphql").bodyJson(json).post();
-        ONode oNode = ONode.loadStr(content);
+        ONode oNode = ONode.loadStr(content).get("data");
 
         List<Course> courses = oNode.get("courses").toObjectList(Course.class);
         assertThat(courses, iterableWithSize(2));
@@ -51,14 +51,14 @@ public class BatchListTest extends HttpTester {
         assertThat(course0.instructor().id(), is(17L));
         assertThat(course0.instructor().firstName(), is("Albert"));
         assertThat(course0.instructor().lastName(), is("Murray"));
-        assertThat(course0.students(), iterableWithSize(0));
+        assertThat(course0.students(), nullValue());
 
         assertThat(course1.id(), is(11L));
         assertThat(course1.name(), is("Ethical Hacking"));
         assertThat(course1.instructor().id(), is(15L));
         assertThat(course1.instructor().firstName(), is("Josh"));
         assertThat(course1.instructor().lastName(), is("Kelly"));
-        assertThat(course1.students(), iterableWithSize(0));
+        assertThat(course1.students(), nullValue());
     }
 
     /**
@@ -74,7 +74,7 @@ public class BatchListTest extends HttpTester {
         String content = path("/graphql").bodyJson(json).post();
         ONode oNode = ONode.loadStr(content);
 
-        List<Course> courses = oNode.get("courses").toObjectList(Course.class);
+        List<Course> courses = oNode.get("data").get("courses").toObjectList(Course.class);
         assertThat(courses, iterableWithSize(2));
         Course course0 = courses.get(0);
         Course course1 = courses.get(1);

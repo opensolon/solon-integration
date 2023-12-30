@@ -6,7 +6,9 @@ import demo.course.support.CourseSupport;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
+import org.apache.commons.collections.CollectionUtils;
 import org.noear.solon.lang.Nullable;
 
 /**
@@ -15,26 +17,33 @@ import org.noear.solon.lang.Nullable;
  */
 public class Course {
 
-    private final Long id;
+    private Long id;
 
-    private final String name;
+    private String name;
 
-    private final Long instructorId;
+    private Long instructorId;
 
-    private final List<Long> studentIds;
+    private List<Long> studentIds;
+
+    private Person instructor;
+
+    private List<Person> students;
 
     @JsonCreator
     public Course(
-            @JsonProperty("id") Long id, @JsonProperty("name") String name,
-            @JsonProperty("instructor") @Nullable Person instructor,
-            @JsonProperty("students") @Nullable List<Person> students) {
+        @JsonProperty("id") Long id, @JsonProperty("name") String name,
+        @JsonProperty("instructor") @Nullable Person instructor,
+        @JsonProperty("students") @Nullable List<Person> students) {
 
         this.id = id;
         this.name = name;
         this.instructorId = (instructor != null ? instructor.id() : -1);
         this.studentIds = (students != null ?
-                students.stream().map(Person::id).collect(Collectors.toList()) :
-                Collections.emptyList());
+            students.stream().map(Person::id).collect(Collectors.toList()) :
+            Collections.emptyList());
+    }
+
+    public Course() {
     }
 
     public Course(Long id, String name, Long instructorId, List<Long> studentIds) {
@@ -57,16 +66,27 @@ public class Course {
     }
 
     public List<Long> studentIds() {
+        if (CollectionUtils.isNotEmpty(this.students)) {
+            return this.students.stream().map(Person::id).collect(Collectors.toList());
+        }
         return this.studentIds;
     }
 
     public List<Person> students() {
-        return this.studentIds.stream().map(CourseSupport.personMap::get)
+        if (CollectionUtils.isNotEmpty(this.studentIds)) {
+            return this.studentIds.stream().map(CourseSupport.personMap::get)
                 .collect(Collectors.toList());
+        } else {
+            return this.students;
+        }
     }
 
     public Person instructor() {
-        return CourseSupport.personMap.get(this.instructorId);
+        if (Objects.nonNull(this.instructorId)) {
+            return CourseSupport.personMap.get(this.instructorId);
+        } else {
+            return this.instructor;
+        }
     }
 
     public static void save(Long id, String name, Long instructorId, List<Long> studentIds) {
