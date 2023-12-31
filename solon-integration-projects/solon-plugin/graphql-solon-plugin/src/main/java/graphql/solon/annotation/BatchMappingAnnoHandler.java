@@ -99,7 +99,7 @@ public class BatchMappingAnnoHandler extends BaseSchemaMappingAnnoHandler<BatchM
     }
 
     @Override
-    protected boolean getIsBatch() {
+    protected boolean isBatch() {
         return true;
     }
 

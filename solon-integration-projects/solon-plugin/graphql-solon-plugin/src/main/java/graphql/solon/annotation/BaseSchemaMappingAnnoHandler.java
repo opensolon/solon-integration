@@ -50,18 +50,22 @@ public abstract class BaseSchemaMappingAnnoHandler<T extends Annotation> impleme
     }
 
     protected DataFetcher<Object> getDataFetcher(AppContext context, BeanWrap wrap,
-            Method method) {
-        boolean isBatch = this.getIsBatch();
+        Method method) {
+        boolean isBatch = this.isBatch();
         return new SchemaMappingDataFetcher(context, wrap, method, isBatch);
     }
 
-    protected boolean getIsBatch() {
+    protected boolean isBatch() {
+        return false;
+    }
+
+    protected boolean isSubscription() {
         return false;
     }
 
     abstract String getTypeName(BeanWrap wrap, Method method,
-            T schemaMapping);
+        T schemaMapping);
 
     abstract String getFieldName(BeanWrap wrap, Method method,
-            T schemaMapping);
+        T schemaMapping);
 }

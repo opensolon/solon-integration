@@ -6,6 +6,8 @@ import graphql.solon.annotation.QueryMapping;
 import graphql.solon.annotation.QueryMappingAnnoHandler;
 import graphql.solon.annotation.SchemaMapping;
 import graphql.solon.annotation.SchemaMappingAnnoHandler;
+import graphql.solon.annotation.SubscriptionMapping;
+import graphql.solon.annotation.SubscriptionMappingAnnoHandler;
 import graphql.solon.config.GraphqlConfiguration;
 import graphql.solon.controller.GraphiqlController;
 import graphql.solon.controller.GraphqlController;
@@ -17,6 +19,7 @@ import graphql.solon.execution.DefaultBatchLoaderRegistry;
 import graphql.solon.properties.GraphqlProperties;
 import graphql.solon.resolver.argument.HandlerMethodArgumentResolver;
 import graphql.solon.resolver.argument.HandlerMethodArgumentResolverCollect;
+import graphql.solon.ws.GraphqlWebsocket;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.Plugin;
 import org.noear.solon.core.event.AppLoadEndEvent;
@@ -54,9 +57,14 @@ public class GraphqlPlugin implements Plugin {
         BatchMappingAnnoHandler batchMappingExtractor = new BatchMappingAnnoHandler(context);
         context.beanExtractorAdd(BatchMapping.class, batchMappingExtractor);
 
+        SubscriptionMappingAnnoHandler subscriptionMappingAnnoHandler = new SubscriptionMappingAnnoHandler(
+            context);
+        context.beanExtractorAdd(SubscriptionMapping.class, subscriptionMappingAnnoHandler);
+
         context.wrapAndPut(QueryMappingAnnoHandler.class, queryExtractor);
         context.wrapAndPut(SchemaMappingAnnoHandler.class, schemaExtractor);
         context.wrapAndPut(BatchMappingAnnoHandler.class, batchMappingExtractor);
+        context.wrapAndPut(SubscriptionMappingAnnoHandler.class, subscriptionMappingAnnoHandler);
 
         context.lifecycle(-99, () -> {
             context.beanMake(GraphqlProperties.class);
@@ -65,6 +73,7 @@ public class GraphqlPlugin implements Plugin {
             context.beanMake(GraphqlConfiguration.class);
             context.beanMake(GraphiqlController.class);
             context.beanMake(GraphqlController.class);
+            context.beanMake(GraphqlWebsocket.class);
         });
 
         EventBus.subscribe(AppLoadEndEvent.class, new AppLoadEndEventListener());

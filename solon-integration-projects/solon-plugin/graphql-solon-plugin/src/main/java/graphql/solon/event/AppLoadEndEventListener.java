@@ -5,12 +5,18 @@ import graphql.schema.GraphQLSchema;
 import graphql.solon.GraphqlPlugin;
 import graphql.solon.configurer.RuntimeWiringConfigurer;
 import graphql.solon.configurer.RuntimeWiringConfigurerCollect;
+import graphql.solon.configurer.ThreadLocalAccessorCollect;
+import graphql.solon.configurer.WebGraphQlInterceptorCollect;
 import graphql.solon.execution.DataLoaderRegistrar;
+import graphql.solon.execution.DefaultExecutionGraphQlService;
 import graphql.solon.execution.DefaultSchemaResourceGraphQlSourceBuilder;
 import graphql.solon.execution.GraphQlSource;
 import graphql.solon.resolver.resource.GraphqlResourceResolver;
 import graphql.solon.resolver.resource.GraphqlResourceResolverCollect;
 import graphql.solon.resource.Resource;
+import graphql.solon.support.ExecutionGraphQlService;
+import graphql.solon.support.WebGraphQlHandler;
+import graphql.solon.support.WebGraphQlHandlerGetter;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
@@ -38,15 +44,20 @@ public class AppLoadEndEventListener implements EventListener<AppLoadEndEvent> {
     private void initGraphqlSource(AppLoadEndEvent appLoadEndEvent) {
         GraphqlResourceResolverCollect graphqlResourceResolverCollect = new GraphqlResourceResolverCollect();
         RuntimeWiringConfigurerCollect runtimeWiringConfigurerCollect = new RuntimeWiringConfigurerCollect();
+        ThreadLocalAccessorCollect threadLocalAccessorCollect = new ThreadLocalAccessorCollect();
+        WebGraphQlInterceptorCollect webGraphQlInterceptorCollect = new WebGraphQlInterceptorCollect();
 
         EventBus.publish(graphqlResourceResolverCollect);
         EventBus.publish(runtimeWiringConfigurerCollect);
+        EventBus.publish(threadLocalAccessorCollect);
+        EventBus.publish(webGraphQlInterceptorCollect);
 
         AppContext appContext = appLoadEndEvent.context();
+
         GraphQlSource graphQlSource = appContext.getBean(GraphQlSource.class);
         Set<Resource> resources = new LinkedHashSet<>();
         List<GraphqlResourceResolver> resolvers = graphqlResourceResolverCollect
-                .getAllCollector();
+            .getAllCollector();
         if (Objects.nonNull(resolvers)) {
             resolvers.forEach(resolver -> {
                 if (resolver.isNeedAppend(resources)) {
@@ -70,9 +81,16 @@ public class AppLoadEndEventListener implements EventListener<AppLoadEndEvent> {
         GraphQL graphql = GraphQL.newGraphQL(graphQlSchema).build();
 
         List<DataLoaderRegistrar> dataLoaderRegistrars = appContext
-                .getBeansOfType(DataLoaderRegistrar.class);
+            .getBeansOfType(DataLoaderRegistrar.class);
 
         log.debug("默认的 GraphQlSource 初始化");
         graphQlSource.init(graphql, graphQlSchema, dataLoaderRegistrars);
+
+        WebGraphQlHandlerGetter getter = appContext.getBean(WebGraphQlHandlerGetter.class);
+        ExecutionGraphQlService service = new DefaultExecutionGraphQlService(graphQlSource);
+        getter.setGraphQlHandler(WebGraphQlHandler.builder(service)
+            .interceptors(webGraphQlInterceptorCollect.getAllCollector())
+            .threadLocalAccessors(threadLocalAccessorCollect.getAllCollector())
+            .build());
     }
 }
