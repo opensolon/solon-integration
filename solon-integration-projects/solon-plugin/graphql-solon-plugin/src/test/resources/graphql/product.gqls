@@ -1,0 +1,9 @@
+extend type Subscription {
+    notifyProductPriceChange (productId: ID): ProductPriceHistory
+}
+
+type ProductPriceHistory {
+    id: ID!
+    price: Int!
+    startDate: String!
+}

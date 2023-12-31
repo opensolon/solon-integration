@@ -3,6 +3,7 @@ package graphql.solon.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+import demo.App;
 import demo.book.component.BookService;
 import java.io.IOException;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,6 @@ import org.noear.solon.core.util.ResourceUtil;
 import org.noear.solon.test.HttpTester;
 import org.noear.solon.test.SolonJUnit5Extension;
 import org.noear.solon.test.SolonTest;
-import test.App;
 
 /**
  * 测试普通的graphql查询

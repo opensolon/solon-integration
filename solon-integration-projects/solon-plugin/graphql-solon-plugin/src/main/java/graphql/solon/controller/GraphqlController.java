@@ -48,7 +48,7 @@ public class GraphqlController {
 
     @Post
     @Mapping("/schema")
-    public String getSchema(Object data, Context request) {
+    public String getSchema() {
         return new SchemaPrinter().print(this.graphQlSource.schema());
     }
 }

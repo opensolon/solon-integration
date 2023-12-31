@@ -3,6 +3,7 @@ package graphql.solon.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
 
+import demo.App;
 import graphql.solon.controller.GraphqlController;
 import java.io.IOException;
 import org.junit.jupiter.api.Test;
@@ -10,7 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.noear.solon.test.HttpTester;
 import org.noear.solon.test.SolonJUnit5Extension;
 import org.noear.solon.test.SolonTest;
-import test.App;
 
 /**
  * 测试 Schema 查询
