@@ -12,7 +12,7 @@ public class App {
 
     public static void main(String[] args) {
         Solon.start(App.class, args, app -> {
-            app.enableWebSocket(true);
+            app.enableWebSocket(false);
         });
     }
 }

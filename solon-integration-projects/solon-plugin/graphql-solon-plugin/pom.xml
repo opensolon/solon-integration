@@ -67,7 +67,13 @@
 
         <dependency>
             <groupId>org.noear</groupId>
+            <artifactId>solon.net</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
             <artifactId>solon.boot.smarthttp</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
