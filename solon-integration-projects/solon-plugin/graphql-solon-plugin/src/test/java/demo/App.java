@@ -7,7 +7,6 @@ import org.noear.solon.annotation.Import;
  * @author fuzi1996
  * @since 2.3
  */
-@Import(scanPackages = "demo")
 public class App {
 
     public static void main(String[] args) {
