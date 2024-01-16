@@ -22,7 +22,7 @@ public class LiteflowMainAutoConfiguration {
 	boolean parseOnStart;
 
 	@Inject
-    AppContext aopContext;
+	AppContext aopContext;
 
 	@Inject
 	LiteflowConfig liteflowConfig;
