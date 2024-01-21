@@ -39,44 +39,46 @@ public class DialectFactory {
             }
             // mysql same type
             else if (dbType == DbType.MYSQL
-                || dbType == DbType.MARIADB
-                || dbType == DbType.GBASE
-                || dbType == DbType.OSCAR
-                || dbType == DbType.XU_GU
-                || dbType == DbType.CLICK_HOUSE
-                || dbType == DbType.OCEAN_BASE
-                || dbType == DbType.CUBRID
-                || dbType == DbType.GOLDILOCKS
-                || dbType == DbType.CSIIDB) {
+                    || dbType == DbType.MARIADB
+                    || dbType == DbType.GBASE
+                    || dbType == DbType.OSCAR
+                    || dbType == DbType.XU_GU
+                    || dbType == DbType.CLICK_HOUSE
+                    || dbType == DbType.OCEAN_BASE
+                    || dbType == DbType.CUBRID
+                    || dbType == DbType.SUNDB) {
                 dialect = new MySqlDialect();
             }
             // oracle same type
             else if (dbType == DbType.ORACLE
-                || dbType == DbType.DM
-                || dbType == DbType.GAUSS) {
+                    || dbType == DbType.DM
+                    || dbType == DbType.GAUSS) {
                 dialect = new OracleDialect();
             }
             // postgresql same type
             else if (dbType == DbType.POSTGRE_SQL
-                || dbType == DbType.H2
-                || dbType == DbType.SQLITE
-                || dbType == DbType.HSQL
-                || dbType == DbType.KINGBASE_ES
-                || dbType == DbType.PHOENIX
-                || dbType == DbType.SAP_HANA
-                || dbType == DbType.IMPALA
-                || dbType == DbType.HIGH_GO
-                || dbType == DbType.VERTICA
-                || dbType == DbType.REDSHIFT
-                || dbType == DbType.OPENGAUSS
-                || dbType == DbType.TDENGINE
-                || dbType == DbType.UXDB) {
+                    || dbType == DbType.H2
+                    || dbType == DbType.LEALONE
+                    || dbType == DbType.SQLITE
+                    || dbType == DbType.HSQL
+                    || dbType == DbType.KINGBASE_ES
+                    || dbType == DbType.PHOENIX
+                    || dbType == DbType.SAP_HANA
+                    || dbType == DbType.IMPALA
+                    || dbType == DbType.HIGH_GO
+                    || dbType == DbType.VERTICA
+                    || dbType == DbType.REDSHIFT
+                    || dbType == DbType.OPENGAUSS
+                    || dbType == DbType.TDENGINE
+                    || dbType == DbType.UXDB
+                    || dbType == DbType.GBASE8S_PG
+                    || dbType == DbType.GBASE_8C) {
                 dialect = new PostgreDialect();
             }
             // other types
             else if (dbType == DbType.ORACLE_12C
-                || dbType == DbType.FIREBIRD
-                || dbType == DbType.SQL_SERVER) {
+                    || dbType == DbType.FIREBIRD
+                    || dbType == DbType.SQL_SERVER) {
                 dialect = new Oracle12cDialect();
             } else if (dbType == DbType.DB2) {
                 dialect = new DB2Dialect();
@@ -84,20 +86,18 @@ public class DialectFactory {
                 dialect = new SQLServer2005Dialect();
             } else if (dbType == DbType.SYBASE) {
                 dialect = new SybaseDialect();
-            } else if (dbType == DbType.GBASEDBT) {
-                dialect = new GBasedbtDialect();
-            } else if (dbType == DbType.GBASE_INFORMIX) {
-                dialect = new GBaseInfromixDialect();
             } else if (dbType == DbType.XCloud) {
                 dialect = new XCloudDialect();
-            } else if (dbType == DbType.FIREBIRD) {
-                dialect = new FirebirdDialect();
             } else if (dbType == DbType.GBASE_8S
-                || dbType == DbType.GBASEDBT
-                || dbType == DbType.GBASE_INFORMIX) {
+                    || dbType == DbType.GBASEDBT
+                    || dbType == DbType.GBASE_INFORMIX
+                    || dbType == DbType.SINODB) {
                 dialect = new GBase8sDialect();
-            }else if(dbType==DbType.INFORMIX){
+            } else if (dbType == DbType.INFORMIX) {
                 dialect = new InformixDialect();
+            } else if (dbType == DbType.TRINO
+                    || dbType == DbType.PRESTO) {
+                dialect = new TrinoDialect();
             }
             DIALECT_ENUM_MAP.put(dbType, dialect);
         }
