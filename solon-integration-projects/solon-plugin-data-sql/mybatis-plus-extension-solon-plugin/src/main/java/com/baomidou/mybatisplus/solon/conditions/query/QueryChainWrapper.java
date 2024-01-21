@@ -22,6 +22,7 @@ import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
 import com.baomidou.mybatisplus.core.toolkit.ExceptionUtils;
 import com.baomidou.mybatisplus.solon.conditions.AbstractChainWrapper;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 /**
@@ -52,8 +53,8 @@ public class QueryChainWrapper<T> extends AbstractChainWrapper<T, String, QueryC
     }
 
     @Override
-    public QueryChainWrapper<T> select(String... columns) {
-        wrapperChildren.select(columns);
+    public QueryChainWrapper<T> select(boolean condition, List<String> columns) {
+        wrapperChildren.select(condition, columns);
         return typedThis;
     }
 
