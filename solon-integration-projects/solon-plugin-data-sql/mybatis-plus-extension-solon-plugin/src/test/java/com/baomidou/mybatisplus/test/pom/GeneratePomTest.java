@@ -47,7 +47,7 @@ class GeneratePomTest {
 
     @Test
     void test() throws IOException {
-        try (InputStream inputStream = new FileInputStream("build/publications/mavenJava/pom-default.xml");) {
+        try (InputStream inputStream = new FileInputStream("build/publications/mavenJava/pom-default.xml")) {
             JerryParser jerryParser = Jerry.create(new LagartoDOMBuilder().enableXmlMode());
             Jerry doc = jerryParser.parse(FileUtil.readUTFString(inputStream));
             Jerry dependencies = doc.s("dependencies dependency");
@@ -56,27 +56,18 @@ class GeneratePomTest {
                 String artifactId = $this.s("artifactId").text();
                 dependenciesMap.put(artifactId, new Dependency(artifactId, $this.s("scope").text(), Boolean.parseBoolean($this.s("optional").text())));
             });
-            Dependency core = dependenciesMap.get("mybatis-plus-core");
-            Assertions.assertEquals("compile", core.getScope());
-            Assertions.assertFalse(core.isOptional());
-            Dependency mybatisSpring = dependenciesMap.get("mybatis-spring");
-            Assertions.assertEquals("compile", mybatisSpring.getScope());
-            Assertions.assertFalse(mybatisSpring.isOptional());
-            Dependency kotlinStdlib = dependenciesMap.get("kotlin-stdlib-jdk8");
-            Assertions.assertEquals("compile", kotlinStdlib.getScope());
-            Assertions.assertTrue(kotlinStdlib.isOptional());
-            Dependency kotlinReflect = dependenciesMap.get("kotlin-reflect");
-            Assertions.assertEquals("compile", kotlinReflect.getScope());
-            Assertions.assertTrue(kotlinReflect.isOptional());
-            Dependency support = dependenciesMap.get("spring-context-support");
-            Assertions.assertEquals("compile", support.getScope());
-            Assertions.assertTrue(support.isOptional());
-            Dependency jdbc = dependenciesMap.get("spring-jdbc");
-            Assertions.assertEquals("compile", jdbc.getScope());
-            Assertions.assertTrue(jdbc.isOptional());
-            Dependency slf4jApi = dependenciesMap.get("slf4j-api");
-            Assertions.assertEquals("compile", slf4jApi.getScope());
-            Assertions.assertTrue(slf4jApi.isOptional());
+            Dependency annotation = dependenciesMap.get("mybatis-plus-annotation");
+            Assertions.assertEquals("compile", annotation.getScope());
+            Assertions.assertFalse(annotation.isOptional());
+            Dependency mybatis = dependenciesMap.get("mybatis");
+            Assertions.assertEquals("compile", mybatis.getScope());
+            Assertions.assertFalse(mybatis.isOptional());
+            Dependency jsqlParser = dependenciesMap.get("jsqlparser");
+            Assertions.assertEquals("compile", jsqlParser.getScope());
+            Assertions.assertFalse(jsqlParser.isOptional());
+            Dependency cglib = dependenciesMap.get("cglib");
+            Assertions.assertEquals("compile", cglib.getScope());
+            Assertions.assertTrue(cglib.isOptional());
         }
     }
 
