@@ -5,6 +5,8 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import graphql.solon.constant.OperationType;
 import org.noear.solon.annotation.Alias;
 
 /**
@@ -31,7 +33,7 @@ public @interface QueryMapping {
      * <p>This attributed is supported at the class level and at the method level!
      * When used on both levels, the one on the method level overrides the one at the class level.
      */
-    String typeName() default "Query";
+    String typeName() default OperationType.QUERY;
 
     /**
      * Alias for {@link QueryMapping#field()}.

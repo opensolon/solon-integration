@@ -1,0 +1,5 @@
+subscription testSubscription($productId: ID!){
+  notifyProductPriceChange(productId: $productId) {
+    price
+  }
+}

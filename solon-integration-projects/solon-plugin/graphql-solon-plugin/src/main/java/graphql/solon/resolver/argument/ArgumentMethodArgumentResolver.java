@@ -1,5 +1,6 @@
 package graphql.solon.resolver.argument;
 
+import com.alibaba.fastjson.JSON;
 import graphql.GraphQLContext;
 import graphql.schema.DataFetchingEnvironment;
 import java.io.IOException;
@@ -92,7 +93,12 @@ public class ArgumentMethodArgumentResolver implements HandlerMethodArgumentReso
             if (tv == null) {
                 //尝试数据转换
                 try {
+                    // 基础类型的数据转化
                     tv = ConvertUtils.convert(argumentRowValue, argumentTragetType);
+                    // 非基础类型的数据转换 ConvertUtils.convert 会返回原始类型不做转换
+                    if (tv.getClass() == argumentRowValue.getClass()) {
+                        tv = JSON.parseObject(JSON.toJSONString(argumentRowValue), argumentTragetType);
+                    }
                 } catch (Exception e) {
                     throw new IllegalArgumentException("convert argument failed!", e);
                 }

@@ -2,6 +2,7 @@ package demo.book.component;
 
 import demo.book.dto.BookInputDTO;
 import graphql.solon.annotation.QueryMapping;
+import graphql.solon.constant.OperationType;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Param;
 
@@ -22,7 +23,12 @@ public class BookService {
     }
 
     @QueryMapping
-    public BookInputDTO bookById(@Param("id") String id) {
+    public BookInputDTO bookById(@Param String id) {
         return this.generateNewOne(id);
+    }
+
+    @QueryMapping(typeName = OperationType.MUTATION)
+    public BookInputDTO createBook(@Param BookInputDTO book) {
+        return book;
     }
 }

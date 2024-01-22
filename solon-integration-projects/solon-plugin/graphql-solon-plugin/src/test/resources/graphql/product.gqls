@@ -2,7 +2,18 @@ extend type Subscription {
     notifyProductPriceChange (productId: ID): ProductPriceHistory
 }
 
+extend type Mutation {
+    addProduct(product: ProductInput!): ProductPriceHistory
+    removeProduct(productId: ID!): ProductPriceHistory
+}
+
 type ProductPriceHistory {
+    id: ID!
+    price: Int!
+    startDate: String!
+}
+
+input ProductInput {
     id: ID!
     price: Int!
     startDate: String!
