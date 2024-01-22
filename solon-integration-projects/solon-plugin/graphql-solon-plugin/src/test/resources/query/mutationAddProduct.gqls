@@ -1,0 +1,7 @@
+mutation testAdd ($product: ProductInput!){
+  addProduct(product: $product) {
+    id
+    price
+    startDate
+  }
+}

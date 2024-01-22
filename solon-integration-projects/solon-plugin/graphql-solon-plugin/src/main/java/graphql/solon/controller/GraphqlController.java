@@ -6,6 +6,8 @@ import graphql.GraphQL;
 import graphql.schema.idl.SchemaPrinter;
 import graphql.solon.execution.GraphQlSource;
 import graphql.solon.resource.GraphqlRequestParam;
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import org.noear.solon.annotation.Controller;
@@ -35,9 +37,11 @@ public class GraphqlController {
         ExecutionInput executionInput = ExecutionInput
             .newExecutionInput()
             .query(param.getQuery())
+            .operationName(param.getOperationName() == null ? "" : param.getOperationName())
             .localContext(ctx.getLocale())
             .graphQLContext(mapOfContext)
-                .build();
+            .variables(param.getVariables() == null ? Collections.emptyMap() : param.getVariables())
+            .build();
 
         executionInput = this.graphQlSource.registerDataLoaders(executionInput);
 

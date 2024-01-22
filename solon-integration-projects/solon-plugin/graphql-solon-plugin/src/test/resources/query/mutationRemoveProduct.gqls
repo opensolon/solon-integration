@@ -1,0 +1,7 @@
+mutation testRemove ($productId: ID!) {
+    removeProduct(productId: $productId) {
+        id
+        price
+        startDate
+    }
+}
