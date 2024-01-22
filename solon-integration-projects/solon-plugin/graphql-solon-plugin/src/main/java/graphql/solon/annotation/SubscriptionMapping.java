@@ -5,6 +5,9 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import graphql.language.OperationDefinition;
+import graphql.solon.constant.OperationType;
 import org.noear.solon.annotation.Alias;
 
 /**
@@ -22,5 +25,5 @@ public @interface SubscriptionMapping {
     @Alias("name")
     String value() default "";
 
-    String typeName() default "Subscription";
+    String typeName() default OperationType.SUBSCRIPTION;
 }
