@@ -7,16 +7,12 @@
     <parent>
         <groupId>org.noear</groupId>
         <artifactId>solon-parent</artifactId>
-        <version>2.6.6-M3</version>
+        <version>2.6.6</version>
         <relativePath/>
     </parent>
 
     <artifactId>graphql-solon-plugin</artifactId>
     <packaging>jar</packaging>
-
-    <properties>
-        <reactor.core.version>3.5.7</reactor.core.version>
-    </properties>
 
     <dependencies>
         <dependency>
@@ -52,7 +48,7 @@
         <dependency>
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-core</artifactId>
-            <version>${reactor.core.version}</version>
+            <version>${reactor-core.version}</version>
         </dependency>
 
         <dependency>
