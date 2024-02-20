@@ -7,7 +7,6 @@ import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
 
 import java.net.URL;
-import java.util.Optional;
 import java.util.Properties;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -19,14 +18,17 @@ import java.util.function.Supplier;
 public class RedissonSupplier implements Supplier<RedissonClient> {
     private Properties properties;
 
-    private Consumer<Config> configUpdater;
+    private Consumer<Config> configHandler;
 
     public RedissonSupplier(Properties properties) {
         this.properties = properties;
     }
 
-    public RedissonSupplier withConfigUpdater(Consumer<Config> configUpdater){
-        this.configUpdater = configUpdater;
+    /**
+     * 添加配置处理
+     */
+    public RedissonSupplier withConfig(Consumer<Config> configHandler) {
+        this.configHandler = configHandler;
         return this;
     }
 
@@ -38,17 +40,20 @@ public class RedissonSupplier implements Supplier<RedissonClient> {
                 URL url = ResourceUtil.findResource(fileUri);
                 Config config = Config.fromYAML(url);
 
-                Optional.ofNullable(configUpdater).ifPresent(configConsumer -> configConsumer.accept(config));
+                if (configHandler != null) {
+                    configHandler.accept(config);
+                }
 
                 return Redisson.create(config);
-
             }
 
             String configTxt = properties.getProperty("config");
             if (Utils.isNotEmpty(configTxt)) {
                 Config config = Config.fromYAML(configTxt);
 
-                Optional.ofNullable(configUpdater).ifPresent(configConsumer -> configConsumer.accept(config));
+                if (configHandler != null) {
+                    configHandler.accept(config);
+                }
 
                 return Redisson.create(config);
             }
