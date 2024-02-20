@@ -20,16 +20,16 @@ public class RedissonSupplier implements Supplier<RedissonClient> {
 
     private Consumer<Config> configHandler;
 
-    public RedissonSupplier(Properties properties) {
-        this.properties = properties;
-    }
-
     /**
      * 添加配置处理
      */
     public RedissonSupplier withConfig(Consumer<Config> configHandler) {
         this.configHandler = configHandler;
         return this;
+    }
+
+    public RedissonSupplier(Properties properties) {
+        this.properties = properties;
     }
 
     @Override

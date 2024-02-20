@@ -6,6 +6,7 @@ import io.lettuce.core.RedisURI;
 import io.lettuce.core.cluster.RedisClusterClient;
 
 import java.time.Duration;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -13,11 +14,21 @@ import java.util.function.Supplier;
  * @since 2.3.8
  */
 public class LettuceSupplier extends LettuceProperties implements Supplier<AbstractRedisClient> {
+    private Consumer<RedisURI.Builder> configHandler;
+
+    /**
+     * 添加配置处理
+     */
+    public LettuceSupplier withConfig(Consumer<RedisURI.Builder> configHandler) {
+        this.configHandler = configHandler;
+        return this;
+    }
 
     @Override
     public AbstractRedisClient get() {
         RedisMode redisMode = RedisMode.getRedisMode(this.getRedisMode());
-        RedisURI redisUri  = getRedisURI();
+        RedisURI redisUri = getRedisURI();
+
         if (redisMode.equals(RedisMode.STANDALONE)) {
             return RedisClient.create(redisUri);
         } else if (redisMode.equals(RedisMode.CLUSTER)) {
@@ -39,7 +50,8 @@ public class LettuceSupplier extends LettuceProperties implements Supplier<Abstr
 
     private RedisURI lettuceCfg2Uri() {
         LettuceConfig config = this.getConfig();
-        RedisURI.Builder builder;
+
+        final RedisURI.Builder builder;
         if (config.getSocket() != null) {
             builder = RedisURI.Builder.socket(config.getSocket());
         } else if (config.getHost() != null) {
@@ -47,6 +59,7 @@ public class LettuceSupplier extends LettuceProperties implements Supplier<Abstr
         } else {
             builder = RedisURI.Builder.redis("localhost", config.getPort());
         }
+
         if (config.getHost() != null) {
             builder.withHost(config.getHost());
         }
@@ -80,9 +93,14 @@ public class LettuceSupplier extends LettuceProperties implements Supplier<Abstr
         }
         if (config.getSentinels() != null && !config.getSentinels().isEmpty()) {
             for (LettuceSentinel sentinel : config.getSentinels()) {
-                RedisURI.builder().withSentinel(sentinel.getHost(), sentinel.getPort(), sentinel.getPassword());
+                builder.withSentinel(sentinel.getHost(), sentinel.getPort(), sentinel.getPassword());
             }
         }
+
+        if (configHandler != null) {
+            configHandler.accept(builder);
+        }
+
         return builder.build();
     }
 }
