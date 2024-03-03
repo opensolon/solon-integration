@@ -29,7 +29,7 @@ import java.util.List;
  * @author noear
  * @since 1.12
  */
-public class SaTokenInterceptor implements RouterInterceptor {
+public class SaTokenInterceptor implements SaFilter, RouterInterceptor {
     /**
      * 是否打开注解鉴权
      */
@@ -89,6 +89,24 @@ public class SaTokenInterceptor implements RouterInterceptor {
     public SaTokenInterceptor setExcludeList(List<String> pathList) {
         excludeList = pathList;
         return this;
+    }
+
+    /**
+     * 获取 [拦截路由] 集合
+     *
+     * @return see note
+     */
+    public List<String> getIncludeList() {
+        return includeList;
+    }
+
+    /**
+     * 获取 [放行路由] 集合
+     *
+     * @return see note
+     */
+    public List<String> getExcludeList() {
+        return excludeList;
     }
 
 
