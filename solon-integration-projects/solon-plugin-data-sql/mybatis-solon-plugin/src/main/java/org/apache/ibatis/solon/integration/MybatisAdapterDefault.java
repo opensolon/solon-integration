@@ -323,10 +323,10 @@ public class MybatisAdapterDefault implements MybatisAdapter {
 
     private void compatibilityTipsOfXml(String val) {
         //todo: 兼容提醒:
-        if (val.endsWith("*.xml") && val.indexOf("*") == val.indexOf("*.xml")) {
+        //if (val.endsWith("*.xml") && val.indexOf("*") == val.indexOf("*.xml")) {
             //@Deprecated //弃用提示
-            LogUtil.global().warn("Mybatis-新文件表达式提示：'" + val + "' 不包括深度子目录；如有需要可增加'/**/'段");
-        }
+        //    LogUtil.global().warn("Mybatis-新文件表达式提示：'" + val + "' 不包括深度子目录；如有需要可增加'/**/'段");
+        //}
     }
 
     private String getClassExpr(String val) {
