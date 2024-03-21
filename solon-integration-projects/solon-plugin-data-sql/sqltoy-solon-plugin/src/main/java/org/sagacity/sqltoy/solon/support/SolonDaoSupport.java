@@ -1,4 +1,4 @@
-package org.noear.solon.extend.sqltoy.support;
+package org.sagacity.sqltoy.solon.support;
 
 import org.sagacity.sqltoy.SqlToyContext;
 import org.sagacity.sqltoy.support.SqlToyDaoSupport;

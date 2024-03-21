@@ -1,6 +1,6 @@
-package org.noear.solon.extend.sqltoy.impl;
+package org.sagacity.sqltoy.solon.impl;
 
-import org.noear.solon.extend.sqltoy.support.SolonDaoSupport;
+import org.sagacity.sqltoy.solon.support.SolonDaoSupport;
 import org.sagacity.sqltoy.SqlToyContext;
 import org.sagacity.sqltoy.callback.StreamResultHandler;
 import org.sagacity.sqltoy.callback.UpdateRowHandler;

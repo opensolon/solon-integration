@@ -5,7 +5,7 @@ import com.sqltoy.helloworld.service.FruitOrderService;
 import com.sqltoy.helloworld.vo.FruitOrderVO;
 import org.noear.solon.Solon;
 
-import org.noear.solon.extend.sqltoy.DbManager;
+import org.sagacity.sqltoy.solon.DbManager;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 
 import javax.sql.DataSource;

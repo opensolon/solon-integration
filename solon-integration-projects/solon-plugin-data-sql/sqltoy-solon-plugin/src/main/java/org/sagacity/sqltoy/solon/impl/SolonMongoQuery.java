@@ -1,4 +1,4 @@
-package org.noear.solon.extend.sqltoy.impl;
+package org.sagacity.sqltoy.solon.impl;
 
 import com.mongodb.client.*;
 import org.bson.BsonDocument;

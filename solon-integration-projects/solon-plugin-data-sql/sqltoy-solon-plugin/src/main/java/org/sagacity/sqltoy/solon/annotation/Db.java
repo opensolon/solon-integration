@@ -1,4 +1,4 @@
-package org.noear.solon.extend.sqltoy.annotation;
+package org.sagacity.sqltoy.solon.annotation;
 
 import java.lang.annotation.*;
 
@@ -11,7 +11,6 @@ import java.lang.annotation.*;
  * @Db XXMapper mapper;
  * @Db("db1") SqlToyLazyDao dao; //指定数据源
  * */
-@Deprecated
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

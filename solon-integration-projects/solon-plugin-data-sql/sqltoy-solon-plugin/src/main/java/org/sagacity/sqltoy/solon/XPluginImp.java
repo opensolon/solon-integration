@@ -1,13 +1,14 @@
-package org.noear.solon.extend.sqltoy;
+package org.sagacity.sqltoy.solon;
 
 import org.noear.solon.Solon;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.Plugin;
 import org.noear.solon.data.cache.CacheService;
 import org.noear.solon.extend.sqltoy.annotation.Db;
-import org.noear.solon.extend.sqltoy.configure.SqlToyContextProperties;
-import org.noear.solon.extend.sqltoy.impl.SolonAppContext;
-import org.noear.solon.extend.sqltoy.translate.SolonTranslateCacheManager;
+import org.noear.solon.extend.sqltoy.annotation.DbInjectorOld;
+import org.sagacity.sqltoy.solon.configure.SqlToyContextProperties;
+import org.sagacity.sqltoy.solon.impl.SolonAppContext;
+import org.sagacity.sqltoy.solon.translate.SolonTranslateCacheManager;
 import org.sagacity.sqltoy.SqlToyContext;
 
 /**
@@ -55,6 +56,7 @@ public class XPluginImp implements Plugin {
         }
 
         context.beanInjectorAdd(Db.class, new DbInjector());
+        context.beanInjectorAdd(org.noear.solon.extend.sqltoy.annotation.Db.class, new DbInjectorOld());
     }
 
     private void initSqlToy(SqlToyContext sqlToyContext) throws Exception {

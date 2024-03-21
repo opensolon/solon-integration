@@ -1,4 +1,4 @@
-package org.noear.solon.extend.sqltoy.translate;
+package org.sagacity.sqltoy.solon.translate;
 
 import org.noear.solon.data.cache.CacheService;
 import org.sagacity.sqltoy.translate.cache.TranslateCacheManager;

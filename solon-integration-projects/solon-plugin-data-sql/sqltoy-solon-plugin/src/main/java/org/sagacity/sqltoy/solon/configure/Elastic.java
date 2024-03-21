@@ -1,4 +1,4 @@
-package org.noear.solon.extend.sqltoy.configure;
+package org.sagacity.sqltoy.solon.configure;
 
 
 import java.io.Serializable;

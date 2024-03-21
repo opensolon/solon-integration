@@ -1,11 +1,11 @@
-package org.noear.solon.extend.sqltoy;
+package org.sagacity.sqltoy.solon;
 
 import org.noear.solon.core.util.ClassUtil;
-import org.noear.solon.extend.sqltoy.configure.Elastic;
-import org.noear.solon.extend.sqltoy.configure.ElasticConfig;
-import org.noear.solon.extend.sqltoy.configure.SqlToyContextProperties;
-import org.noear.solon.extend.sqltoy.configure.SqlToyContextTaskPoolProperties;
-import org.noear.solon.extend.sqltoy.impl.SolonConnectionFactory;
+import org.sagacity.sqltoy.solon.configure.Elastic;
+import org.sagacity.sqltoy.solon.configure.ElasticConfig;
+import org.sagacity.sqltoy.solon.configure.SqlToyContextProperties;
+import org.sagacity.sqltoy.solon.configure.SqlToyContextTaskPoolProperties;
+import org.sagacity.sqltoy.solon.impl.SolonConnectionFactory;
 import org.sagacity.sqltoy.SqlToyContext;
 import org.sagacity.sqltoy.config.model.ElasticEndpoint;
 import org.sagacity.sqltoy.integration.AppContext;
@@ -30,7 +30,7 @@ import static java.lang.System.err;
  * @author noear
  * @since 1.8
  */
-class SqlToyContextBuilder {
+public class SqlToyContextBuilder {
     SqlToyContextProperties properties;
     AppContext appContext;
     public SqlToyContextBuilder(SqlToyContextProperties properties, AppContext appContext){
