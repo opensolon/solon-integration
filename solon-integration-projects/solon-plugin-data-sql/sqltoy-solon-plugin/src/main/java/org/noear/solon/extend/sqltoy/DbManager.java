@@ -1,11 +1,11 @@
 package org.noear.solon.extend.sqltoy;
 
 import org.noear.solon.core.AppContext;
+import org.noear.solon.extend.sqltoy.impl.LightDaoImpl;
+import org.noear.solon.extend.sqltoy.impl.SqlToyLazyDaoImpl;
 import org.sagacity.sqltoy.SqlToyContext;
 import org.sagacity.sqltoy.dao.LightDao;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
-import org.sagacity.sqltoy.dao.impl.LightDaoImpl;
-import org.sagacity.sqltoy.dao.impl.SqlToyLazyDaoImpl;
 import org.sagacity.sqltoy.service.SqlToyCRUDService;
 
 import javax.sql.DataSource;

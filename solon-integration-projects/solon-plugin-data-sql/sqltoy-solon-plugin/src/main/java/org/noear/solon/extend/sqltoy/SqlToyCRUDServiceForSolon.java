@@ -1,18 +1,25 @@
 package org.noear.solon.extend.sqltoy;
 
+import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Singleton;
 import org.noear.solon.data.annotation.Tran;
-import org.noear.solon.annotation.Component;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
-import org.sagacity.sqltoy.model.*;
+import org.sagacity.sqltoy.model.CacheMatchFilter;
+import org.sagacity.sqltoy.model.LockMode;
+import org.sagacity.sqltoy.model.Page;
+import org.sagacity.sqltoy.model.ParallQuery;
+import org.sagacity.sqltoy.model.ParallelConfig;
+import org.sagacity.sqltoy.model.QueryResult;
+import org.sagacity.sqltoy.model.TreeTableModel;
 import org.sagacity.sqltoy.service.SqlToyCRUDService;
-import org.sagacity.sqltoy.service.impl.SqlToyCRUDServiceImpl;
 import org.sagacity.sqltoy.translate.TranslateHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -23,9 +30,7 @@ import java.util.*;
 @Singleton(false) //因为会被多数据源使用，所以不能是单例
 @Component
 public class SqlToyCRUDServiceForSolon implements SqlToyCRUDService {
-    protected final Logger logger = LoggerFactory.getLogger(SqlToyCRUDServiceImpl.class);
     protected SqlToyLazyDao sqlToyLazyDao;
-
 
     public void setSqlToyLazyDao(SqlToyLazyDao sqlToyLazyDao) {
         this.sqlToyLazyDao = sqlToyLazyDao;
