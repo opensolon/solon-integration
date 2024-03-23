@@ -1,4 +1,4 @@
-package org.sagacity.sqltoy.solon.impl;
+package org.sagacity.sqltoy.solon.integration;
 
 import org.noear.solon.core.AppContext;
 

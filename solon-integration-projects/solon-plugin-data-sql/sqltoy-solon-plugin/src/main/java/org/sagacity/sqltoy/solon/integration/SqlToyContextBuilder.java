@@ -1,11 +1,11 @@
-package org.sagacity.sqltoy.solon;
+package org.sagacity.sqltoy.solon.integration;
 
 import org.noear.solon.core.util.ClassUtil;
 import org.sagacity.sqltoy.solon.configure.Elastic;
 import org.sagacity.sqltoy.solon.configure.ElasticConfig;
 import org.sagacity.sqltoy.solon.configure.SqlToyContextProperties;
 import org.sagacity.sqltoy.solon.configure.SqlToyContextTaskPoolProperties;
-import org.sagacity.sqltoy.solon.impl.SolonConnectionFactory;
+import org.sagacity.sqltoy.solon.integration.SolonConnectionFactory;
 import org.sagacity.sqltoy.SqlToyContext;
 import org.sagacity.sqltoy.config.model.ElasticEndpoint;
 import org.sagacity.sqltoy.integration.AppContext;

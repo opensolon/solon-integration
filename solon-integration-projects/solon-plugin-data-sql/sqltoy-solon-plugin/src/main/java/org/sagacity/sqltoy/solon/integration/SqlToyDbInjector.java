@@ -1,12 +1,13 @@
-package org.sagacity.sqltoy.solon;
+package org.sagacity.sqltoy.solon.integration;
 
 import org.noear.solon.core.BeanInjector;
 import org.noear.solon.core.VarHolder;
-import org.noear.solon.extend.sqltoy.annotation.Db;
+import org.sagacity.sqltoy.solon.annotation.Db;
 import org.sagacity.sqltoy.SqlToyContext;
 import org.sagacity.sqltoy.dao.LightDao;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 import org.sagacity.sqltoy.service.SqlToyCRUDService;
+import org.sagacity.sqltoy.solon.DbManager;
 
 import javax.sql.DataSource;
 import java.util.Map;
@@ -16,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author 夜の孤城
  * @since 1.5
  * */
-public class DbInjector implements BeanInjector<Db> {
+public class SqlToyDbInjector implements BeanInjector<Db> {
     private static Map<DataSource, SqlToyLazyDao> daoMap = new ConcurrentHashMap();
     private static Map<DataSource, SqlToyCRUDService> serviceMap = new ConcurrentHashMap();
 

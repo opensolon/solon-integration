@@ -1,4 +1,4 @@
-package org.sagacity.sqltoy.solon;
+package org.sagacity.sqltoy.solon.service.impl;
 
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Singleton;

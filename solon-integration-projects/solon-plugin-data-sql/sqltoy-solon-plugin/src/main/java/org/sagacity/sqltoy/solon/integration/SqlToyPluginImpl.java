@@ -1,14 +1,13 @@
-package org.sagacity.sqltoy.solon;
+package org.sagacity.sqltoy.solon.integration;
 
 import org.noear.solon.Solon;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.Plugin;
 import org.noear.solon.data.cache.CacheService;
-import org.noear.solon.extend.sqltoy.annotation.Db;
 import org.noear.solon.extend.sqltoy.annotation.DbInjectorOld;
+import org.sagacity.sqltoy.solon.DbManager;
 import org.sagacity.sqltoy.solon.configure.SqlToyContextProperties;
-import org.sagacity.sqltoy.solon.impl.SolonAppContext;
-import org.sagacity.sqltoy.solon.translate.SolonTranslateCacheManager;
+import org.sagacity.sqltoy.solon.translate.cache.impl.SolonTranslateCacheManager;
 import org.sagacity.sqltoy.SqlToyContext;
 
 /**
@@ -19,7 +18,7 @@ import org.sagacity.sqltoy.SqlToyContext;
  * @since 1.5
  * @since 1.8
  */
-public class XPluginImp implements Plugin {
+public class SqlToyPluginImpl implements Plugin {
 
     AppContext context;
 
@@ -28,10 +27,16 @@ public class XPluginImp implements Plugin {
         this.context = context;
 
         //尝试初始化 rdb
-        SqlToyContextProperties properties = context.cfg().getBean("sqltoy", SqlToyContextProperties.class);
+        SqlToyContextProperties properties = context.cfg().getBean("solon.sqltoy", SqlToyContextProperties.class);
         if (properties == null) {
+            //old:
+            properties = context.cfg().getBean("sqltoy", SqlToyContextProperties.class);
+        }
+        if (properties == null) {
+            //def:
             properties = new SqlToyContextProperties();
         }
+
 
         if (Solon.cfg().isDebugMode()) {
             properties.setDebug(true);
@@ -55,7 +60,9 @@ public class XPluginImp implements Plugin {
             initSqlToy(sqlToyContext);
         }
 
-        context.beanInjectorAdd(Db.class, new DbInjector());
+        //新的注解包
+        context.beanInjectorAdd(org.sagacity.sqltoy.solon.annotation.Db.class, new SqlToyDbInjector());
+        //旧的注解包
         context.beanInjectorAdd(org.noear.solon.extend.sqltoy.annotation.Db.class, new DbInjectorOld());
     }
 

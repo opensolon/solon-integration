@@ -1,12 +1,13 @@
 package org.sagacity.sqltoy.solon;
 
 import org.noear.solon.core.AppContext;
-import org.sagacity.sqltoy.solon.impl.LightDaoImpl;
-import org.sagacity.sqltoy.solon.impl.SqlToyLazyDaoImpl;
+import org.sagacity.sqltoy.solon.dao.impl.LightDaoImpl;
+import org.sagacity.sqltoy.solon.dao.impl.SqlToyLazyDaoImpl;
 import org.sagacity.sqltoy.SqlToyContext;
 import org.sagacity.sqltoy.dao.LightDao;
 import org.sagacity.sqltoy.dao.SqlToyLazyDao;
 import org.sagacity.sqltoy.service.SqlToyCRUDService;
+import org.sagacity.sqltoy.solon.service.impl.SqlToyCRUDServiceForSolon;
 
 import javax.sql.DataSource;
 import java.util.HashMap;

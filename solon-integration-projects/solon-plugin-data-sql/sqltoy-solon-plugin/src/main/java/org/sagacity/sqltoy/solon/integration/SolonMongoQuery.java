@@ -1,4 +1,4 @@
-package org.sagacity.sqltoy.solon.impl;
+package org.sagacity.sqltoy.solon.integration;
 
 import com.mongodb.client.*;
 import org.bson.BsonDocument;

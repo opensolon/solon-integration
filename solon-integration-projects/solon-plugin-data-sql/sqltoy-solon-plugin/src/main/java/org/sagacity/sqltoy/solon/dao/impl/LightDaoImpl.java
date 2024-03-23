@@ -1,4 +1,4 @@
-package org.sagacity.sqltoy.solon.impl;
+package org.sagacity.sqltoy.solon.dao.impl;
 
 import org.sagacity.sqltoy.solon.support.SolonDaoSupport;
 import org.sagacity.sqltoy.SqlToyContext;
