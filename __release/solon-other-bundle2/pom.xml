@@ -33,5 +33,6 @@
         <module>../../solon-integration-projects/solon-plugin-data-sql/bean-searcher-solon-plugin</module>
         <module>../../solon-integration-projects/solon-plugin-data-sql/openjpa-solon-plugin</module>
         <module>../../solon-integration-projects/solon-plugin-data-sql/hibernate-solon-plugin</module>
+        <module>../../solon-integration-projects/solon-plugin-data-sql/mybatis-tkmapper-solon-plugin</module>
     </modules>
 </project>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.noear</groupId>
+        <artifactId>solon-parent</artifactId>
+        <version>2.7.3</version>
+        <relativePath/>
+    </parent>
+
+    <properties>
+        <tkmapper.version>4.2.3</tkmapper.version>
+    </properties>
+
+    <artifactId>mybatis-tkmapper-solon-plugin</artifactId>
+    <packaging>jar</packaging>
+    <description>TkMybatis的Solon插件</description>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>mybatis-solon-plugin</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper-solon-plugin</artifactId>
+            <version>${tkmapper.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.noear</groupId>
+                    <artifactId>mybatis-solon-plugin</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+    </dependencies>
+
+</project>
