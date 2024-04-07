@@ -3,7 +3,7 @@
 ```xml
 <dependency>
     <groupId>org.noear</groupId>
-    <artifactId>mybatis-plus-solon-plugin</artifactId>
+    <artifactId>mybatis-tkmapper-solon-plugin</artifactId>
 </dependency>
 ```
 #### 1、描述
