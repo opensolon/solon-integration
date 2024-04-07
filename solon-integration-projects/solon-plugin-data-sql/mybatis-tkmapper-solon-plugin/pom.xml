@@ -7,20 +7,18 @@
     <parent>
         <groupId>org.noear</groupId>
         <artifactId>solon-parent</artifactId>
-        <version>2.7.3</version>
+        <version>2.7.4-SNAPSHOT</version>
         <relativePath/>
     </parent>
+
+    <artifactId>mybatis-tkmapper-solon-plugin</artifactId>
+    <packaging>jar</packaging>
 
     <properties>
         <tkmapper.version>4.3.0</tkmapper.version>
     </properties>
 
-    <artifactId>mybatis-tkmapper-solon-plugin</artifactId>
-    <packaging>jar</packaging>
-    <description>TkMybatis的Solon插件</description>
-
     <dependencies>
-
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>mybatis-solon-plugin</artifactId>
