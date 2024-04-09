@@ -14,6 +14,7 @@ import java.sql.SQLException;
 public class SolonManagedTransaction implements Transaction {
     DataSource dataSource;
     Connection connection;
+
     public SolonManagedTransaction(DataSource dataSource) {
         this.dataSource = dataSource;
     }
@@ -21,7 +22,7 @@ public class SolonManagedTransaction implements Transaction {
     @Override
     public Connection getConnection() throws SQLException {
         if (connection == null) {
-            connection = TranUtils.getConnection(dataSource);
+            connection = TranUtils.getConnectionProxy(dataSource);
         }
 
         return connection;
@@ -30,24 +31,20 @@ public class SolonManagedTransaction implements Transaction {
     @Override
     public void commit() throws SQLException {
         if (connection != null) {
-            if (TranUtils.inTrans() == false && connection.getAutoCommit() == false) {
-                connection.commit();
-            }
+            connection.commit();
         }
     }
 
     @Override
     public void rollback() throws SQLException {
         if (connection != null) {
-            if (TranUtils.inTrans() == false && connection.getAutoCommit() == false) {
-                connection.rollback();
-            }
+            connection.rollback();
         }
     }
 
     @Override
     public void close() throws SQLException {
-        if (connection != null && TranUtils.inTrans() == false) {
+        if (connection != null) {
             connection.close();
         }
     }
