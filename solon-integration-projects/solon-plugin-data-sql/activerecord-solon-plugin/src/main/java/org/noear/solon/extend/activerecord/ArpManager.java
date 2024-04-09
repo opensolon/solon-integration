@@ -8,10 +8,10 @@ import org.noear.solon.Utils;
 import org.noear.solon.core.BeanWrap;
 import org.noear.solon.core.event.EventBus;
 import org.noear.solon.core.util.ScanUtil;
+import org.noear.solon.data.tran.DataSourceProxy;
 import org.noear.solon.extend.activerecord.annotation.Db;
 import org.noear.solon.extend.activerecord.annotation.Table;
 import org.noear.solon.extend.activerecord.impl.ConfigImpl;
-import org.noear.solon.extend.activerecord.impl.DataSourceProxyImpl;
 
 import javax.sql.DataSource;
 import java.util.*;
@@ -77,7 +77,7 @@ public class ArpManager {
         }
 
         // 构建配置
-        DataSource arpDs = new DataSourceProxyImpl(ds);
+        DataSource arpDs = new DataSourceProxy(ds);
         Config arpCfg = new ConfigImpl(name, arpDs, DbKit.DEFAULT_TRANSACTION_LEVEL);
 
         // 构建arp
