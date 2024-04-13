@@ -27,6 +27,9 @@ Solon Java Framework
     <a target="_blank" href="https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html">
 		<img src="https://img.shields.io/badge/JDK-21-green.svg" alt="jdk-21" />
 	</a>
+    <a target="_blank" href="https://www.oracle.com/java/technologies/javase/jdk22-archive-downloads.html">
+		<img src="https://img.shields.io/badge/JDK-22-green.svg" alt="jdk-22" />
+	</a>
     <br />
     <a target="_blank" href='https://gitee.com/noear/solon/stargazers'>
 		<img src='https://gitee.com/noear/solon/badge/star.svg' alt='gitee star'/>
@@ -44,6 +47,6 @@ Solon Java Framework
 
 <hr />
 
-并发高 2～ 3 倍；运行时内存节省 50%；启动快 5 ～ 10 倍；打包可以缩小 50% ~ 90%
+并发高 2～ 3 倍；运行时内存节省 50%；启动快 5 ～ 10 倍；打包可以缩小 50% ~ 90%；同时兼容 java8 ~ java22
 
 <hr />
