@@ -11,10 +11,10 @@ import java.sql.SQLException;
  * @author noear
  * @see 1.8
  */
-public class DynamicConnectionImpl implements DynamicConnection {
+public class SolonManagedDynamicConnection implements DynamicConnection {
     private DataSource dataSource;
 
-    public DynamicConnectionImpl(DataSource dataSource) {
+    public SolonManagedDynamicConnection(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 

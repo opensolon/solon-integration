@@ -56,7 +56,7 @@ public class XPluginImp implements Plugin {
 
         //@Db("db1") LambdaTemplate ; //顺序别乱变
         if (LambdaTemplate.class.isAssignableFrom(varH.getType())) {
-            LambdaTemplate accessor = new LambdaTemplate(new DynamicConnectionImpl(ds));
+            LambdaTemplate accessor = new LambdaTemplate(new SolonManagedDynamicConnection(ds));
 
             varH.setValue(accessor);
             return;
@@ -64,7 +64,7 @@ public class XPluginImp implements Plugin {
 
         //@Db("db1") JdbcTemplate ;
         if (JdbcTemplate.class.isAssignableFrom(varH.getType())) {
-            JdbcTemplate accessor = new JdbcTemplate(new DynamicConnectionImpl(ds));
+            JdbcTemplate accessor = new JdbcTemplate(new SolonManagedDynamicConnection(ds));
 
             varH.setValue(accessor);
             return;
@@ -72,7 +72,7 @@ public class XPluginImp implements Plugin {
 
         //@Db("db1") DalSession ;
         if (DalSession.class.isAssignableFrom(varH.getType())) {
-            DalSession accessor = new DalSession(new DynamicConnectionImpl(ds));
+            DalSession accessor = new DalSession(new SolonManagedDynamicConnection(ds));
 
             varH.setValue(accessor);
             return;
@@ -80,7 +80,7 @@ public class XPluginImp implements Plugin {
 
         //@Db("db1") UserMapper ;
         if (varH.getType().isInterface()) {
-            DalSession accessor = new DalSession(new DynamicConnectionImpl(ds), dalRegistry);
+            DalSession accessor = new DalSession(new SolonManagedDynamicConnection(ds), dalRegistry);
 
             if (clz == BaseMapper.class) {
                 Object obj = accessor.createBaseMapper((Class<?>) varH.getGenericType().getActualTypeArguments()[0]);
