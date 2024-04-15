@@ -156,4 +156,4 @@ public void paging() {
 ```
 **具体可参考：**
 
-[https://gitee.com/noear/solon-examples/tree/main/4.Solon-Data/demo4102-tkmapper](https://gitee.com/noear/solon-examples/tree/main/4.Solon-Data/demo4102-tkmapper)
+[https://github.com/noear/solon-examples/tree/main/4.Solon-Data/demo4037-tkmapper](https://github.com/noear/solon-examples/tree/main/4.Solon-Data/demo4037-tkmapper)
