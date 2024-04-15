@@ -374,6 +374,16 @@ public class DubboServiceAnno implements DubboService, Service {
     }
 
     @Override
+    public String serialization() {
+        return anno.serialization();
+    }
+
+    @Override
+    public String preferSerialization() {
+        return anno.preferSerialization();
+    }
+
+    @Override
     public Class<? extends Annotation> annotationType() {
         return anno.annotationType();
     }

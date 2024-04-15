@@ -14,6 +14,6 @@ import java.sql.SQLException;
 class DsConnectionFactoryImpl extends DbConnectionFactory {
     @Override
     public Connection getConnection(DataSource ds) throws SQLException {
-        return TranUtils.getConnection(ds);
+        return TranUtils.getConnectionProxy(ds);
     }
 }

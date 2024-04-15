@@ -20,13 +20,11 @@ public class DynamicConnectionImpl implements DynamicConnection {
 
     @Override
     public Connection getConnection() throws SQLException {
-        return TranUtils.getConnection(dataSource);
+        return TranUtils.getConnectionProxy(dataSource);
     }
 
     @Override
     public void releaseConnection(Connection conn) throws SQLException {
-        if (TranUtils.inTrans() == false) {
-            conn.close();
-        }
+        conn.close();
     }
 }
