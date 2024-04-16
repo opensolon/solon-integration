@@ -135,9 +135,7 @@ public class MybatisAdapterDefault implements MybatisAdapter {
                         }
 
                         //package || type class，转为类表达式
-                        String valNew = getClassExpr(val);
-
-                        for (Class<?> clz : ResourceUtil.scanClasses(dsWrap.context().getClassLoader(),valNew)) {
+                        for (Class<?> clz : ResourceUtil.scanClasses(dsWrap.context().getClassLoader(), val)) {
                             if (clz.isInterface() == false) {
                                 getConfiguration().getTypeAliasRegistry().registerAlias(clz);
                             }
@@ -153,9 +151,7 @@ public class MybatisAdapterDefault implements MybatisAdapter {
                         }
 
                         //package || type class，转为类表达式
-                        String valNew = getClassExpr(val);
-
-                        for (Class<?> clz : ResourceUtil.scanClasses(dsWrap.context().getClassLoader(),valNew)) {
+                        for (Class<?> clz : ResourceUtil.scanClasses(dsWrap.context().getClassLoader(), val)) {
                             if (TypeHandler.class.isAssignableFrom(clz)) {
                                 getConfiguration().getTypeHandlerRegistry().register(clz);
                             }
@@ -192,9 +188,7 @@ public class MybatisAdapterDefault implements MybatisAdapter {
                             compatibilityTipsOfXml(val);
                         } else {
                             //package || type class，转为类表达式
-                            String valNew = getClassExpr(val);
-
-                            for (Class<?> clz : ResourceUtil.scanClasses(dsWrap.context().getClassLoader(),valNew)) {
+                            for (Class<?> clz : ResourceUtil.scanClasses(dsWrap.context().getClassLoader(), val)) {
                                 if (clz.isInterface()) {
                                     if (mapperVerifyEnabled) {
                                         if (isMapper(clz)) {
@@ -252,10 +246,10 @@ public class MybatisAdapterDefault implements MybatisAdapter {
         return factory;
     }
 
-    Map<Class<?> , Object> mapperCached = new HashMap<>();
+    Map<Class<?>, Object> mapperCached = new HashMap<>();
 
     @Override
-    public  <T> T getMapper(Class<T> mapperClz) {
+    public <T> T getMapper(Class<T> mapperClz) {
         Object mapper = mapperCached.get(mapperClz);
 
         if (mapper == null) {
@@ -324,27 +318,8 @@ public class MybatisAdapterDefault implements MybatisAdapter {
     private void compatibilityTipsOfXml(String val) {
         //todo: 兼容提醒:
         //if (val.endsWith("*.xml") && val.indexOf("*") == val.indexOf("*.xml")) {
-            //@Deprecated //弃用提示
+        //@Deprecated //弃用提示
         //    LogUtil.global().warn("Mybatis-新文件表达式提示：'" + val + "' 不包括深度子目录；如有需要可增加'/**/'段");
         //}
-    }
-
-    private String getClassExpr(String val) {
-        //兼容旧代码: 把包名转为类表达式，但类名保持原态
-
-        if (val.endsWith(".class") == false && val.endsWith(".*") == false) {
-            int idx = val.lastIndexOf('.');
-            char acr = val.charAt(idx + 1);
-
-            if (acr > 96) { //44=$ 97=a
-                //开头为小写（说明是包）
-                return val + ".*";
-            } else {
-                //开头为大写或$（说明是类）
-                return val;
-            }
-        }
-
-        return val;
     }
 }
