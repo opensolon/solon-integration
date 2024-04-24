@@ -21,6 +21,7 @@ import graphql.solon.resolver.argument.HandlerMethodArgumentResolver;
 import graphql.solon.resolver.argument.HandlerMethodArgumentResolverCollect;
 import graphql.solon.ws.GraphqlWebsocket;
 import org.noear.solon.core.AppContext;
+import org.noear.solon.core.LifecycleIndex;
 import org.noear.solon.core.Plugin;
 import org.noear.solon.core.event.AppLoadEndEvent;
 import org.noear.solon.core.event.EventBus;
@@ -66,7 +67,7 @@ public class GraphqlPlugin implements Plugin {
         context.wrapAndPut(BatchMappingAnnoHandler.class, batchMappingExtractor);
         context.wrapAndPut(SubscriptionMappingAnnoHandler.class, subscriptionMappingAnnoHandler);
 
-        context.lifecycle(-99, () -> {
+        context.lifecycle(LifecycleIndex.PLUGIN_BEAN_USES, () -> {
             context.beanMake(GraphqlProperties.class);
             context.beanMake(DefaultCprResolverEventListener.class);
             context.beanMake(DefaultRwConfigurerCollectEventListener.class);

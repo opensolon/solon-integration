@@ -14,6 +14,7 @@ import org.apache.ibatis.type.TypeHandler;
 import org.noear.solon.Solon;
 import org.noear.solon.Utils;
 import org.noear.solon.core.BeanWrap;
+import org.noear.solon.core.LifecycleIndex;
 import org.noear.solon.core.Props;
 import org.noear.solon.core.VarHolder;
 import org.noear.solon.core.event.EventBus;
@@ -83,7 +84,7 @@ public class MybatisAdapterDefault implements MybatisAdapter {
         }
 
         //加载插件（通过Bean）
-        dsWrap.context().lifecycle(-99, () -> {
+        dsWrap.context().lifecycle(LifecycleIndex.PLUGIN_BEAN_USES, () -> {
             dsWrap.context().beanForeach(bw -> {
                 if (bw.raw() instanceof Interceptor) {
                     config.addInterceptor(bw.raw());

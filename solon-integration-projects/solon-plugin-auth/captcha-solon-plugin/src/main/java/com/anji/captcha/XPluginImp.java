@@ -4,6 +4,7 @@ import com.anji.captcha.config.AjCaptchaServiceConfiguration;
 import com.anji.captcha.config.AjCaptchaStorageConfiguration;
 import com.anji.captcha.properties.AjCaptchaProperties;
 import org.noear.solon.core.AppContext;
+import org.noear.solon.core.LifecycleIndex;
 import org.noear.solon.core.Plugin;
 import com.anji.captcha.controller.CaptchaController;
 
@@ -14,7 +15,7 @@ import com.anji.captcha.controller.CaptchaController;
 public class XPluginImp implements Plugin {
     @Override
     public void start(AppContext context) {
-        context.lifecycle(-99, () -> {
+        context.lifecycle(LifecycleIndex.PLUGIN_BEAN_USES, () -> {
             context.beanMake(AjCaptchaProperties.class);
             context.beanMake(AjCaptchaServiceConfiguration.class);
             context.beanMake(AjCaptchaStorageConfiguration.class);

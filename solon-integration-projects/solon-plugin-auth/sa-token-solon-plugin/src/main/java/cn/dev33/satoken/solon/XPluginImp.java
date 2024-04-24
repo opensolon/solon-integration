@@ -21,6 +21,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.temp.SaTempInterface;
 import org.noear.solon.Solon;
 import org.noear.solon.core.AppContext;
+import org.noear.solon.core.LifecycleIndex;
 import org.noear.solon.core.Plugin;
 
 /**
@@ -38,7 +39,7 @@ public class XPluginImp implements Plugin {
 
 
         //注入其它 Bean
-        context.lifecycle(-99, () -> {
+        context.lifecycle(LifecycleIndex.PLUGIN_BEAN_USES, () -> {
             beanInitDo(context);
             context.beanMake(SaSsoAutoConfigure.class);
             context.beanMake(SaOAuth2AutoConfigure.class);

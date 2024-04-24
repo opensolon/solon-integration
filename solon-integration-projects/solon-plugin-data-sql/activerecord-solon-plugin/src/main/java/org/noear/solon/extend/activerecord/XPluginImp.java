@@ -3,6 +3,7 @@ package org.noear.solon.extend.activerecord;
 import javax.sql.DataSource;
 
 import org.noear.solon.core.AppContext;
+import org.noear.solon.core.LifecycleIndex;
 import org.noear.solon.core.Plugin;
 import org.noear.solon.extend.activerecord.annotation.Db;
 import org.noear.solon.extend.activerecord.annotation.Table;
@@ -28,7 +29,7 @@ public class XPluginImp implements Plugin {
         });
 
         // 通过DataSource类型获取Bean实例
-        context.lifecycle(-99, () -> {
+        context.lifecycle(LifecycleIndex.PLUGIN_BEAN_USES, () -> {
             ArpManager.start();
         });
     }

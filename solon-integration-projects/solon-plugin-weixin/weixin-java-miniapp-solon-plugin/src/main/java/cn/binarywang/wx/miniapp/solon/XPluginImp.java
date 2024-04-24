@@ -1,6 +1,7 @@
 package cn.binarywang.wx.miniapp.solon;
 
 import org.noear.solon.core.AppContext;
+import org.noear.solon.core.LifecycleIndex;
 import org.noear.solon.core.Plugin;
 import cn.binarywang.wx.miniapp.solon.config.WxMaServiceAutoConfiguration;
 import cn.binarywang.wx.miniapp.solon.config.storage.WxMaInJedisConfigStorageConfiguration;
@@ -12,7 +13,7 @@ public class XPluginImp implements Plugin{
 
 	@Override
 	public void start(AppContext context) throws Throwable {
-		context.lifecycle(-99, () -> {
+		context.lifecycle(LifecycleIndex.PLUGIN_BEAN_USES, () -> {
             context.beanMake(WxMaProperties.class);
             
             context.beanMake(WxMaInMemoryConfigStorageConfiguration.class);
