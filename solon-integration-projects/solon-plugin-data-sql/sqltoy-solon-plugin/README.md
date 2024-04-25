@@ -120,7 +120,7 @@ public interface DemoMapper {
     Long count();
     //default 方法不处理，直接调用，可在default方法中调用本接口方法处理一些业务
     default long doSomeThingElse(){
-        // Aop.get(XX.class) 获取其他bean来处理业务
+        // Solon.context().get(XX.class) 获取其他bean来处理业务
         //dao().xxx  或通过SqlToyLazyDao来处理其他业务
         return count()+1;
     }
