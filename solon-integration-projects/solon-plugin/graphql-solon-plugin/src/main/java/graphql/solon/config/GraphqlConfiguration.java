@@ -14,11 +14,8 @@ import org.slf4j.LoggerFactory;
  */
 @Configuration
 public class GraphqlConfiguration {
-
     private static Logger log = LoggerFactory.getLogger(GraphqlConfiguration.class);
-    
-    public GraphqlConfiguration() {
-    }
+
 
     /**
      * 注入GraphQlSource

@@ -1,7 +1,8 @@
 package graphql.solon.event;
 
 import java.util.List;
-import org.noear.solon.annotation.Configuration;
+
+import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.event.EventListener;
 import graphql.solon.properties.GraphqlProperties;
@@ -17,18 +18,12 @@ import org.slf4j.LoggerFactory;
  * @author fuzi1996
  * @since 2.3
  */
-@Configuration
-public class DefaultCprResolverEventListener implements
-        EventListener<GraphqlResourceResolverCollect> {
-
-    private static Logger log = LoggerFactory.getLogger(
-            DefaultCprResolverEventListener.class);
+@Component
+public class DefaultCprResolverEventListener implements EventListener<GraphqlResourceResolverCollect> {
+    private static Logger log = LoggerFactory.getLogger(DefaultCprResolverEventListener.class);
 
     @Inject
     private GraphqlProperties properties;
-
-    public DefaultCprResolverEventListener() {
-    }
 
     @Override
     public void onEvent(

@@ -4,7 +4,7 @@ import graphql.schema.idl.TypeRuntimeWiring;
 import java.util.LinkedList;
 import java.util.List;
 import org.noear.solon.Solon;
-import org.noear.solon.annotation.Configuration;
+import org.noear.solon.annotation.Component;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.event.EventListener;
 import graphql.solon.annotation.BaseSchemaMappingAnnoHandler;
@@ -20,23 +20,17 @@ import org.slf4j.LoggerFactory;
  * @author fuzi1996
  * @since 2.3
  */
-@Configuration
-public class DefaultRwConfigurerCollectEventListener implements
-        EventListener<RuntimeWiringConfigurerCollect> {
+@Component
+public class DefaultRwConfigurerCollectEventListener implements EventListener<RuntimeWiringConfigurerCollect> {
 
-    private static Logger log = LoggerFactory
-            .getLogger(DefaultRwConfigurerCollectEventListener.class);
+    private static Logger log = LoggerFactory.getLogger(DefaultRwConfigurerCollectEventListener.class);
 
-    public DefaultRwConfigurerCollectEventListener() {
-    }
 
     @Override
-    public void onEvent(
-            RuntimeWiringConfigurerCollect collect) throws Throwable {
+    public void onEvent(RuntimeWiringConfigurerCollect collect) throws Throwable {
 
         AppContext context = Solon.context();
-        List<BaseSchemaMappingAnnoHandler> beans = context
-                .getBeansOfType(BaseSchemaMappingAnnoHandler.class);
+        List<BaseSchemaMappingAnnoHandler> beans = context.getBeansOfType(BaseSchemaMappingAnnoHandler.class);
 
         List<DataFetcherWrap> wrapList = new LinkedList<>();
         for (BaseSchemaMappingAnnoHandler bean : beans) {

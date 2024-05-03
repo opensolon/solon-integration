@@ -38,10 +38,6 @@ public class AppLoadEndEventListener implements EventListener<AppLoadEndEvent> {
 
     @Override
     public void onEvent(AppLoadEndEvent appLoadEndEvent) throws Throwable {
-        this.initGraphqlSource(appLoadEndEvent);
-    }
-
-    private void initGraphqlSource(AppLoadEndEvent appLoadEndEvent) {
         GraphqlResourceResolverCollect graphqlResourceResolverCollect = new GraphqlResourceResolverCollect();
         RuntimeWiringConfigurerCollect runtimeWiringConfigurerCollect = new RuntimeWiringConfigurerCollect();
         ThreadLocalAccessorCollect threadLocalAccessorCollect = new ThreadLocalAccessorCollect();
