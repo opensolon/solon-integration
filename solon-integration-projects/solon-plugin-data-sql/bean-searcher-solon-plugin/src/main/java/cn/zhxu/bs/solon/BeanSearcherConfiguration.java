@@ -13,7 +13,6 @@ import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Condition;
 import org.noear.solon.annotation.Configuration;
 import org.noear.solon.annotation.Inject;
-import org.noear.solon.core.AppContext;
 
 import javax.sql.DataSource;
 import java.time.ZoneId;
@@ -25,9 +24,6 @@ import java.util.function.Consumer;
 
 @Configuration
 public class BeanSearcherConfiguration {
-    @Inject
-    AppContext context;
-
     //放到这儿，减少注入处理代码
     @Inject
     BeanSearcherProperties config;
@@ -113,7 +109,7 @@ public class BeanSearcherConfiguration {
 
     @Bean
     @Condition(onMissingBean = Dialect.class)
-    public Dialect dialect() {
+    public Dialect dialect(List<DataSourceDialect> dialects) {
         Sql conf = config.getSql();
         Sql.Dialect defaultType = conf.getDialect();
         if (defaultType == null) {
@@ -123,7 +119,6 @@ public class BeanSearcherConfiguration {
         if (conf.isDialectDynamic()) {
             DynamicDialect dynamicDialect = new DynamicDialect();
             dynamicDialect.setDefaultDialect(defaultDialect);
-            List<DataSourceDialect> dialects = context.getBeansOfType(DataSourceDialect.class);
             dialects.forEach(item -> dynamicDialect.put(item.getDataSource(), item.getDialect()));
             conf.getDialects().forEach((ds, dType) ->
                     dynamicDialect.put(ds, createDialect(dType, "dialects." + ds)));
@@ -264,10 +259,9 @@ public class BeanSearcherConfiguration {
     @Condition(onMissingBean = ListFieldConvertor.class,
             onProperty = "${bean-searcher.field-convertor.use-list:true}=true")
     @SuppressWarnings("all")
-    public ListFieldConvertor listFieldConvertor() {
-        List<ListFieldConvertor.Convertor> tmp = context.getBeansOfType(ListFieldConvertor.Convertor.class);
+    public ListFieldConvertor listFieldConvertor(List<ListFieldConvertor.Convertor> convertors0) {
         List<ListFieldConvertor.Convertor<?>> convertors = new ArrayList<>();
-        tmp.forEach(convertors::add);
+        convertors0.forEach(convertors::add);
         BeanSearcherProperties.FieldConvertor conf = config.getFieldConvertor();
         ListFieldConvertor convertor = new ListFieldConvertor(conf.getListItemSeparator());
         if (convertors != null) {
@@ -294,8 +288,7 @@ public class BeanSearcherConfiguration {
 
     @Bean
     @Condition(onMissingBean = MetaResolver.class)
-    public MetaResolver metaResolver(DbMapping dbMapping) {
-        SnippetResolver snippetResolver = context.getBean(SnippetResolver.class);
+    public MetaResolver metaResolver(@Inject(required = false) SnippetResolver snippetResolver, DbMapping dbMapping) {
         DefaultMetaResolver metaResolver = new DefaultMetaResolver(dbMapping);
         if (snippetResolver != null) {
             metaResolver.setSnippetResolver(snippetResolver);
@@ -324,10 +317,11 @@ public class BeanSearcherConfiguration {
         return convertor;
     }
 
+    //======================
+
     @Bean
     @Condition(onMissingBean = FieldOpPool.class)
-    public FieldOpPool fieldOpPool(Dialect dialect) {
-        List<FieldOp> fieldOps = context.getBeansOfType(FieldOp.class);
+    public FieldOpPool fieldOpPool(List<FieldOp> fieldOps, Dialect dialect) {
         FieldOpPool pool = new FieldOpPool();
         ifAvailable(fieldOps, ops -> ops.forEach(pool::addFieldOp));
         pool.setDialect(dialect);
@@ -336,11 +330,10 @@ public class BeanSearcherConfiguration {
 
     @Bean
     @Condition(onMissingBean = ParamResolver.class)
-    public ParamResolver paramResolver(PageExtractor pageExtractor,
+    public ParamResolver paramResolver(List<ParamFilter> paramFilters, PageExtractor pageExtractor,
+                                       List<FieldConvertor.ParamConvertor> convertors,
                                        FieldOpPool fieldOpPool,
                                        GroupResolver groupResolver) {
-        List<ParamFilter> paramFilters = context.getBeansOfType(ParamFilter.class);
-        List<FieldConvertor.ParamConvertor> convertors = context.getBeansOfType(FieldConvertor.ParamConvertor.class);
 
         DefaultParamResolver paramResolver = new DefaultParamResolver(convertors, paramFilters);
         paramResolver.setPageExtractor(pageExtractor);
@@ -363,11 +356,9 @@ public class BeanSearcherConfiguration {
 
     @Bean
     @Condition(onMissingBean = SqlExecutor.class)
-    public SqlExecutor sqlExecutor() {
-        DataSource dataSource = context.getBean(DataSource.class);
-        List<NamedDataSource> namedDataSources = context.getBeansOfType(NamedDataSource.class);
-        SqlExecutor.SlowListener slowListener = context.getBean(SqlExecutor.SlowListener.class);
-
+    public SqlExecutor sqlExecutor(List<NamedDataSource> namedDataSources,
+                                   DataSource dataSource,
+                                   @Inject(required = false) SqlExecutor.SlowListener slowListener) {
         DefaultSqlExecutor executor = new DefaultSqlExecutor(dataSource);
         ifAvailable(namedDataSources, ndsList -> {
             for (NamedDataSource nds : ndsList) {
@@ -381,8 +372,7 @@ public class BeanSearcherConfiguration {
 
     @Bean
     @Condition(onMissingBean = BeanReflector.class)
-    public BeanReflector beanReflector() {
-        List<FieldConvertor.BFieldConvertor> convertors = context.getBeansOfType(FieldConvertor.BFieldConvertor.class);
+    public BeanReflector beanReflector(List<FieldConvertor.BFieldConvertor> convertors) {
         if (convertors != null) {
             return new DefaultBeanReflector(convertors);
         }
@@ -392,14 +382,14 @@ public class BeanSearcherConfiguration {
     @Bean
     @Condition(onMissingBean = BeanSearcher.class,
             onProperty = "${bean-searcher.use-bean-searcher:true}=true")
-    public BeanSearcher beanSearcher(MetaResolver metaResolver,
+    public BeanSearcher beanSearcher(List<SqlInterceptor> interceptors,
+                                     List<ResultFilter> processors,
+                                     MetaResolver metaResolver,
                                      ParamResolver paramResolver,
                                      SqlResolver sqlResolver,
                                      SqlExecutor sqlExecutor,
                                      BeanReflector beanReflector,
                                      BeanSearcherProperties props) {
-        List<SqlInterceptor> interceptors = context.getBeansOfType(SqlInterceptor.class);
-        List<ResultFilter> processors = context.getBeansOfType(ResultFilter.class);
         DefaultBeanSearcher searcher = new DefaultBeanSearcher();
         searcher.setMetaResolver(metaResolver);
         searcher.setParamResolver(paramResolver);
@@ -415,8 +405,7 @@ public class BeanSearcherConfiguration {
     @Bean
     @Condition(onMissingBean = B2MFieldConvertor.class,
             onProperty = "${bean-searcher.field-convertor.use-b2-m}=true")
-    public B2MFieldConvertor b2mFieldConvertor() {
-        List<FieldConvertor.BFieldConvertor> convertors = context.getBeansOfType(FieldConvertor.BFieldConvertor.class);
+    public B2MFieldConvertor b2mFieldConvertor(List<FieldConvertor.BFieldConvertor> convertors) {
         if (convertors != null) {
             return new B2MFieldConvertor(convertors);
         }
@@ -426,14 +415,14 @@ public class BeanSearcherConfiguration {
     @Bean //@Primary
     @Condition(onMissingBean = MapSearcher.class,
             onProperty = "${bean-searcher.use-map-searcher:true}=true")
-    public MapSearcher mapSearcher(MetaResolver metaResolver,
+    public MapSearcher mapSearcher(List<FieldConvertor.MFieldConvertor> convertors,
+                                   List<SqlInterceptor> interceptors,
+                                   List<ResultFilter> resultFilters,
+                                   MetaResolver metaResolver,
                                    ParamResolver paramResolver,
                                    SqlResolver sqlResolver,
                                    SqlExecutor sqlExecutor,
                                    BeanSearcherProperties props) {
-        List<FieldConvertor.MFieldConvertor> convertors = context.getBeansOfType(FieldConvertor.MFieldConvertor.class);
-        List<SqlInterceptor> interceptors = context.getBeansOfType(SqlInterceptor.class);
-        List<ResultFilter> resultFilters = context.getBeansOfType(ResultFilter.class);
         DefaultMapSearcher searcher = new DefaultMapSearcher();
         searcher.setMetaResolver(metaResolver);
         searcher.setParamResolver(paramResolver);
@@ -464,5 +453,4 @@ public class BeanSearcherConfiguration {
             consumer.accept(provider);
         }
     }
-
 }
