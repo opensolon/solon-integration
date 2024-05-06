@@ -9,8 +9,6 @@ import org.noear.solon.annotation.Condition;
 import org.noear.solon.annotation.Configuration;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.AppContext;
-import org.noear.solon.core.bean.InitializingBean;
-import org.noear.solon.core.bean.LifecycleBean;
 
 /**
  * @author noear
@@ -19,6 +17,9 @@ import org.noear.solon.core.bean.LifecycleBean;
 @Condition(onClass = SaOAuth2Manager.class)
 @Configuration
 public class SaOAuth2AutoConfigure {
+    /**
+     * @since 2.8
+     * */
     @Bean
     public void init(AppContext appContext) throws Throwable {
         appContext.getBeanAsync(SaOAuth2Template.class, bean -> {

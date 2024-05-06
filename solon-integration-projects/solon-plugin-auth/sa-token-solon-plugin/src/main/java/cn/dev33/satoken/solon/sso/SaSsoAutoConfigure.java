@@ -10,7 +10,6 @@ import org.noear.solon.annotation.Condition;
 import org.noear.solon.annotation.Configuration;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.AppContext;
-import org.noear.solon.core.bean.LifecycleBean;
 
 /**
  * @author noear
@@ -18,12 +17,12 @@ import org.noear.solon.core.bean.LifecycleBean;
  */
 @Condition(onClass = SaSsoManager.class)
 @Configuration
-public class SaSsoAutoConfigure implements LifecycleBean {
-    @Inject
-    private AppContext appContext;
-
-    @Override
-    public void start() throws Throwable {
+public class SaSsoAutoConfigure {
+    /**
+     * @since 2.8
+     * */
+    @Bean
+    public void init(AppContext appContext) throws Throwable {
         appContext.getBeanAsync(SaSsoTemplate.class, bean -> {
             SaSsoUtil.ssoTemplate = bean;
             SaSsoProcessor.instance.ssoTemplate = bean;
