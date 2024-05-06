@@ -10,7 +10,7 @@ import org.noear.solon.annotation.Condition;
 import org.noear.solon.annotation.Configuration;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.AppContext;
-import org.noear.solon.core.bean.InitializingBean;
+import org.noear.solon.core.bean.LifecycleBean;
 
 /**
  * @author noear
@@ -18,27 +18,27 @@ import org.noear.solon.core.bean.InitializingBean;
  */
 @Condition(onClass = SaSsoManager.class)
 @Configuration
-public class SaSsoAutoConfigure implements InitializingBean {
+public class SaSsoAutoConfigure implements LifecycleBean {
     @Inject
     private AppContext appContext;
 
     @Override
-    public void afterInjection() throws Throwable {
-        appContext.subBeansOfType(SaSsoTemplate.class, bean->{
+    public void start() throws Throwable {
+        appContext.getBeanAsync(SaSsoTemplate.class, bean -> {
             SaSsoUtil.ssoTemplate = bean;
             SaSsoProcessor.instance.ssoTemplate = bean;
         });
 
-        appContext.subBeansOfType(SaSsoConfig.class, bean->{
+        appContext.getBeanAsync(SaSsoConfig.class, bean -> {
             SaSsoManager.setConfig(bean);
         });
     }
 
     /**
      * 获取 SSO 配置Bean
-     * */
+     */
     @Bean
-    public SaSsoConfig getConfig(@Inject(value = "${sa-token.sso}",required = false) SaSsoConfig ssoConfig) {
+    public SaSsoConfig getConfig(@Inject(value = "${sa-token.sso}", required = false) SaSsoConfig ssoConfig) {
         return ssoConfig;
     }
 }

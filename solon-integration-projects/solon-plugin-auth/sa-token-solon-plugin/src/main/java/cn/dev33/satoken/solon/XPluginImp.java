@@ -21,7 +21,6 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.temp.SaTempInterface;
 import org.noear.solon.Solon;
 import org.noear.solon.core.AppContext;
-import org.noear.solon.core.LifecycleIndex;
 import org.noear.solon.core.Plugin;
 
 /**
@@ -32,21 +31,15 @@ public class XPluginImp implements Plugin {
 
     @Override
     public void start(AppContext context) {
+        context.beanMake(SaSsoAutoConfigure.class);
+        context.beanMake(SaOAuth2AutoConfigure.class);
+
+
         // Sa-Token 日志输出 Bean
         context.getBeanAsync(SaLog.class, bean -> {
             SaManager.setLog(bean);
         });
 
-
-        //注入其它 Bean
-        context.lifecycle(LifecycleIndex.PLUGIN_BEAN_USES, () -> {
-            beanInitDo(context);
-            context.beanMake(SaSsoAutoConfigure.class);
-            context.beanMake(SaOAuth2AutoConfigure.class);
-        });
-    }
-
-    private void beanInitDo(AppContext context) {
         // 注入上下文Bean
         SaManager.setSaTokenContext(new SaContextForSolon());
 
@@ -56,6 +49,7 @@ public class XPluginImp implements Plugin {
             SaManager.setConfig(saTokenConfig);
         }
 
+        //注入 SaTokenConfig
         context.getBeanAsync(SaTokenConfig.class, bean -> {
             SaManager.setConfig(bean);
         });
