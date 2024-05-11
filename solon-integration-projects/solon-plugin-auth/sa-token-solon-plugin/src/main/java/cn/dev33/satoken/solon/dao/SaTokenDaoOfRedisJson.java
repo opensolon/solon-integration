@@ -1,7 +1,6 @@
 package cn.dev33.satoken.solon.dao;
 
 import cn.dev33.satoken.dao.SaTokenDao;
-import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 import org.noear.redisx.RedisClient;
@@ -32,15 +31,6 @@ public class SaTokenDaoOfRedisJson implements SaTokenDao {
         // 重写 SaSession 生成策略
         SaStrategy.instance.createSession = (sessionId) -> new SaSessionForJson(sessionId);
 
-    }
-
-    @Override
-    public SaSession getSession(String sessionId) {
-        Object obj = getObject(sessionId);
-        if (obj == null) {
-            return null;
-        }
-        return ONode.deserialize(obj.toString(), SaSessionForJson.class);
     }
 
 
@@ -103,7 +93,8 @@ public class SaTokenDaoOfRedisJson implements SaTokenDao {
      */
     @Override
     public Object getObject(String key) {
-        return get(key);
+        String value = get(key);
+        return ONode.deserialize(value);
     }
 
     /**
@@ -159,7 +150,7 @@ public class SaTokenDaoOfRedisJson implements SaTokenDao {
     @Override
     public List<String> searchData(String prefix, String keyword, int start, int size, boolean sortType) {
         Set<String> keys = redisBucket.keys(prefix + "*" + keyword + "*");
-        List<String> list = new ArrayList<String>(keys);
+        List<String> list = new ArrayList<>(keys);
         return SaFoxUtil.searchList(list, start, size, sortType);
     }
 }
