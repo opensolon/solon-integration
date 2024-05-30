@@ -1,4 +1,4 @@
-package graphql.solon.test;
+package features.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;

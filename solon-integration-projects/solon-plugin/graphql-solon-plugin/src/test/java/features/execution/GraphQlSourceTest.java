@@ -1,4 +1,4 @@
-package graphql.solon.execution;
+package features.execution;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -12,6 +12,9 @@ import graphql.schema.GraphQLSchema;
 import graphql.schema.StaticDataFetcher;
 import graphql.schema.idl.TypeRuntimeWiring;
 import graphql.solon.configurer.RuntimeWiringConfigurer;
+import graphql.solon.execution.DefaultGraphQlSource;
+import graphql.solon.execution.DefaultSchemaResourceGraphQlSourceBuilder;
+import graphql.solon.execution.GraphQlSource;
 import graphql.solon.resource.ByteArrayResource;
 import graphql.solon.resource.Resource;
 import java.util.Collections;
@@ -30,7 +33,7 @@ import org.junit.jupiter.api.Test;
 public class GraphQlSourceTest {
 
     private GraphQlSource getGraphqlSource(Set<Resource> resources,
-            List<RuntimeWiringConfigurer> configurers) {
+                                           List<RuntimeWiringConfigurer> configurers) {
         DefaultSchemaResourceGraphQlSourceBuilder defaultBuilder = new DefaultSchemaResourceGraphQlSourceBuilder();
         defaultBuilder.schemaResources(resources);
 
