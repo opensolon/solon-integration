@@ -14,7 +14,6 @@ import org.simplejavamail.email.EmailBuilder;
 
 import demo.DemoApp;
 
-@ExtendWith(SolonJUnit5Extension.class)
 @SolonTest(DemoApp.class)
 public class DemoTest1 {
 

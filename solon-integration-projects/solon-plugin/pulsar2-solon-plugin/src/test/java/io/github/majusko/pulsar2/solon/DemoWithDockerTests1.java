@@ -53,7 +53,6 @@ import io.github.majusko.pulsar2.solon.utils.UrlBuildService;
 import reactor.core.Disposable;
 
 @Import(scanPackages = {"io.github.majusko.pulsar"})
-@ExtendWith(SolonJUnit5Extension.class)
 @SolonTest(DemoApp.class)
 @Testcontainers
 public class DemoWithDockerTests1 {

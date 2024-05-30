@@ -18,7 +18,6 @@ import org.noear.solon.test.SolonTest;
  * @author fuzi1996
  * @since 2.6.3
  */
-@ExtendWith(SolonJUnit5Extension.class)
 @SolonTest(value = App.class, properties = "tbk=demo.book.component")
 public class SchemaRequestTest extends HttpTester {
 

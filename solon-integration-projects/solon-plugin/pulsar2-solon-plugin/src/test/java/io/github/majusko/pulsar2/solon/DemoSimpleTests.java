@@ -43,7 +43,6 @@ import java.util.stream.Collectors;
 import static org.awaitility.Awaitility.await;
 
 @Import(scanPackages = {"io.github.majusko.pulsar"})
-@ExtendWith(SolonJUnit5Extension.class)
 @SolonTest(DemoApp.class)
 public class DemoSimpleTests {
 	@Inject

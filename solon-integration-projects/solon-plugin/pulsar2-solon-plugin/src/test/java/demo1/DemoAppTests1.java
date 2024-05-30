@@ -19,7 +19,6 @@ import org.noear.solon.test.SolonTest;
 //@Import(scanPackages = {"io.github.majusko.pulsar2.solon.producer","demo1"})
 //@Import(value = {TestProducerConfiguration.class,Pulsar2ProducerConfiguration.class})
 //@Import(value = {TestProducerConfiguration.class})
-@ExtendWith(SolonJUnit5Extension.class)
 @SolonTest(DemoApp.class)
 public class DemoAppTests1 {
 //    @Inject

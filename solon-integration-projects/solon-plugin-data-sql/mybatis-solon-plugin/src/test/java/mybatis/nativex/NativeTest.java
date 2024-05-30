@@ -13,7 +13,6 @@ import org.noear.solon.test.aot.RuntimeNativeMetadataAssert;
  * @since 2023/10/29 18:20
  */
 @SolonTest(value = MybatisApp.class, isAot = true)
-@ExtendWith(SolonJUnit5Extension.class)
 public class NativeTest {
 
     @Test

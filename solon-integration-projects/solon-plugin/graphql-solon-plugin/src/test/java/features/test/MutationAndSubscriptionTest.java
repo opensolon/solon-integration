@@ -26,7 +26,6 @@ import org.noear.solon.test.SolonTest;
  *
  * @author lagnx
  */
-@ExtendWith(SolonJUnit5Extension.class)
 @SolonTest(value = App.class)
 public class MutationAndSubscriptionTest extends HttpTester {
 
