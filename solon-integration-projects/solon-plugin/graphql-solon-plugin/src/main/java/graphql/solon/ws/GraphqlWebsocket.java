@@ -26,6 +26,7 @@ import org.noear.snack.ONode;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.lang.Nullable;
 import org.noear.solon.net.annotation.ServerEndpoint;
+import org.noear.solon.net.websocket.SubProtocolCapable;
 import org.noear.solon.net.websocket.WebSocket;
 import org.noear.solon.net.websocket.listener.SimpleWebSocketListener;
 import org.reactivestreams.Publisher;
@@ -43,7 +44,7 @@ import reactor.core.scheduler.Schedulers;
  * @since 2.3
  */
 @ServerEndpoint("/graphql")
-public class GraphqlWebsocket extends SimpleWebSocketListener {
+public class GraphqlWebsocket extends SimpleWebSocketListener implements SubProtocolCapable {
 
     private static final Logger log = LoggerFactory.getLogger(GraphqlWebsocket.class);
 
@@ -51,6 +52,11 @@ public class GraphqlWebsocket extends SimpleWebSocketListener {
 
     @Inject
     private WebGraphQlHandlerGetter getter;
+
+    @Override
+    public String getSubProtocols() {
+        return "graphql-transport-ws";
+    }
 
     @Override
     public void onOpen(WebSocket socket) {
