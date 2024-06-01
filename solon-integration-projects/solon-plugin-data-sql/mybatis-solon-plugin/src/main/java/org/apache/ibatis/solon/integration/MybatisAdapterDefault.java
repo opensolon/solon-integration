@@ -18,10 +18,11 @@ import org.noear.solon.core.LifecycleIndex;
 import org.noear.solon.core.Props;
 import org.noear.solon.core.VarHolder;
 import org.noear.solon.core.event.EventBus;
-import org.noear.solon.core.util.LogUtil;
 import org.noear.solon.core.util.ResourceUtil;
 import org.apache.ibatis.solon.MybatisAdapter;
 import org.apache.ibatis.solon.tran.SolonManagedTransactionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.io.InputStream;
@@ -35,6 +36,8 @@ import java.util.*;
  * @since 1.1
  */
 public class MybatisAdapterDefault implements MybatisAdapter {
+    protected static final Logger log = LoggerFactory.getLogger(MybatisAdapterDefault.class);
+
     protected final BeanWrap dsWrap;
     protected final Props dsProps;
 
@@ -207,12 +210,12 @@ public class MybatisAdapterDefault implements MybatisAdapter {
         });
 
         if (mappers.size() == 0) {
-            LogUtil.global().warn("Missing mappers configuration!");
+            log.warn("Mybatis: Missing mappers configuration!");
             //throw new IllegalStateException("Please add the mappers configuration!");
         }
 
         if (config.getMapperRegistry().getMappers().size() == 0) {
-            LogUtil.global().warn("Missing mapper registration, please check the mappers configuration!");
+            log.warn("Mybatis: Missing mapper registration, please check the mappers configuration!");
             //throw new IllegalStateException("Please check the mappers configuration!");
         }
 
@@ -320,7 +323,7 @@ public class MybatisAdapterDefault implements MybatisAdapter {
         //todo: 兼容提醒:
         //if (val.endsWith("*.xml") && val.indexOf("*") == val.indexOf("*.xml")) {
         //@Deprecated //弃用提示
-        //    LogUtil.global().warn("Mybatis-新文件表达式提示：'" + val + "' 不包括深度子目录；如有需要可增加'/**/'段");
+        //    log.warn("Mybatis-新文件表达式提示：'" + val + "' 不包括深度子目录；如有需要可增加'/**/'段");
         //}
     }
 }

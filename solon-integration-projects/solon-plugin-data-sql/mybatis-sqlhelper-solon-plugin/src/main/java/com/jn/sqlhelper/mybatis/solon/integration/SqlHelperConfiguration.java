@@ -10,7 +10,8 @@ import org.apache.ibatis.session.Configuration;
 import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.event.EventListener;
-import org.noear.solon.core.util.LogUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * SqlHelper 分布插件配置器（添加拦截器）
@@ -20,6 +21,7 @@ import org.noear.solon.core.util.LogUtil;
  * */
 @org.noear.solon.annotation.Configuration
 public class SqlHelperConfiguration implements EventListener<Configuration> {
+    private static final Logger log = LoggerFactory.getLogger(SqlHelperConfiguration.class);
 
     @Inject("${sqlhelper.mybatis.instrumentor}")
     SQLInstrumentorConfig sqlInstrumentConfig;
@@ -38,7 +40,7 @@ public class SqlHelperConfiguration implements EventListener<Configuration> {
             return;
         }
 
-        LogUtil.global().info("Mybatis: Start to customize mybatis configuration with mybatis-sqlhelper-solon-plugin");
+        log.info("Mybatis: Start to customize mybatis configuration with mybatis-sqlhelper-solon-plugin");
         configuration.setDefaultScriptingLanguage(CustomScriptLanguageDriver.class);
 
         SqlHelperMybatisPlugin plugin = new SqlHelperMybatisPlugin();
@@ -46,7 +48,7 @@ public class SqlHelperConfiguration implements EventListener<Configuration> {
         plugin.setInstrumentorConfig(sqlInstrumentConfig);
         plugin.init();
 
-        LogUtil.global().info("Mybatis: The interceptor has been added: " + SqlHelperMybatisPlugin.class);
+        log.info("Mybatis: The interceptor has been added: " + SqlHelperMybatisPlugin.class);
         configuration.addInterceptor(plugin);
     }
 }
