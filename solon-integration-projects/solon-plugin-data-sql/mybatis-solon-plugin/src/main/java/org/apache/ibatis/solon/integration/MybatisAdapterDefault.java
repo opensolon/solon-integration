@@ -212,11 +212,12 @@ public class MybatisAdapterDefault implements MybatisAdapter {
         if (mappers.size() == 0) {
             log.warn("Mybatis: Missing mappers configuration!");
             //throw new IllegalStateException("Please add the mappers configuration!");
-        }
-
-        if (config.getMapperRegistry().getMappers().size() == 0) {
-            log.warn("Mybatis: Missing mapper registration, please check the mappers configuration!");
-            //throw new IllegalStateException("Please check the mappers configuration!");
+        } else {
+            //如果有配置，但是没有 mapper 注册成功；说明有问题了
+            if (config.getMapperRegistry().getMappers().size() == 0) {
+                //log.warn("Mybatis: Missing mapper registration, please check the mappers configuration!");
+                throw new IllegalStateException("Missing mapper registration, please check the mappers configuration!");
+            }
         }
 
         //for plugins section
