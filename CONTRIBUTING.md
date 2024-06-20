@@ -71,7 +71,7 @@
 |                                           |                                  |
 | https://gitee.com/noear/solon-cloud       | Solon Cloud 代码仓库                 | 
 | https://gitee.com/noear/solon-admin       | Solon Admin 代码仓库                 | 
-| https://gitee.com/noear/solon-jakarta     | Solon Jakarta 代码仓库（采用 java11 编译） | 
+| https://gitee.com/noear/solon-jakarta     | Solon Jakarta 代码仓库（采用 java17 编译） | 
 | https://gitee.com/noear/solon-integration | Solon Integration 代码仓库           | 
 |                                           |                                  |
 | https://gitee.com/noear/solon-idea-plugin | Solon Idea 插件代码仓库                | 
