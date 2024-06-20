@@ -16,25 +16,25 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>../../solon-integration-projects/solon-plugin-auth/sa-token-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-auth/sa-token-dao-redisson-jackson</module>
-        <module>../../solon-integration-projects/solon-plugin-auth/captcha-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-auth/vaptcha-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-auth/jap-ids-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-auth/jap-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-flow/liteflow-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-rpc/dubbo-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-rpc/dubbo3-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-rpc/feign-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-rpc/forest-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-job/cron4j-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-job/powerjob-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-job/quartz-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-weixin/weixin-java-cp-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-weixin/weixin-java-miniapp-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-weixin/weixin-java-mp-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-weixin/weixin-java-open-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-weixin/weixin-java-pay-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-weixin/weixin-java-qidian-solon-plugin</module>
+        <module>../../solon-plugin-auth/sa-token-solon-plugin</module>
+        <module>../../solon-plugin-auth/sa-token-dao-redisson-jackson</module>
+        <module>../../solon-plugin-auth/captcha-solon-plugin</module>
+        <module>../../solon-plugin-auth/vaptcha-solon-plugin</module>
+        <module>../../solon-plugin-auth/jap-ids-solon-plugin</module>
+        <module>../../solon-plugin-auth/jap-solon-plugin</module>
+        <module>../../solon-plugin-flow/liteflow-solon-plugin</module>
+        <module>../../solon-plugin-rpc/dubbo-solon-plugin</module>
+        <module>../../solon-plugin-rpc/dubbo3-solon-plugin</module>
+        <module>../../solon-plugin-rpc/feign-solon-plugin</module>
+        <module>../../solon-plugin-rpc/forest-solon-plugin</module>
+        <module>../../solon-plugin-job/cron4j-solon-plugin</module>
+        <module>../../solon-plugin-job/powerjob-solon-plugin</module>
+        <module>../../solon-plugin-job/quartz-solon-plugin</module>
+        <module>../../solon-plugin-weixin/weixin-java-cp-solon-plugin</module>
+        <module>../../solon-plugin-weixin/weixin-java-miniapp-solon-plugin</module>
+        <module>../../solon-plugin-weixin/weixin-java-mp-solon-plugin</module>
+        <module>../../solon-plugin-weixin/weixin-java-open-solon-plugin</module>
+        <module>../../solon-plugin-weixin/weixin-java-pay-solon-plugin</module>
+        <module>../../solon-plugin-weixin/weixin-java-qidian-solon-plugin</module>
     </modules>
 </project>

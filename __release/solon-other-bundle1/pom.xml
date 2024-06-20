@@ -16,20 +16,20 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>../../solon-integration-projects/solon-plugin/graphql-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin/seata-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin/easy-trans-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin/drools-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin/easypoi-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin/easypoi-web-solon</module>
-        <module>../../solon-integration-projects/solon-plugin/easypoi-wps-solon</module>
-        <module>../../solon-integration-projects/solon-plugin/hasor-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin/orika-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin/pulsar2-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin/sureness-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin/simplejavamail-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin/sms4j-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-data-nosql/redisson-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-data-nosql/lettuce-solon-plugin</module>
+        <module>../../solon-plugin/graphql-solon-plugin</module>
+        <module>../../solon-plugin/seata-solon-plugin</module>
+        <module>../../solon-plugin/easy-trans-solon-plugin</module>
+        <module>../../solon-plugin/drools-solon-plugin</module>
+        <module>../../solon-plugin/easypoi-solon-plugin</module>
+        <module>../../solon-plugin/easypoi-web-solon</module>
+        <module>../../solon-plugin/easypoi-wps-solon</module>
+        <module>../../solon-plugin/hasor-solon-plugin</module>
+        <module>../../solon-plugin/orika-solon-plugin</module>
+        <module>../../solon-plugin/pulsar2-solon-plugin</module>
+        <module>../../solon-plugin/sureness-solon-plugin</module>
+        <module>../../solon-plugin/simplejavamail-solon-plugin</module>
+        <module>../../solon-plugin/sms4j-solon-plugin</module>
+        <module>../../solon-plugin-data-nosql/redisson-solon-plugin</module>
+        <module>../../solon-plugin-data-nosql/lettuce-solon-plugin</module>
     </modules>
 </project>

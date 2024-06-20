@@ -16,23 +16,23 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>../../solon-integration-projects/solon-plugin-data-sql/beetlsql-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-data-sql/hasordb-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-data-sql/dbvisitor-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-data-sql/sqltoy-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-data-sql/mybatis-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-data-sql/mybatis-sqlhelper-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-data-sql/mybatis-pagehelper-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-data-sql/mybatis-plus-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-data-sql/mybatis-plus-extension-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-data-sql/mybatis-flex-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-data-sql/fastmybatis-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-data-sql/activerecord-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-data-sql/weed3-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-data-sql/wood-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-data-sql/bean-searcher-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-data-sql/openjpa-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-data-sql/hibernate-solon-plugin</module>
-        <module>../../solon-integration-projects/solon-plugin-data-sql/mybatis-tkmapper-solon-plugin</module>
+        <module>../../solon-plugin-data-sql/beetlsql-solon-plugin</module>
+        <module>../../solon-plugin-data-sql/hasordb-solon-plugin</module>
+        <module>../../solon-plugin-data-sql/dbvisitor-solon-plugin</module>
+        <module>../../solon-plugin-data-sql/sqltoy-solon-plugin</module>
+        <module>../../solon-plugin-data-sql/mybatis-solon-plugin</module>
+        <module>../../solon-plugin-data-sql/mybatis-sqlhelper-solon-plugin</module>
+        <module>../../solon-plugin-data-sql/mybatis-pagehelper-solon-plugin</module>
+        <module>../../solon-plugin-data-sql/mybatis-plus-solon-plugin</module>
+        <module>../../solon-plugin-data-sql/mybatis-plus-extension-solon-plugin</module>
+        <module>../../solon-plugin-data-sql/mybatis-flex-solon-plugin</module>
+        <module>../../solon-plugin-data-sql/fastmybatis-solon-plugin</module>
+        <module>../../solon-plugin-data-sql/activerecord-solon-plugin</module>
+        <module>../../solon-plugin-data-sql/weed3-solon-plugin</module>
+        <module>../../solon-plugin-data-sql/wood-solon-plugin</module>
+        <module>../../solon-plugin-data-sql/bean-searcher-solon-plugin</module>
+        <module>../../solon-plugin-data-sql/openjpa-solon-plugin</module>
+        <module>../../solon-plugin-data-sql/hibernate-solon-plugin</module>
+        <module>../../solon-plugin-data-sql/mybatis-tkmapper-solon-plugin</module>
     </modules>
 </project>
