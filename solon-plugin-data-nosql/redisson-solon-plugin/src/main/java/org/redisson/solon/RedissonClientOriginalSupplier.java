@@ -15,7 +15,7 @@ import java.util.function.Supplier;
  * RedissonClient 提供者（使用原生配置）
  *
  * @author noear
- * @since 2.2
+ * @since 2.8
  */
 public class RedissonClientOriginalSupplier implements Supplier<RedissonClient> {
     private Properties properties;
