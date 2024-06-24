@@ -7,6 +7,7 @@ import org.noear.solon.annotation.*;
 import org.noear.solon.core.handle.Context;
 
 /**
+ * 图形验证码相关接口
  * @author noear
  * @since 1.5
  */
@@ -16,6 +17,12 @@ public class CaptchaController {
     @Inject
     private CaptchaService captchaService;
 
+    
+   /**
+    * 获取图形验证码
+    * @author noear
+    * @since 1.5
+    */
     @Post
     @Mapping("/get")
     public ResponseModel get(CaptchaVO data, Context request) {
@@ -25,6 +32,11 @@ public class CaptchaController {
         return this.captchaService.get(data);
     }
 
+   /**
+    * 校验图形验证码
+    * @author noear
+    * @since 1.5
+    */
     @Post
     @Mapping("/check")
     public ResponseModel check(CaptchaVO data, Context request) {
