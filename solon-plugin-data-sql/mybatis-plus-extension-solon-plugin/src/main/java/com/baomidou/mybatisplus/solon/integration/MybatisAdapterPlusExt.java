@@ -26,8 +26,6 @@ public class MybatisAdapterPlusExt extends MybatisAdapterPlus {
 
     @Override
     public void injectTo(VarHolder varH) {
-        super.injectTo(varH);
-
         //@Db("db1") IService service;
         if (IService.class.isAssignableFrom(varH.getType())) {
             varH.context().getWrapAsync(varH.getType(), serviceBw -> {
@@ -39,6 +37,8 @@ public class MybatisAdapterPlusExt extends MybatisAdapterPlus {
                     varH.setValue(serviceBw.get());
                 }
             });
+        } else {
+            super.injectTo(varH);
         }
     }
 
@@ -55,7 +55,7 @@ public class MybatisAdapterPlusExt extends MybatisAdapterPlus {
 
         if (serviceCached.containsKey(varH.getType())) {
             //从缓存获取
-            service = serviceCached.get(service);
+            service = serviceCached.get(varH.getType());
         } else {
             Object baseMapperOld = service.getBaseMapper();
 
