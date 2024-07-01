@@ -42,6 +42,16 @@ public class ServiceImpl<M extends BaseMapper<T>, T> implements IService<T> {
         return baseMapper;
     }
 
+    /**
+     * 设置 baseMapper
+     *
+     *
+     * @since 2024-01-01
+     * */
+    public void setBaseMapper(M baseMapper) {
+        this.baseMapper = baseMapper;
+    }
+
     protected Class<T> entityClass = currentModelClass();
 
     @Override
