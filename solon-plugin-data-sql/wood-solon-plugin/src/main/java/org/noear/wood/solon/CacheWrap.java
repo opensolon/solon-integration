@@ -1,7 +1,10 @@
 package org.noear.wood.solon;
 
+import org.noear.solon.core.util.ClassUtil;
 import org.noear.solon.data.cache.CacheService;
 import org.noear.wood.cache.ICacheServiceEx;
+
+import java.lang.reflect.Type;
 
 /**
  * 缓存包装器
@@ -36,8 +39,15 @@ public class CacheWrap implements ICacheServiceEx, CacheService {
     }
 
     @Override
+    public <T> T get(String key, Type toType) {
+        Class<?> clz = ClassUtil.getTypeClass(toType);
+        return (T)real.get(key, clz);
+    }
+
+
+    @Override
     public <T> T get(String key, Class<T> clz) {
-        return real.get(key, clz);
+        return this.get(key, (Type)clz);
     }
 
     @Override

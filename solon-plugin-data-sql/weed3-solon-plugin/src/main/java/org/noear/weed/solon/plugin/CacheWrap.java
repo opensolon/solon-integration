@@ -3,6 +3,8 @@ package org.noear.weed.solon.plugin;
 import org.noear.solon.data.cache.CacheService;
 import org.noear.weed.cache.ICacheServiceEx;
 
+import java.lang.reflect.Type;
+
 /**
  * @author noear
  * @since 1.3
@@ -31,7 +33,7 @@ public class CacheWrap implements ICacheServiceEx, CacheService {
 
 
     @Override
-    public <T> T get(String key, Class<T> clz) {
+    public <T> T get(String key, Type toType) {
         return (T)real.get(key);
     }
 
