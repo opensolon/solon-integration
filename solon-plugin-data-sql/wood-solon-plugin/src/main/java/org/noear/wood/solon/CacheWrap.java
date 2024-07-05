@@ -1,6 +1,5 @@
 package org.noear.wood.solon;
 
-import org.noear.solon.core.util.ClassUtil;
 import org.noear.solon.data.cache.CacheService;
 import org.noear.wood.cache.ICacheServiceEx;
 
@@ -31,7 +30,7 @@ public class CacheWrap implements ICacheServiceEx, CacheService {
 
     /**
      * @deprecated 2.5
-     * */
+     */
     @Deprecated
     @Override
     public Object get(String key) {
@@ -40,14 +39,13 @@ public class CacheWrap implements ICacheServiceEx, CacheService {
 
     @Override
     public <T> T get(String key, Type toType) {
-        Class<?> clz = ClassUtil.getTypeClass(toType);
-        return (T)real.get(key, clz);
+        return (T) real.get(key, toType);
     }
 
 
     @Override
     public <T> T get(String key, Class<T> clz) {
-        return this.get(key, (Type)clz);
+        return this.get(key, (Type) clz);
     }
 
     @Override
