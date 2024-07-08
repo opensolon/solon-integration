@@ -1,7 +1,7 @@
 package io.lettuce.solon;
 
 /**
- * Lettuce属性
+ * Lettuce 属性
  *
  * @author Sorghum
  * @since 2.4
@@ -11,17 +11,17 @@ public class LettuceProperties {
     /**
      * Redis模式 (standalone, cluster, sentinel)
      */
-    String redisMode;
+    private String redisMode;
 
     /**
      * RedisURI
      */
-    String redisUri;
+    private String redisUri;
 
     /**
      * Lettuce配置
      */
-    LettuceConfig config;
+    private LettuceConfig config;
 
     public String getRedisMode() {
         return redisMode;

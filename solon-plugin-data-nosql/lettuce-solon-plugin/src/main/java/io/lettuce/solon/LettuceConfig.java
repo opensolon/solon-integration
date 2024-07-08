@@ -9,7 +9,7 @@ import static io.lettuce.core.RedisURI.DEFAULT_REDIS_PORT;
 
 
 /**
- * Lettuce配置
+ * Lettuce 配置
  *
  * @author Sorghum
  * @since 2.4

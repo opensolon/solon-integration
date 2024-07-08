@@ -2,18 +2,18 @@ package io.lettuce.solon;
 
 
 /**
- * Lettuce哨兵
+ * Lettuce 哨兵
  *
  * @author Sorghum
  * @since 2.3.8
  */
 public class LettuceSentinel {
 
-    String host;
+    private String host;
 
-    int port;
+    private int port;
 
-    String password;
+    private String password;
 
 
     public String getHost() {

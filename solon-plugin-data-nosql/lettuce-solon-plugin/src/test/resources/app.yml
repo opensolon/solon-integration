@@ -2,7 +2,7 @@
 ### 模式一
 lettuce.rd1:
   redis-mode: standalone
-  redis-uri: redis://localhost:6379/0
+  redis-uri: redis://123456@localhost:6379/0
 lettuce.rd3:
   redis-mode: cluster
   redis-uri: redis://localhost:6379/0
