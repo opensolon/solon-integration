@@ -15,10 +15,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.time.Duration;
-import java.util.Collections;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 import org.apache.commons.collections.CollectionUtils;
@@ -54,7 +51,7 @@ public class GraphqlWebsocket extends SimpleWebSocketListener implements SubProt
     private WebGraphQlHandlerGetter getter;
 
     @Override
-    public String getSubProtocols() {
+    public String getSubProtocols(Collection<String> requestProtocols) {
         return "graphql-transport-ws";
     }
 
