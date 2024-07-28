@@ -5,16 +5,16 @@ server:
 dataSource:
   db1:
     # 与数据库名可用保持一致
-    schema: flowersay
-    jdbcUrl: jdbc:mysql://172.16.0.3:3306/flowersay?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true
+    schema: test
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true
     driverClassName: com.mysql.cj.jdbc.Driver
     username: root
-    password: 123456
+    password: 1234
 
 mybatis:
   db1:
     mappers:
-      - "demo.mappers"
+      - "demo.dso.mapper.*"
     configuration:
       cacheEnabled: false
       mapUnderscoreToCamelCase: true
