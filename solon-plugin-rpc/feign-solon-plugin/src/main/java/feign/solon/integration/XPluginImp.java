@@ -60,7 +60,7 @@ public class XPluginImp implements Plugin {
                 });
             }
         } else {
-            FeignTarget target = new FeignTarget(clz, anno.name(), anno.path(), () -> anno.url());
+            FeignTarget target = new FeignTarget(clz, anno.name(), anno.path(), (port) -> anno.url());
             consumer.accept(builder.target(target));
         }
     }
