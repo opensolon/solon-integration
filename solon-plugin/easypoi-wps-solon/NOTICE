@@ -1,0 +1,36 @@
+Copyright 2017-2024 noear.org and authors
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+This project includes:
+  Apache Commons Codec under Apache License, Version 2.0
+  Apache Commons Collections under Apache License, Version 2.0
+  Apache Commons Compress under Apache License, Version 2.0
+  Apache Commons Lang under The Apache Software License, Version 2.0
+  Apache Commons Math under Apache License, Version 2.0
+  Apache POI under Apache License, Version 2.0
+  Bean Validation API under The Apache Software License, Version 2.0
+  curvesapi under BSD License
+  easypoi-annotation under The Apache License, Version 2.0
+  easypoi-base under The Apache License, Version 2.0
+  easypoi-wps-solon under The Apache Software License, Version 2.0
+  Guava: Google Core Libraries for Java under The Apache Software License, Version 2.0
+  hutool-all under Mulan Permissive Software License，Version 2
+  Javassist under MPL 1.1 or LGPL 2.1 or Apache License 2.0
+  OGNL - Object Graph Navigation Library under The Apache Software License, Version 2.0
+  Project Lombok under The MIT License
+  SLF4J API Module under MIT License
+  solon under The Apache Software License, Version 2.0
+  solon.mvc under The Apache Software License, Version 2.0
+  XmlBeans under The Apache Software License, Version 2.0
+
