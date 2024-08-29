@@ -46,7 +46,7 @@ public class SocialController extends JapController {
                 throw new IllegalStateException();
             } else {
                 // 填入缺失的 next 参数
-                ctx.paramSet("next", next);
+                ctx.paramMap().put("next", next);
             }
         } else {
             if (!this.validNext(next)) {

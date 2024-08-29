@@ -34,8 +34,7 @@ public class SaRequestForSolon implements SaRequest {
 
     @Override
     public List<String> getParamNames(){
-        Set<String> names = ctx.paramMap().keySet();
-        return new ArrayList<>(names);
+        return new ArrayList<>(ctx.paramNames());
     }
 
     /**
