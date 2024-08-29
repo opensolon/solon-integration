@@ -81,7 +81,7 @@
         <!-- test -->
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon-api</artifactId>
+            <artifactId>solon-web-shortcuts</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

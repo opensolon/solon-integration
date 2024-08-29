@@ -53,7 +53,7 @@
         <!-- test -->
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon-lib</artifactId>
+            <artifactId>solon-lib-shortcuts</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
