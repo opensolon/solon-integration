@@ -44,7 +44,7 @@ public class SaRequestForSolon implements SaRequest {
      */
     @Override
     public Map<String, String> getParamMap(){
-        return ctx.paramMap();
+        return ctx.paramMap().toValueMap();
     }
 
     @Override
