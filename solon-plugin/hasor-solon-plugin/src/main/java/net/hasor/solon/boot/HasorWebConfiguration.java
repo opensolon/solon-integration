@@ -5,9 +5,9 @@ import net.hasor.utils.ExceptionUtils;
 import net.hasor.web.startup.RuntimeFilter;
 import net.hasor.web.startup.RuntimeListener;
 import org.noear.solon.Solon;
+import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Configuration;
 import org.noear.solon.annotation.Inject;
-import org.noear.solon.core.bean.InitializingBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +23,7 @@ import java.util.Set;
  * @since 2020.10.10
  * */
 @Configuration
-public class HasorWebConfiguration implements ServletContainerInitializer, InitializingBean {
+public class HasorWebConfiguration implements ServletContainerInitializer {
     private static final Logger logger = LoggerFactory.getLogger(HasorWebConfiguration.class);
     private String filterPath = "/*";
     private int filterOrder = 0;
@@ -36,8 +36,8 @@ public class HasorWebConfiguration implements ServletContainerInitializer, Initi
      * <p>
      * 为开发隐式插件提供支持
      */
-    @Override
-    public void afterInjection() throws Throwable {
+    @Bean
+    public void init() {
         EnableHasorWeb enableHasor = Solon.app().source().getAnnotation(EnableHasorWeb.class);
         //
         this.filterPath = enableHasor.path();

@@ -31,7 +31,7 @@ public class ReferenceAnno implements Reference {
     @Override
     public String version() {
         if (version == null) {
-            version = Solon.cfg().getByParse(anno.version());
+            version = Solon.cfg().getByTmpl(anno.version());
         }
 
         return version;
@@ -41,7 +41,7 @@ public class ReferenceAnno implements Reference {
     @Override
     public String group() {
         if (group == null) {
-            group = Solon.cfg().getByParse(anno.group());
+            group = Solon.cfg().getByTmpl(anno.group());
         }
 
         return group;
@@ -51,7 +51,7 @@ public class ReferenceAnno implements Reference {
     @Override
     public String url() {
         if (url == null) {
-            url = Solon.cfg().getByParse(anno.url());
+            url = Solon.cfg().getByTmpl(anno.url());
         }
 
         return url;
@@ -61,7 +61,7 @@ public class ReferenceAnno implements Reference {
     @Override
     public String client() {
         if (client == null) {
-            client = Solon.cfg().getByParse(anno.client());
+            client = Solon.cfg().getByTmpl(anno.client());
         }
 
         return client;
@@ -101,7 +101,7 @@ public class ReferenceAnno implements Reference {
     @Override
     public String reconnect() {
         if (reconnect == null) {
-            reconnect = Solon.cfg().getByParse(anno.reconnect());
+            reconnect = Solon.cfg().getByTmpl(anno.reconnect());
         }
 
         return reconnect;
@@ -116,7 +116,7 @@ public class ReferenceAnno implements Reference {
     @Override
     public String proxy() {
         if (proxy == null) {
-            proxy = Solon.cfg().getByParse(anno.proxy());
+            proxy = Solon.cfg().getByTmpl(anno.proxy());
         }
 
         return proxy;
@@ -126,7 +126,7 @@ public class ReferenceAnno implements Reference {
     @Override
     public String stub() {
         if (stub == null) {
-            stub = Solon.cfg().getByParse(anno.stub());
+            stub = Solon.cfg().getByTmpl(anno.stub());
         }
 
         return stub;
@@ -136,7 +136,7 @@ public class ReferenceAnno implements Reference {
     @Override
     public String cluster() {
         if (cluster == null) {
-            cluster = Solon.cfg().getByParse(anno.cluster());
+            cluster = Solon.cfg().getByTmpl(anno.cluster());
         }
 
         return cluster;
@@ -157,7 +157,7 @@ public class ReferenceAnno implements Reference {
     @Override
     public String onconnect() {
         if (onconnect == null) {
-            onconnect = Solon.cfg().getByParse(anno.onconnect());
+            onconnect = Solon.cfg().getByTmpl(anno.onconnect());
         }
 
         return onconnect;
@@ -167,7 +167,7 @@ public class ReferenceAnno implements Reference {
     @Override
     public String ondisconnect() {
         if (ondisconnect == null) {
-            ondisconnect = Solon.cfg().getByParse(anno.ondisconnect());
+            ondisconnect = Solon.cfg().getByTmpl(anno.ondisconnect());
         }
 
         return ondisconnect;
@@ -177,7 +177,7 @@ public class ReferenceAnno implements Reference {
     @Override
     public String owner() {
         if (owner == null) {
-            owner = Solon.cfg().getByParse(anno.owner());
+            owner = Solon.cfg().getByTmpl(anno.owner());
         }
 
         return owner;
@@ -187,7 +187,7 @@ public class ReferenceAnno implements Reference {
     @Override
     public String layer() {
         if (layer == null) {
-            layer = Solon.cfg().getByParse(anno.layer());
+            layer = Solon.cfg().getByTmpl(anno.layer());
         }
 
         return layer;
@@ -202,7 +202,7 @@ public class ReferenceAnno implements Reference {
     @Override
     public String loadbalance() {
         if (loadbalance == null) {
-            loadbalance = Solon.cfg().getByParse(anno.loadbalance());
+            loadbalance = Solon.cfg().getByTmpl(anno.loadbalance());
         }
 
         return loadbalance;
@@ -227,7 +227,7 @@ public class ReferenceAnno implements Reference {
     @Override
     public String mock() {
         if (mock == null) {
-            mock = Solon.cfg().getByParse(anno.mock());
+            mock = Solon.cfg().getByTmpl(anno.mock());
         }
 
         return mock;
@@ -237,7 +237,7 @@ public class ReferenceAnno implements Reference {
     @Override
     public String validation() {
         if (validation == null) {
-            validation = Solon.cfg().getByParse(anno.validation());
+            validation = Solon.cfg().getByTmpl(anno.validation());
         }
 
         return validation;
@@ -252,7 +252,7 @@ public class ReferenceAnno implements Reference {
     @Override
     public String cache() {
         if (cache == null) {
-            cache = Solon.cfg().getByParse(anno.cache());
+            cache = Solon.cfg().getByTmpl(anno.cache());
         }
 
         return cache;
@@ -282,7 +282,7 @@ public class ReferenceAnno implements Reference {
     @Override
     public String module() {
         if (module == null) {
-            module = Solon.cfg().getByParse(anno.module());
+            module = Solon.cfg().getByTmpl(anno.module());
         }
 
         return module;
@@ -292,7 +292,7 @@ public class ReferenceAnno implements Reference {
     @Override
     public String consumer() {
         if (consumer == null) {
-            consumer = Solon.cfg().getByParse(anno.consumer());
+            consumer = Solon.cfg().getByTmpl(anno.consumer());
         }
 
         return consumer;
@@ -302,7 +302,7 @@ public class ReferenceAnno implements Reference {
     @Override
     public String monitor() {
         if (monitor == null) {
-            monitor = Solon.cfg().getByParse(anno.monitor());
+            monitor = Solon.cfg().getByTmpl(anno.monitor());
         }
 
         return monitor;
@@ -317,7 +317,7 @@ public class ReferenceAnno implements Reference {
     @Override
     public String protocol() {
         if (protocol == null) {
-            protocol = Solon.cfg().getByParse(anno.protocol());
+            protocol = Solon.cfg().getByTmpl(anno.protocol());
         }
 
         return protocol;
@@ -327,7 +327,7 @@ public class ReferenceAnno implements Reference {
     @Override
     public String tag() {
         if (tag == null) {
-            tag = Solon.cfg().getByParse(anno.tag());
+            tag = Solon.cfg().getByTmpl(anno.tag());
         }
 
         return tag;
@@ -342,7 +342,7 @@ public class ReferenceAnno implements Reference {
     @Override
     public String id() {
         if (id == null) {
-            id = Solon.cfg().getByParse(anno.id());
+            id = Solon.cfg().getByTmpl(anno.id());
         }
 
         return id;

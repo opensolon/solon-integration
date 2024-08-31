@@ -33,7 +33,7 @@ public class DubboServiceAnno implements DubboService, Service {
     @Override
     public String version() {
         if (version == null) {
-            version = Solon.cfg().getByParse(anno.version());
+            version = Solon.cfg().getByTmpl(anno.version());
         }
 
         return version;
@@ -43,7 +43,7 @@ public class DubboServiceAnno implements DubboService, Service {
     @Override
     public String group() {
         if (group == null) {
-            group = Solon.cfg().getByParse(anno.group());
+            group = Solon.cfg().getByTmpl(anno.group());
         }
 
         return group;
@@ -53,7 +53,7 @@ public class DubboServiceAnno implements DubboService, Service {
     @Override
     public String path() {
         if (path == null) {
-            path = Solon.cfg().getByParse(anno.path());
+            path = Solon.cfg().getByTmpl(anno.path());
         }
 
         return path;
@@ -69,7 +69,7 @@ public class DubboServiceAnno implements DubboService, Service {
     @Override
     public String token() {
         if (token == null) {
-            token = Solon.cfg().getByParse(anno.token());
+            token = Solon.cfg().getByTmpl(anno.token());
         }
 
         return token;
@@ -89,7 +89,7 @@ public class DubboServiceAnno implements DubboService, Service {
     @Override
     public String accesslog() {
         if (accesslog == null) {
-            accesslog = Solon.cfg().getByParse(anno.accesslog());
+            accesslog = Solon.cfg().getByTmpl(anno.accesslog());
         }
 
         return accesslog;
@@ -114,7 +114,7 @@ public class DubboServiceAnno implements DubboService, Service {
     @Override
     public String document() {
         if (document == null) {
-            document = Solon.cfg().getByParse(anno.document());
+            document = Solon.cfg().getByTmpl(anno.document());
         }
 
         return document;
@@ -130,7 +130,7 @@ public class DubboServiceAnno implements DubboService, Service {
     @Override
     public String local() {
         if (local == null) {
-            local = Solon.cfg().getByParse(anno.local());
+            local = Solon.cfg().getByTmpl(anno.local());
         }
 
         return local;
@@ -141,7 +141,7 @@ public class DubboServiceAnno implements DubboService, Service {
     @Override
     public String stub() {
         if (stub == null) {
-            stub = Solon.cfg().getByParse(anno.stub());
+            stub = Solon.cfg().getByTmpl(anno.stub());
         }
 
         return stub;
@@ -152,7 +152,7 @@ public class DubboServiceAnno implements DubboService, Service {
     @Override
     public String cluster() {
         if (cluster == null) {
-            cluster = Solon.cfg().getByParse(anno.cluster());
+            cluster = Solon.cfg().getByTmpl(anno.cluster());
         }
 
         return cluster;
@@ -162,7 +162,7 @@ public class DubboServiceAnno implements DubboService, Service {
     @Override
     public String proxy() {
         if (proxy == null) {
-            proxy = Solon.cfg().getByParse(anno.proxy());
+            proxy = Solon.cfg().getByTmpl(anno.proxy());
         }
 
         return proxy;
@@ -182,7 +182,7 @@ public class DubboServiceAnno implements DubboService, Service {
     @Override
     public String onconnect() {
         if (onconnect == null) {
-            onconnect = Solon.cfg().getByParse(anno.onconnect());
+            onconnect = Solon.cfg().getByTmpl(anno.onconnect());
         }
 
         return onconnect;
@@ -192,7 +192,7 @@ public class DubboServiceAnno implements DubboService, Service {
     @Override
     public String ondisconnect() {
         if (ondisconnect == null) {
-            ondisconnect = Solon.cfg().getByParse(anno.ondisconnect());
+            ondisconnect = Solon.cfg().getByTmpl(anno.ondisconnect());
         }
 
         return ondisconnect;
@@ -202,7 +202,7 @@ public class DubboServiceAnno implements DubboService, Service {
     @Override
     public String owner() {
         if (owner == null) {
-            owner = Solon.cfg().getByParse(anno.owner());
+            owner = Solon.cfg().getByTmpl(anno.owner());
         }
 
         return owner;
@@ -222,7 +222,7 @@ public class DubboServiceAnno implements DubboService, Service {
     @Override
     public String loadbalance() {
         if (loadbalance == null) {
-            loadbalance = Solon.cfg().getByParse(anno.loadbalance());
+            loadbalance = Solon.cfg().getByTmpl(anno.loadbalance());
         }
 
         return loadbalance;
@@ -247,7 +247,7 @@ public class DubboServiceAnno implements DubboService, Service {
     @Override
     public String mock() {
         if (mock == null) {
-            mock = Solon.cfg().getByParse(anno.mock());
+            mock = Solon.cfg().getByTmpl(anno.mock());
         }
 
         return mock;
@@ -257,7 +257,7 @@ public class DubboServiceAnno implements DubboService, Service {
     @Override
     public String validation() {
         if (validation == null) {
-            validation = Solon.cfg().getByParse(anno.validation());
+            validation = Solon.cfg().getByTmpl(anno.validation());
         }
 
         return validation;
@@ -272,7 +272,7 @@ public class DubboServiceAnno implements DubboService, Service {
     @Override
     public String cache() {
         if (cache == null) {
-            cache = Solon.cfg().getByParse(anno.cache());
+            cache = Solon.cfg().getByTmpl(anno.cache());
         }
 
         return cache;
@@ -297,7 +297,7 @@ public class DubboServiceAnno implements DubboService, Service {
     @Override
     public String application() {
         if (application == null) {
-            application = Solon.cfg().getByParse(anno.application());
+            application = Solon.cfg().getByTmpl(anno.application());
         }
 
         return application;
@@ -307,7 +307,7 @@ public class DubboServiceAnno implements DubboService, Service {
     @Override
     public String module() {
         if (module == null) {
-            module = Solon.cfg().getByParse(anno.module());
+            module = Solon.cfg().getByTmpl(anno.module());
         }
 
         return module;
@@ -317,7 +317,7 @@ public class DubboServiceAnno implements DubboService, Service {
     @Override
     public String provider() {
         if (provider == null) {
-            provider = Solon.cfg().getByParse(anno.provider());
+            provider = Solon.cfg().getByTmpl(anno.provider());
         }
 
         return provider;
@@ -342,7 +342,7 @@ public class DubboServiceAnno implements DubboService, Service {
     @Override
     public String tag() {
         if (tag == null) {
-            tag = Solon.cfg().getByParse(anno.tag());
+            tag = Solon.cfg().getByTmpl(anno.tag());
         }
 
         return tag;

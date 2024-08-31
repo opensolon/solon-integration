@@ -33,6 +33,7 @@ import org.noear.solon.aot.RuntimeNativeRegistrar;
 import org.noear.solon.aot.hint.ExecutableMode;
 import org.noear.solon.aot.hint.MemberCategory;
 import org.noear.solon.core.AppContext;
+import org.noear.solon.core.util.ResourceUtil;
 import org.noear.solon.core.wrap.MethodWrap;
 
 import java.lang.reflect.Method;
@@ -112,8 +113,8 @@ public class MybatisRuntimeNativeRegistrar implements RuntimeNativeRegistrar {
     protected void registerMybatisAdapter(AppContext context, RuntimeNativeMetadata metadata, MybatisAdapterDefault bean) {
         //注册 xml 资源
         for (String res : bean.getMappers()) {
-            if (res.startsWith(Utils.TAG_classpath)) {
-                res = res.substring(Utils.TAG_classpath.length());
+            if (res.startsWith(ResourceUtil.TAG_classpath)) {
+                res = res.substring(ResourceUtil.TAG_classpath.length());
                 res = res.replace("**", "*");
                 res = res.replace("*", ".*");
                 metadata.registerResourceInclude(res);

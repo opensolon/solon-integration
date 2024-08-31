@@ -5,9 +5,9 @@ import net.hasor.core.Module;
 import net.hasor.utils.ExceptionUtils;
 import net.hasor.utils.StringUtils;
 import org.noear.solon.Solon;
+import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Configuration;
 import org.noear.solon.annotation.Inject;
-import org.noear.solon.core.bean.InitializingBean;
 
 import java.io.IOException;
 
@@ -18,7 +18,7 @@ import java.io.IOException;
  * @since 2020.10.10
  * */
 @Configuration
-public class HasorConfiguration implements InitializingBean {
+public class HasorConfiguration  {
     @Inject
     private org.noear.solon.core.AppContext context;
 
@@ -27,8 +27,8 @@ public class HasorConfiguration implements InitializingBean {
      * <p>
      * 为开发隐式插件提供支持
      */
-    @Override
-    public void afterInjection() throws Throwable {
+    @Bean
+    public void init() {
         EnableHasor enableHasor = Solon.app().source().getAnnotation(EnableHasor.class);
 
         BuildConfig buildConfig = BuildConfig.getInstance();

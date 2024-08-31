@@ -11,7 +11,6 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 
-import org.noear.solon.Utils;
 import org.noear.solon.core.util.ResourceUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,10 +51,10 @@ public class FileUtil {
      * @param fileList {@code List<File>} 所传入的FileList
      */
     public static void fileList(String path, List<File> fileList) {
-        if (path.startsWith(Utils.TAG_classpath)) {
+        if (path.startsWith(ResourceUtil.TAG_classpath)) {
             try {
                 createTempDir();
-                Enumeration<URL> resources = ResourceUtil.getResources(path);
+                Enumeration<URL> resources = ResourceUtil.getResources(ResourceUtil.remSchema(path));
                 while (resources.hasMoreElements()) {
                     URL resource = resources.nextElement();
                     fileList.add(copyResourceToTempFile(resource));
