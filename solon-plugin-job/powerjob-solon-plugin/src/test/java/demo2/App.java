@@ -32,7 +32,7 @@ public class App {
 
         @Override
         public void start(AppContext context) throws Throwable {
-            PowerJobProperties properties = context.cfg().getBean(configStarts, PowerJobProperties.class);
+            PowerJobProperties properties = context.cfg().toBean(configStarts, PowerJobProperties.class);
 
             if (!properties.isEnabled()) {
                 logger.warn("PowerJob is disabled, powerjob worker will not start.");

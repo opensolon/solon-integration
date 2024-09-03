@@ -44,7 +44,7 @@ public class XPluginImp implements Plugin {
         SaManager.setSaJsonTemplate(new SaJsonTemplateForSnack3());
 
         //注入配置Bean
-        SaTokenConfig saTokenConfig = Solon.cfg().getBean("sa-token", SaTokenConfig.class);
+        SaTokenConfig saTokenConfig = Solon.cfg().toBean("sa-token", SaTokenConfig.class);
         if (saTokenConfig != null) {
             SaManager.setConfig(saTokenConfig);
         }

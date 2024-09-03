@@ -26,7 +26,7 @@ public class XPluginImp implements Plugin {
 
     @Override
     public void start(AppContext context) throws Throwable {
-        PowerJobProperties properties = context.cfg().getBean("solon.powerjob", PowerJobProperties.class);
+        PowerJobProperties properties = context.cfg().toBean("solon.powerjob", PowerJobProperties.class);
 
         if (properties == null || !properties.isEnabled()) {
             logger.warn("PowerJob is disabled, powerjob worker will not start.");

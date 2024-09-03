@@ -11,6 +11,6 @@ public class IdsProps {
 
     public static final String BAST_PATH = Solon.cfg().get("jap.ids.basePath", "/oauth");
     public static final String WELL_PATH = "/.well-known";
-    public static final IdsConfig IDS_CONFIG = Solon.cfg().getBean("jap.ids.config", IdsConfig.class);
+    public static final IdsConfig IDS_CONFIG = Solon.cfg().toBean("jap.ids.config", IdsConfig.class);
 
 }

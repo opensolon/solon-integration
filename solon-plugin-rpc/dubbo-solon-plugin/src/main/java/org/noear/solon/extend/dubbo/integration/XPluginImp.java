@@ -31,7 +31,7 @@ public class XPluginImp implements Plugin {
     private void initialize() {
         // 应用配置
         ApplicationConfig application = Solon.cfg()
-                .getBean("dubbo.application", ApplicationConfig.class);
+                .toBean("dubbo.application", ApplicationConfig.class);
         if (application == null) {
             application = new ApplicationConfig();
         }
@@ -44,12 +44,12 @@ public class XPluginImp implements Plugin {
 
         // 注册中心
         Registries registries = Solon.cfg()
-                .getBean("dubbo.registries", Registries.class);
+                .toBean("dubbo.registries", Registries.class);
         if (registries != null && registries.size() > 0) {
             bootstrap.registries(registries);
         } else {
             RegistryConfig registry = Solon.cfg()
-                    .getBean("dubbo.registry", RegistryConfig.class);
+                    .toBean("dubbo.registry", RegistryConfig.class);
             if (registry == null) {
                 registry = new RegistryConfig();
             }
@@ -63,19 +63,19 @@ public class XPluginImp implements Plugin {
 
         //提供者
         ProviderConfig provider = Solon.cfg()
-                .getBean("dubbo.provider", ProviderConfig.class);
+                .toBean("dubbo.provider", ProviderConfig.class);
         if (provider != null) {
             bootstrap.provider(provider);
         }
 
         //协议
         Protocols protocols = Solon.cfg()
-                .getBean("dubbo.protocols", Protocols.class);
+                .toBean("dubbo.protocols", Protocols.class);
         if (protocols != null && protocols.size() > 0) {
             bootstrap.protocols(protocols);
         } else {
             ProtocolConfig protocol = Solon.cfg()
-                    .getBean("dubbo.protocol", ProtocolConfig.class);
+                    .toBean("dubbo.protocol", ProtocolConfig.class);
             if (protocol == null) {
                 protocol = new ProtocolConfig();
             }
@@ -91,7 +91,7 @@ public class XPluginImp implements Plugin {
 
         //消费者
         ConsumerConfig consumer = Solon.cfg()
-                .getBean("dubbo.consumer", ConsumerConfig.class);
+                .toBean("dubbo.consumer", ConsumerConfig.class);
         if (consumer != null) {
             bootstrap.consumer(consumer);
         }
