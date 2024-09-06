@@ -38,6 +38,9 @@ public class XPluginImp implements Plugin {
             }
         });
 
-        Solon.app().after("**", ctx -> SurenessContextHolder.unbindSubject());
+        Solon.app().routerInterceptor((x, h, c) -> {
+            SurenessContextHolder.unbindSubject();
+            c.doIntercept(x, h);
+        });
     }
 }
