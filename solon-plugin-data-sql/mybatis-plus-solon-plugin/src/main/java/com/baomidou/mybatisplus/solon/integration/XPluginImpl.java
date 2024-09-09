@@ -1,14 +1,18 @@
 package com.baomidou.mybatisplus.solon.integration;
 
+import com.baomidou.mybatisplus.core.config.GlobalConfig;
+import com.baomidou.mybatisplus.core.mapper.Mapper;
 import com.baomidou.mybatisplus.core.toolkit.reflect.GenericTypeUtils;
 import com.baomidou.mybatisplus.solon.integration.aot.MybatisPlusRuntimeNativeRegistrar;
+import org.apache.ibatis.solon.integration.DsBeanInjectorImpl;
+import org.apache.ibatis.solon.integration.MybatisAdapterManager;
 import org.noear.solon.aot.RuntimeNativeRegistrar;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.runtime.NativeDetector;
 import org.noear.solon.core.util.ClassUtil;
 import org.noear.solon.core.util.GenericUtil;
-import org.apache.ibatis.solon.integration.MybatisAdapterManager;
 import org.noear.solon.core.Plugin;
+import org.noear.solon.data.annotation.Ds;
 
 /**
  * @author noear
@@ -29,5 +33,9 @@ public class XPluginImpl implements Plugin {
             context.wrapAndPut(MybatisPlusRuntimeNativeRegistrar.class);
         }
 
+        //@since 2.9
+        DsBeanInjectorImpl dsInjector = new DsBeanInjectorImpl();
+        context.beanInjectorAdd(Ds.class, GlobalConfig.class, dsInjector);
+        context.beanInjectorAdd(Ds.class, Mapper.class, dsInjector);
     }
 }
