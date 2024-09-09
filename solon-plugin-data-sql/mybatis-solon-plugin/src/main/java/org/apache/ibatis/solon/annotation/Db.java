@@ -9,7 +9,9 @@ import java.lang.annotation.*;
  * @Db("db1") SqlSessionFactory factory;
  * @Db("db1") SqlSession session;
  * @Db("db1") Mapper mapper;
+ * @deprecated 2.9
  * */
+@Deprecated
 @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
