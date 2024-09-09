@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  *
  * @author 胡高 (https://gitee.com/gollyhu)
  * @since 1.10
- * @deprecated 2.9
+ * @deprecated 3.0
  */
 @Deprecated
 @Inherited

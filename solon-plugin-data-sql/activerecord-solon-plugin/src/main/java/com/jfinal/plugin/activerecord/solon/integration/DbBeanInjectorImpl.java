@@ -17,7 +17,7 @@ import java.lang.reflect.Proxy;
 /**
  * @author noear
  * @since 1.10
- * @deprecated 2.9
+ * @deprecated 3.0
  */
 @Deprecated
 public class DbBeanInjectorImpl implements BeanInjector<Db> {

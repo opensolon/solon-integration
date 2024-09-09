@@ -8,8 +8,8 @@ import org.noear.wood.annotation.Db;
 
 /**
  * @author noear
- * @since 2.9
- * @deprecated 2.9
+ * @since 3.0
+ * @deprecated 3.0
  */
 @Deprecated
 public class DbBeanBuilderImpl implements BeanBuilder<Db> {
