@@ -2,7 +2,6 @@ package org.hibernate.solon.integration;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.solon.annotation.Db;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.Plugin;
 import org.noear.solon.data.annotation.Ds;
