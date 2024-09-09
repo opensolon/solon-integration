@@ -3,8 +3,12 @@ package org.noear.wood.solon.integration;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.Plugin;
 import org.noear.solon.core.util.ClassUtil;
+import org.noear.solon.data.annotation.Ds;
+import org.noear.wood.BaseMapper;
+import org.noear.wood.DbContext;
 import org.noear.wood.WoodConfig;
 import org.noear.wood.annotation.Db;
+import org.noear.wood.solon.annotation.Mappable;
 import org.noear.wood.xml.XmlSqlLoader;
 
 import javax.sql.DataSource;
@@ -25,10 +29,14 @@ public class XPluginImp implements Plugin {
         WoodConfig.connectionFactory = new DsConnectionFactoryImpl();
 
         // 添加响应器（构建、注入）
-        DbBeanReactor beanReactor = new DbBeanReactor();
+        context.beanBuilderAdd(Db.class, new DbBeanBuilderImpl());
+        context.beanInjectorAdd(Db.class, new DbBeanInjectorImpl());
 
-        context.beanBuilderAdd(Db.class, beanReactor);
-        context.beanInjectorAdd(Db.class, beanReactor);
+        //@since 2.9
+        DsBeanInjectorImpl injector = new DsBeanInjectorImpl();
+        context.beanInjectorAdd(Ds.class, DbContext.class, injector);
+        context.beanInjectorAdd(Ds.class, BaseMapper.class, injector);
+        context.beanInjectorAdd(Ds.class, Mappable.class, injector);
 
         // 加载xml sql
         if (ClassUtil.hasClass(() -> XmlSqlLoader.class)) {
