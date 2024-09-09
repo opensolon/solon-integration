@@ -11,7 +11,9 @@ import javax.sql.DataSource;
 /**
  * @author lingkang
  * @since 2.5
+ * @deprecated 2.9
  */
+@Deprecated
 public class DbBeanInjector implements BeanInjector<Db> {
     @Override
     public void doInject(VarHolder varH, Db anno) {

@@ -6,8 +6,9 @@ import java.lang.annotation.*;
 /**
  * 数据工厂注解
  *
- * 例：
+ * @deprecated 2.9
  * */
+@Deprecated
 @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
