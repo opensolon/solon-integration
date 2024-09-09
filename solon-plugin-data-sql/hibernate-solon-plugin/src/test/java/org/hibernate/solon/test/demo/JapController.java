@@ -1,8 +1,8 @@
 package org.hibernate.solon.test.demo;
 
-import org.hibernate.solon.annotation.Db;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
+import org.noear.solon.data.annotation.Ds;
 import org.noear.solon.data.annotation.Tran;
 
 import javax.persistence.EntityManager;
@@ -11,7 +11,7 @@ import javax.persistence.EntityManagerFactory;
 @Mapping("jpa")
 @Controller
 public class JapController {
-    @Db
+    @Ds
     private EntityManagerFactory sessionFactory;
 
     private EntityManager openSession() {
