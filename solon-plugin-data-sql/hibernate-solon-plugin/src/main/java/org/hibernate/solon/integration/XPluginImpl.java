@@ -27,8 +27,6 @@ public class XPluginImpl implements Plugin {
 
         context.subWrapsOfType(DataSource.class, HibernateAdapterManager::register);
 
-        context.beanInjectorAdd(Db.class, new DbBeanInjector());
-
         //@since 2.9
         DsBeanInjectorImpl injector = new DsBeanInjectorImpl();
         context.beanInjectorAdd(Ds.class, SessionFactory.class, injector);
