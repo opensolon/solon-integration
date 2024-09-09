@@ -1,10 +1,10 @@
-package org.noear.solon.extend.activerecord.impl;
+package com.jfinal.plugin.activerecord.solon.integration;
 
 import com.jfinal.plugin.activerecord.Model;
 import org.noear.solon.core.BeanBuilder;
 import org.noear.solon.core.BeanWrap;
-import org.noear.solon.extend.activerecord.ModelManager;
-import org.noear.solon.extend.activerecord.annotation.Table;
+import com.jfinal.plugin.activerecord.solon.ModelManager;
+import com.jfinal.plugin.activerecord.solon.annotation.Table;
 
 /**
  * @author noear

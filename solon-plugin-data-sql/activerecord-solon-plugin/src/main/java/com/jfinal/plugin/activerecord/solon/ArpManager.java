@@ -1,4 +1,4 @@
-package org.noear.solon.extend.activerecord;
+package com.jfinal.plugin.activerecord.solon;
 
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.activerecord.Config;
@@ -9,9 +9,8 @@ import org.noear.solon.core.BeanWrap;
 import org.noear.solon.core.event.EventBus;
 import org.noear.solon.core.util.ScanUtil;
 import org.noear.solon.data.tran.DataSourceProxy;
-import org.noear.solon.extend.activerecord.annotation.Db;
-import org.noear.solon.extend.activerecord.annotation.Table;
-import org.noear.solon.extend.activerecord.impl.ConfigImpl;
+import com.jfinal.plugin.activerecord.solon.annotation.Db;
+import com.jfinal.plugin.activerecord.solon.annotation.Table;
 
 import javax.sql.DataSource;
 import java.util.*;

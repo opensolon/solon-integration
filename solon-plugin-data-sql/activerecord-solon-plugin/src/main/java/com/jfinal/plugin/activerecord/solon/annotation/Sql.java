@@ -1,4 +1,4 @@
-package org.noear.solon.extend.activerecord.annotation;
+package com.jfinal.plugin.activerecord.solon.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;

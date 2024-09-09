@@ -1,10 +1,10 @@
-package org.noear.solon.extend.activerecord;
+package com.jfinal.plugin.activerecord.solon;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.noear.solon.extend.activerecord.annotation.Table;
+import com.jfinal.plugin.activerecord.solon.annotation.Table;
 
 import com.jfinal.plugin.activerecord.Model;
 

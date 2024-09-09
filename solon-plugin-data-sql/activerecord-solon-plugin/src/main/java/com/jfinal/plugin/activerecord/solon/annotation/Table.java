@@ -1,4 +1,4 @@
-package org.noear.solon.extend.activerecord.annotation;
+package com.jfinal.plugin.activerecord.solon.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -7,18 +7,22 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 命名空间注解
+ * 表注解
  *
- * @author 胡高 (https://gitee.com/gollyhu)
- * @since 1.10
+ * @author noear
+ * @since 1.4
  */
 @Inherited
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD,  ElementType.TYPE})
-public @interface Namespace {
+public @interface Table {
     /**
-     * 命名空间
-     */
-    String value();
-
+     * 表名
+     * */
+    String name();
+    /**
+     * 主键
+     * */
+    String primaryKey() default "id";
 }
+

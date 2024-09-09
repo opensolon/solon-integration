@@ -1,4 +1,4 @@
-package org.noear.solon.extend.activerecord.annotation;
+package com.jfinal.plugin.activerecord.solon.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -12,7 +12,9 @@ import java.lang.annotation.Target;
  *
  * @author 胡高 (https://gitee.com/gollyhu)
  * @since 1.10
+ * @deprecated 2.9
  */
+@Deprecated
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.TYPE})

@@ -1,4 +1,4 @@
-package org.noear.solon.extend.activerecord.proxy;
+package com.jfinal.plugin.activerecord.solon.proxy;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -9,8 +9,8 @@ import java.util.Map;
 import org.noear.solon.Utils;
 import org.noear.solon.core.util.GenericUtil;
 import org.noear.solon.core.util.ReflectUtil;
-import org.noear.solon.extend.activerecord.annotation.Namespace;
-import org.noear.solon.extend.activerecord.annotation.Sql;
+import com.jfinal.plugin.activerecord.solon.annotation.Namespace;
+import com.jfinal.plugin.activerecord.solon.annotation.Sql;
 
 import com.jfinal.plugin.activerecord.Page;
 

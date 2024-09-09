@@ -1,4 +1,4 @@
-package org.noear.solon.extend.activerecord.impl;
+package com.jfinal.plugin.activerecord.solon;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

@@ -1,4 +1,4 @@
-package org.noear.solon.extend.activerecord.proxy;
+package com.jfinal.plugin.activerecord.solon.proxy;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;

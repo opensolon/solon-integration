@@ -1,10 +1,10 @@
-package org.noear.solon.extend.activerecord.proxy;
+package com.jfinal.plugin.activerecord.solon.proxy;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.noear.solon.core.util.ConvertUtil;
-import org.noear.solon.extend.activerecord.ModelManager;
+import com.jfinal.plugin.activerecord.solon.ModelManager;
 
 import com.jfinal.kit.TypeKit;
 import com.jfinal.plugin.activerecord.Db;
