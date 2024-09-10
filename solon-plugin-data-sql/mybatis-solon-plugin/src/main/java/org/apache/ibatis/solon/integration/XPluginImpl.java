@@ -23,11 +23,12 @@ public class XPluginImpl implements Plugin {
         });
 
         //@since 2.9
-        DsBeanInjectorImpl dsInjector = new DsBeanInjectorImpl();
-        context.beanInjectorAdd(Ds.class, MybatisAdapter.class, dsInjector);
-        context.beanInjectorAdd(Ds.class, SqlSessionFactory.class, dsInjector);
-        context.beanInjectorAdd(Ds.class, Configuration.class, dsInjector);
-        context.beanInjectorAdd(Ds.class, Mappable.class, dsInjector);
+        DsBeanInjectorImpl injector = new DsBeanInjectorImpl();
+        context.beanInjectorAdd(Ds.class, injector); //默认（可能会被替掉）
+        context.beanInjectorAdd(Ds.class, MybatisAdapter.class, injector);
+        context.beanInjectorAdd(Ds.class, SqlSessionFactory.class, injector);
+        context.beanInjectorAdd(Ds.class, Configuration.class, injector);
+        context.beanInjectorAdd(Ds.class, Mappable.class, injector);
 
         ///////////////////////////////////////
 

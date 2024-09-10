@@ -30,6 +30,7 @@ public class XPluginImp implements Plugin {
 
         //@since 2.9 Ds 注入
         DsBeanInjectorImpl injector = new DsBeanInjectorImpl();
+        context.beanInjectorAdd(Ds.class, injector); //默认（可能会被替掉）
         context.beanInjectorAdd(Ds.class, DbPro.class, injector);
         context.beanInjectorAdd(Ds.class, ActiveRecordPlugin.class, injector);
         context.beanInjectorAdd(Ds.class, Mappable.class, injector);

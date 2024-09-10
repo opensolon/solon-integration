@@ -28,6 +28,7 @@ public class XPluginImpl implements Plugin {
 
         //@since 2.9
         DsBeanInjectorImpl injector = new DsBeanInjectorImpl();
+        context.beanInjectorAdd(Ds.class, injector); //默认（可能会被替掉）
         context.beanInjectorAdd(Ds.class, SessionFactory.class, injector);
         context.beanInjectorAdd(Ds.class, Configuration.class, injector);
         context.beanInjectorAdd(Ds.class, EntityManagerFactory.class, injector);

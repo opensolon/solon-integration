@@ -21,6 +21,7 @@ public class XPluginImp implements Plugin {
     public void start(AppContext context) {
         DsBeanInjectorImpl injector = new DsBeanInjectorImpl(dalRegistry);
 
+        context.beanInjectorAdd(Ds.class, injector); //默认（可能会被替掉）
         context.beanInjectorAdd(Ds.class, LambdaTemplate.class, injector);
         context.beanInjectorAdd(Ds.class, JdbcTemplate.class, injector);
         context.beanInjectorAdd(Ds.class, DalSession.class, injector);
