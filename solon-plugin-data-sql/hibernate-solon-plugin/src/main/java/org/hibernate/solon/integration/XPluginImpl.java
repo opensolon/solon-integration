@@ -1,12 +1,9 @@
 package org.hibernate.solon.integration;
 
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.solon.annotation.Db;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.Plugin;
-import org.noear.solon.data.annotation.Ds;
 
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.spi.PersistenceProviderResolverHolder;
 import javax.sql.DataSource;
 
@@ -26,11 +23,7 @@ public class XPluginImpl implements Plugin {
 
         context.subWrapsOfType(DataSource.class, HibernateAdapterManager::register);
 
-        //@since 2.9
-        DsBeanInjectorImpl injector = new DsBeanInjectorImpl();
-        context.beanInjectorAdd(Ds.class, injector); //默认（可能会被替掉）
-        context.beanInjectorAdd(Ds.class, SessionFactory.class, injector);
-        context.beanInjectorAdd(Ds.class, Configuration.class, injector);
-        context.beanInjectorAdd(Ds.class, EntityManagerFactory.class, injector);
+        //添加 db 注入处理
+        context.beanInjectorAdd(Db.class, new DbBeanInjectorImpl());
     }
 }

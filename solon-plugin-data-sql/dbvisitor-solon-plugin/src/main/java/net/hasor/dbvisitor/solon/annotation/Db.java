@@ -1,21 +1,23 @@
-package org.apache.ibatis.solon.annotation;
+package net.hasor.dbvisitor.solon.annotation;
 
 import java.lang.annotation.*;
+
 
 /**
  * 数据工厂注解
  *
  * 例：
- * @Db("db1") SqlSessionFactory factory;
- * @Db("db1") SqlSession session;
- * @Db("db1") Mapper mapper;
+ * @Db("db1")
+ *
+ * @author noear
+ * @since 1.6
  * */
 @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Db {
     /**
-     * ds bean name
+     * datsSource bean name
      * */
     String value() default "";
 }

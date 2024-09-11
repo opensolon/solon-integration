@@ -12,9 +12,7 @@ import java.lang.annotation.Target;
  *
  * @author 胡高 (https://gitee.com/gollyhu)
  * @since 1.10
- * @deprecated 3.0
  */
-@Deprecated
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.TYPE})

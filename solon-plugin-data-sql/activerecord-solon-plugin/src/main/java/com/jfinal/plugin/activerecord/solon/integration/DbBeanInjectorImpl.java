@@ -10,6 +10,7 @@ import org.noear.solon.core.VarHolder;
 import com.jfinal.plugin.activerecord.solon.ArpManager;
 import com.jfinal.plugin.activerecord.solon.annotation.Db;
 import com.jfinal.plugin.activerecord.solon.proxy.MapperInvocationHandler;
+import org.noear.solon.data.datasource.DsUtils;
 
 import javax.sql.DataSource;
 import java.lang.reflect.Proxy;
@@ -17,21 +18,13 @@ import java.lang.reflect.Proxy;
 /**
  * @author noear
  * @since 1.10
- * @deprecated 3.0
  */
-@Deprecated
 public class DbBeanInjectorImpl implements BeanInjector<Db> {
     @Override
-    public void doInject(VarHolder varH, Db anno) {
-        if (Utils.isEmpty(anno.value())) {
-            varH.context().getWrapAsync(DataSource.class, (dsBw) -> {
-                this.injectDo(varH, anno.value(), dsBw.raw());
-            });
-        } else {
-            varH.context().getWrapAsync(anno.value(), (dsBw) -> {
-                this.injectDo(varH, anno.value(), dsBw.raw());
-            });
-        }
+    public void doInject(VarHolder vh, Db anno) {
+        DsUtils.observeDs(vh.context(), anno.value(), (dsWrap) -> {
+            this.injectDo(vh, anno.value(), dsWrap.raw());
+        });
     }
 
     /**

@@ -9,9 +9,7 @@ import org.noear.wood.annotation.Db;
 /**
  * @author noear
  * @since 3.0
- * @deprecated 3.0
  */
-@Deprecated
 public class DbBeanBuilderImpl implements BeanBuilder<Db> {
     @Override
     public void doBuild(Class<?> clz, BeanWrap bw, Db anno) throws Throwable {

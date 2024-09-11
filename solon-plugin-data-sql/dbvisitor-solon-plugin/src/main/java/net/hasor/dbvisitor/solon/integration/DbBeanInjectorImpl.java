@@ -5,10 +5,10 @@ import net.hasor.dbvisitor.dal.repository.DalRegistry;
 import net.hasor.dbvisitor.dal.session.DalSession;
 import net.hasor.dbvisitor.jdbc.core.JdbcTemplate;
 import net.hasor.dbvisitor.lambda.LambdaTemplate;
+import net.hasor.dbvisitor.solon.annotation.Db;
 import org.noear.solon.core.BeanInjector;
 import org.noear.solon.core.BeanWrap;
 import org.noear.solon.core.VarHolder;
-import org.noear.solon.data.annotation.Ds;
 import org.noear.solon.data.datasource.DsUtils;
 
 import javax.sql.DataSource;
@@ -17,14 +17,14 @@ import javax.sql.DataSource;
  * @author noear
  * @since 2.9
  */
-public class DsBeanInjectorImpl implements BeanInjector<Ds> {
+public class DbBeanInjectorImpl implements BeanInjector<Db> {
     private final DalRegistry dalRegistry;
-    public DsBeanInjectorImpl(DalRegistry dalRegistry) {
+    public DbBeanInjectorImpl(DalRegistry dalRegistry) {
         this.dalRegistry = dalRegistry;
     }
 
     @Override
-    public void doInject(VarHolder vh, Ds anno) {
+    public void doInject(VarHolder vh, Db anno) {
         DsUtils.observeDs(vh.context(), anno.value(), (dsWrap) -> {
             inject0(vh, dsWrap);
         });

@@ -11,9 +11,7 @@ import org.noear.wood.annotation.Db;
 /**
  * @author noear
  * @since 3.0
- * @deprecated 3.0
  */
-@Deprecated
 public class DbBeanInjectorImpl implements BeanInjector<Db> {
     @Override
     public void doInject(VarHolder vh, Db anno) {

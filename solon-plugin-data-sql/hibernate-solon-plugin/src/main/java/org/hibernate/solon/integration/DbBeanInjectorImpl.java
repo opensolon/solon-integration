@@ -1,18 +1,18 @@
 package org.hibernate.solon.integration;
 
+import org.hibernate.solon.annotation.Db;
 import org.noear.solon.core.BeanInjector;
 import org.noear.solon.core.BeanWrap;
 import org.noear.solon.core.VarHolder;
-import org.noear.solon.data.annotation.Ds;
 import org.noear.solon.data.datasource.DsUtils;
 
 /**
  * @author lingkang
  * @since 2.5
  */
-public class DsBeanInjectorImpl implements BeanInjector<Ds> {
+public class DbBeanInjectorImpl implements BeanInjector<Db> {
     @Override
-    public void doInject(VarHolder vh, Ds anno) {
+    public void doInject(VarHolder vh, Db anno) {
         DsUtils.observeDs(vh.context(), anno.value(), dsWrap -> {
             inject0(vh, dsWrap);
         });
