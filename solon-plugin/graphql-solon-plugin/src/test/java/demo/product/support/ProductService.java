@@ -2,16 +2,13 @@ package demo.product.support;
 
 import demo.product.dto.ProductPriceHistoryDTO;
 import graphql.solon.annotation.QueryMapping;
-import graphql.solon.annotation.SchemaMapping;
 import graphql.solon.annotation.SubscriptionMapping;
+import graphql.solon.constant.OperationType;
 import java.util.Date;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
-
-import graphql.solon.constant.OperationType;
-import graphql.solon.util.ConcurrentReferenceHashMap;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Param;
 import reactor.core.publisher.Flux;
@@ -47,7 +44,7 @@ public class ProductService {
             Stream.generate(() -> {
 
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

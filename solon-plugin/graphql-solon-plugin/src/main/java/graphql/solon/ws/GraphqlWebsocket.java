@@ -15,7 +15,11 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.time.Duration;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 import org.apache.commons.collections.CollectionUtils;
@@ -90,6 +94,7 @@ public class GraphqlWebsocket extends SimpleWebSocketListener implements SubProt
 
     @Override
     public void onMessage(WebSocket socket, String text) throws IOException {
+        System.out.format("0000000000 %s 0000000000 %n", text);
         GraphQlWebSocketMessage graphQlWebSocketMessage = ONode.loadStr(text)
             .toObject(GraphQlWebSocketMessage.class);
         String id = graphQlWebSocketMessage.getId();
