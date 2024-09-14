@@ -4,6 +4,7 @@ import demo.product.dto.ProductPriceHistoryDTO;
 import graphql.solon.annotation.QueryMapping;
 import graphql.solon.annotation.SubscriptionMapping;
 import graphql.solon.constant.OperationType;
+import java.time.Duration;
 import java.util.Date;
 import java.util.Map;
 import java.util.Random;
@@ -38,20 +39,10 @@ public class ProductService {
 
     @SubscriptionMapping("notifyProductPriceChange")
     public Flux<ProductPriceHistoryDTO> notifyProductPriceChange(@Param Long productId) {
-
-        // A flux is the publisher of data
         return Flux.fromStream(
             Stream.generate(() -> {
-
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-
                 return new ProductPriceHistoryDTO(productId, new Date(),
                         rn.nextInt(10) + 1);
-            }));
-
+            })).delayElements(Duration.ofSeconds(1));
     }
 }

@@ -7,11 +7,14 @@ import static org.hamcrest.Matchers.notNullValue;
 import demo.App;
 import demo.product.dto.ProductPriceHistoryDTO;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.handshake.ServerHandshake;
 import org.junit.jupiter.api.Test;
-import org.noear.java_websocket.client.SimpleWebSocketClient;
 import org.noear.snack.ONode;
 import org.noear.solon.core.util.ResourceUtil;
 import org.noear.solon.test.HttpTester;
@@ -28,7 +31,7 @@ public class SubscriptionTest extends HttpTester {
      * 订阅测试：未完成！会失败
      */
     @Test
-    public void testSubscription() throws IOException, InterruptedException {
+    public void testSubscription() throws IOException, InterruptedException, URISyntaxException {
         ProductPriceHistoryDTO product = new ProductPriceHistoryDTO(123L, new Date(), 999);
 
         ONode param = new ONode();
@@ -49,6 +52,7 @@ public class SubscriptionTest extends HttpTester {
 
         //休息会儿
         for (int i = 0; i < 3; i++) {
+            client.ping();
             Thread.sleep(1000);
             System.out.println("====");
         }
@@ -59,12 +63,9 @@ public class SubscriptionTest extends HttpTester {
             Thread.sleep(1000);
             System.out.println("====");
         }
-
-        //关闭（使用 release 会同时停止心跳及自动重连）
-        client.release();
     }
 
-    static class WsClient extends SimpleWebSocketClient {
+    static class WsClient extends WebSocketClient {
 
         private String id;
 
@@ -72,13 +73,19 @@ public class SubscriptionTest extends HttpTester {
 
         private boolean isCompleted = false;
 
-        public WsClient(String serverUri) {
-            super(serverUri);
+        public WsClient(String serverUri) throws URISyntaxException {
+            super(new URI(serverUri));
+            this.id = UUID.randomUUID().toString();
+        }
+
+        @Override
+        public void onOpen(ServerHandshake serverHandshake) {
+
         }
 
         @Override
         public void onMessage(String message) {
-            System.out.printf("--------- %s ---------%n", message);
+            System.out.printf("--------- Client onMessage --------- %s ---------%n", message);
             MesResult result = ONode.deserialize(message, MesResult.class);
             String type = result.getType();
             if (Objects.equals("connection_ack", type)) {
@@ -103,9 +110,17 @@ public class SubscriptionTest extends HttpTester {
                 } else {
                     throw new IllegalArgumentException("未知id");
                 }
-            } else {
-                throw new IllegalArgumentException("未知数据");
             }
+        }
+
+        @Override
+        public void onClose(int i, String s, boolean b) {
+
+        }
+
+        @Override
+        public void onError(Exception e) {
+
         }
 
         public void initConnection() throws InterruptedException {
@@ -116,7 +131,6 @@ public class SubscriptionTest extends HttpTester {
         }
 
         public void subscribe(ONode payload) {
-            this.id = UUID.randomUUID().toString();
             MesResult result = new MesResult();
             result.setId(this.id);
             result.setType("subscribe");
@@ -127,6 +141,10 @@ public class SubscriptionTest extends HttpTester {
         public void complete() {
             this.send("{id: \"" + this.id + "\", type: \"complete\"}");
             this.isCompleted = true;
+        }
+
+        public void ping() {
+            this.send("{id: \"" + this.id + "\", type: \"ping\"}");
         }
 
         public static class MesResult {

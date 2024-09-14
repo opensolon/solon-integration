@@ -94,7 +94,7 @@ public class GraphqlWebsocket extends SimpleWebSocketListener implements SubProt
 
     @Override
     public void onMessage(WebSocket socket, String text) throws IOException {
-        System.out.format("0000000000 %s 0000000000 %n", text);
+        System.out.format("--------- Server OnMessage--------- %s --------- %n", text);
         GraphQlWebSocketMessage graphQlWebSocketMessage = ONode.loadStr(text)
             .toObject(GraphQlWebSocketMessage.class);
         String id = graphQlWebSocketMessage.getId();
