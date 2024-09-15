@@ -96,12 +96,12 @@ public class MybatisAdapterPlus extends MybatisAdapterDefault {
     }
 
     @Override
-    public void injectTo(VarHolder varH) {
-        super.injectTo(varH);
+    public void injectTo(VarHolder vh) {
+        super.injectTo(vh);
 
         //@Db("db1") SqlSessionFactory factory;
-        if (GlobalConfig.class.isAssignableFrom(varH.getType())) {
-            varH.setValue(this.getGlobalConfig());
+        if (GlobalConfig.class.isAssignableFrom(vh.getType())) {
+            vh.setValue(this.getGlobalConfig());
             return;
         }
     }

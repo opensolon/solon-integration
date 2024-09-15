@@ -284,30 +284,30 @@ public class MybatisAdapterDefault implements MybatisAdapter {
     }
 
     @Override
-    public void injectTo(VarHolder varH) {
+    public void injectTo(VarHolder vh) {
         //@Db("db1") MybatisAdapter adapter;
-        if (MybatisAdapter.class.isAssignableFrom(varH.getType())) {
-            varH.setValue(this);
+        if (MybatisAdapter.class.isAssignableFrom(vh.getType())) {
+            vh.setValue(this);
             return;
         }
 
         //@Db("db1") SqlSessionFactory factory;
-        if (SqlSessionFactory.class.isAssignableFrom(varH.getType())) {
-            varH.setValue(this.getFactory());
+        if (SqlSessionFactory.class.isAssignableFrom(vh.getType())) {
+            vh.setValue(this.getFactory());
             return;
         }
 
         //@Db("db1") Configuration cfg;
-        if (Configuration.class.isAssignableFrom(varH.getType())) {
-            varH.setValue(this.getConfiguration());
+        if (Configuration.class.isAssignableFrom(vh.getType())) {
+            vh.setValue(this.getConfiguration());
             return;
         }
 
         //@Db("db1") UserMapper userMapper;
-        if (varH.getType().isInterface()) {
-            Object mapper = this.getMapper(varH.getType());
+        if (vh.getType().isInterface()) {
+            Object mapper = this.getMapper(vh.getType());
 
-            varH.setValue(mapper);
+            vh.setValue(mapper);
             return;
         }
     }

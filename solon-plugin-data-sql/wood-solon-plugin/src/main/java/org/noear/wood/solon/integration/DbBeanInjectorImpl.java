@@ -22,19 +22,19 @@ public class DbBeanInjectorImpl implements BeanInjector<Db> {
         });
     }
 
-    private void inject0(VarHolder varH, BeanWrap dsBw) {
+    private void inject0(VarHolder vh, BeanWrap dsBw) {
         DbContext db = DbManager.global().get(dsBw);
-        Class<?> clz = varH.getType();
+        Class<?> clz = vh.getType();
 
         if (DbContext.class.isAssignableFrom(clz)) {
-            varH.setValue(db);
+            vh.setValue(db);
         } else if (clz.isInterface()) {
             if (clz == BaseMapper.class) {
-                Object obj = db.mapperBase((Class<?>) varH.getGenericType().getActualTypeArguments()[0]);
-                varH.setValue(obj);
+                Object obj = db.mapperBase((Class<?>) vh.getGenericType().getActualTypeArguments()[0]);
+                vh.setValue(obj);
             } else {
                 Object obj = db.mapper(clz);
-                varH.setValue(obj);
+                vh.setValue(obj);
             }
         }
     }

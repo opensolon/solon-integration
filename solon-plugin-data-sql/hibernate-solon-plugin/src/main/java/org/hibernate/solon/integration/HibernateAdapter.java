@@ -92,17 +92,17 @@ public class HibernateAdapter {
 
     }
 
-    protected void injectTo(VarHolder varH) {
-        if (SessionFactory.class.isAssignableFrom(varH.getType())) {
-            varH.setValue(getSessionFactory());
+    protected void injectTo(VarHolder vh) {
+        if (SessionFactory.class.isAssignableFrom(vh.getType())) {
+            vh.setValue(getSessionFactory());
         }
 
-        if (Configuration.class.isAssignableFrom(varH.getType())) {
-            varH.setValue(getConfiguration());
+        if (Configuration.class.isAssignableFrom(vh.getType())) {
+            vh.setValue(getConfiguration());
         }
 
-        if (EntityManagerFactory.class.isAssignableFrom(varH.getType())) {
-            varH.setValue(getSessionFactory());
+        if (EntityManagerFactory.class.isAssignableFrom(vh.getType())) {
+            vh.setValue(getSessionFactory());
         }
     }
 }

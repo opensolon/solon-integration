@@ -32,41 +32,41 @@ public class DbBeanInjectorImpl implements BeanInjector<Db> {
     /**
      * 字段注入
      */
-    private void injectDo(VarHolder varH, String name, DataSource ds) {
+    private void injectDo(VarHolder vh, String name, DataSource ds) {
         //如果是 DbPro
-        if (DbPro.class.isAssignableFrom(varH.getType())) {
+        if (DbPro.class.isAssignableFrom(vh.getType())) {
             if (Utils.isEmpty(name)) {
                 name = DbKit.MAIN_CONFIG_NAME;
             }
 
             Config config = DbKit.getConfig(name);
             if (config != null) {
-                varH.setValue(com.jfinal.plugin.activerecord.Db.use(name));
+                vh.setValue(com.jfinal.plugin.activerecord.Db.use(name));
             } else {
                 String name2 = name;
                 ArpManager.addStartEvent(() -> {
-                    varH.setValue(com.jfinal.plugin.activerecord.Db.use(name2));
+                    vh.setValue(com.jfinal.plugin.activerecord.Db.use(name2));
                 });
             }
             return;
         }
 
         //如果是 ActiveRecordPlugin
-        if (ActiveRecordPlugin.class.isAssignableFrom(varH.getType())) {
+        if (ActiveRecordPlugin.class.isAssignableFrom(vh.getType())) {
             ActiveRecordPlugin arp = ArpManager.getOrAdd(name, ds);
-            varH.setValue(arp);
+            vh.setValue(arp);
             return;
         }
 
         //如果是 interface，则为 Mapper 代理
-        if (varH.getType().isInterface()) {
-            MapperInvocationHandler handler = new MapperInvocationHandler(varH.getType(), name);
+        if (vh.getType().isInterface()) {
+            MapperInvocationHandler handler = new MapperInvocationHandler(vh.getType(), name);
 
-            Object obj = Proxy.newProxyInstance(varH.context().getClassLoader(),
-                    new Class[]{varH.getType()},
+            Object obj = Proxy.newProxyInstance(vh.context().getClassLoader(),
+                    new Class[]{vh.getType()},
                     handler);
 
-            varH.setValue(obj);
+            vh.setValue(obj);
             return;
         }
     }

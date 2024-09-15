@@ -21,11 +21,11 @@ public class DbBeanInjectorImpl implements BeanInjector<Db> {
         });
     }
 
-    private void inject0(VarHolder varH, BeanWrap dsBw) {
+    private void inject0(VarHolder vh, BeanWrap dsBw) {
         MybatisAdapter adapter = MybatisAdapterManager.get(dsBw);
 
         if (adapter != null) {
-            adapter.injectTo(varH);
+            adapter.injectTo(vh);
         }
     }
 }

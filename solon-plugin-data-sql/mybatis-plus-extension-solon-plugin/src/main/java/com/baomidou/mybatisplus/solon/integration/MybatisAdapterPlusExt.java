@@ -25,20 +25,20 @@ public class MybatisAdapterPlusExt extends MybatisAdapterPlus {
     }
 
     @Override
-    public void injectTo(VarHolder varH) {
+    public void injectTo(VarHolder vh) {
         //@Db("db1") IService service;
-        if (IService.class.isAssignableFrom(varH.getType())) {
-            varH.context().getWrapAsync(varH.getType(), serviceBw -> {
+        if (IService.class.isAssignableFrom(vh.getType())) {
+            vh.context().getWrapAsync(vh.getType(), serviceBw -> {
                 if (serviceBw.raw() instanceof ServiceImpl) {
                     //如果是 ServiceImpl
-                    injectService(varH, serviceBw);
+                    injectService(vh, serviceBw);
                 } else {
                     //如果不是 ServiceImpl
-                    varH.setValue(serviceBw.get());
+                    vh.setValue(serviceBw.get());
                 }
             });
         } else {
-            super.injectTo(varH);
+            super.injectTo(vh);
         }
     }
 
@@ -50,12 +50,12 @@ public class MybatisAdapterPlusExt extends MybatisAdapterPlus {
     /**
      * 注入服务 IService
      */
-    private void injectService(VarHolder varH, BeanWrap serviceBw) {
+    private void injectService(VarHolder vh, BeanWrap serviceBw) {
         ServiceImpl service = serviceBw.raw();
 
-        if (serviceCached.containsKey(varH.getType())) {
+        if (serviceCached.containsKey(vh.getType())) {
             //从缓存获取
-            service = serviceCached.get(varH.getType());
+            service = serviceCached.get(vh.getType());
         } else {
             Object baseMapperOld = service.getBaseMapper();
 
@@ -77,11 +77,11 @@ public class MybatisAdapterPlusExt extends MybatisAdapterPlus {
                     service.setBaseMapper(baseMapper);
 
                     //缓存
-                    serviceCached.put(varH.getType(), service);
+                    serviceCached.put(vh.getType(), service);
                 }
             }
         }
 
-        varH.setValue(service);
+        vh.setValue(service);
     }
 }

@@ -47,5 +47,5 @@ public interface MybatisAdapter {
     /**
      * 注入到
      */
-    void injectTo(VarHolder varH);
+    void injectTo(VarHolder vh);
 }

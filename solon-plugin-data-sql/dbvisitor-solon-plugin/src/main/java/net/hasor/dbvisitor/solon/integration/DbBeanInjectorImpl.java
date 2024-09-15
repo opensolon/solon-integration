@@ -32,9 +32,9 @@ public class DbBeanInjectorImpl implements BeanInjector<Db> {
         });
     }
 
-    private void inject0(VarHolder varH, BeanWrap dsBw) {
+    private void inject0(VarHolder vh, BeanWrap dsBw) {
         try {
-            inject1(varH, dsBw);
+            inject1(vh, dsBw);
         } catch (RuntimeException e) {
             throw e;
         } catch (Throwable e) {
@@ -42,44 +42,44 @@ public class DbBeanInjectorImpl implements BeanInjector<Db> {
         }
     }
 
-    private void inject1(VarHolder varH, BeanWrap dsBw) throws Exception {
+    private void inject1(VarHolder vh, BeanWrap dsBw) throws Exception {
         DataSource ds = dsBw.get();
-        Class<?> clz = varH.getType();
+        Class<?> clz = vh.getType();
 
         //@Db("db1") LambdaTemplate ; //顺序别乱变
-        if (LambdaTemplate.class.isAssignableFrom(varH.getType())) {
+        if (LambdaTemplate.class.isAssignableFrom(vh.getType())) {
             LambdaTemplate accessor = new LambdaTemplate(new SolonManagedDynamicConnection(ds));
 
-            varH.setValue(accessor);
+            vh.setValue(accessor);
             return;
         }
 
         //@Db("db1") JdbcTemplate ;
-        if (JdbcTemplate.class.isAssignableFrom(varH.getType())) {
+        if (JdbcTemplate.class.isAssignableFrom(vh.getType())) {
             JdbcTemplate accessor = new JdbcTemplate(new SolonManagedDynamicConnection(ds));
 
-            varH.setValue(accessor);
+            vh.setValue(accessor);
             return;
         }
 
         //@Db("db1") DalSession ;
-        if (DalSession.class.isAssignableFrom(varH.getType())) {
+        if (DalSession.class.isAssignableFrom(vh.getType())) {
             DalSession accessor = new DalSession(new SolonManagedDynamicConnection(ds));
 
-            varH.setValue(accessor);
+            vh.setValue(accessor);
             return;
         }
 
         //@Db("db1") UserMapper ;
-        if (varH.getType().isInterface()) {
+        if (vh.getType().isInterface()) {
             DalSession accessor = new DalSession(new SolonManagedDynamicConnection(ds), dalRegistry);
 
             if (clz == BaseMapper.class) {
-                Object obj = accessor.createBaseMapper((Class<?>) varH.getGenericType().getActualTypeArguments()[0]);
-                varH.setValue(obj);
+                Object obj = accessor.createBaseMapper((Class<?>) vh.getGenericType().getActualTypeArguments()[0]);
+                vh.setValue(obj);
             } else {
-                Object mapper = accessor.createMapper(varH.getType());
-                varH.setValue(mapper);
+                Object mapper = accessor.createMapper(vh.getType());
+                vh.setValue(mapper);
             }
             return;
         }
