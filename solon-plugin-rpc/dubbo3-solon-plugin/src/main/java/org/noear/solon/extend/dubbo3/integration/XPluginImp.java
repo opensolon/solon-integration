@@ -120,6 +120,8 @@ public class XPluginImp implements Plugin {
         }));
 
         context.beanInjectorAdd(DubboReference.class, ((holder, anno) -> {
+            holder.required(true);
+
             if (holder.getType().isInterface()) {
                 ReferenceConfig<?> config = new ReferenceConfig<>(new DubboReferenceAnno(anno));
                 config.setInterface(holder.getType());
@@ -150,6 +152,8 @@ public class XPluginImp implements Plugin {
         }));
 
         context.beanInjectorAdd(Reference.class, ((holder, anno) -> {
+            holder.required(true);
+
             if (holder.getType().isInterface()) {
                 ReferenceConfig<?> config = new ReferenceConfig<>(new ReferenceAnno(anno));
                 config.setInterface(holder.getType());

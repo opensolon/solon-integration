@@ -114,6 +114,8 @@ public class XPluginImp implements Plugin {
         }));
 
         context.beanInjectorAdd(Reference.class, ((holder, anno) -> {
+            holder.required(true);
+
             if (holder.getType().isInterface()) {
                 ReferenceConfig<?> config = new ReferenceConfig<>(new ReferenceAnno(anno));
                 config.setInterface(holder.getType());
