@@ -14,12 +14,25 @@ import java.util.List;
 public class MybatisPluginManager {
     private static List<Interceptor> interceptors;
 
+    /**
+     * 获取全局插件
+     */
     public static List<Interceptor> getInterceptors() {
         tryInit();
 
         return interceptors;
     }
 
+    /**
+     * 添加全局插件
+     */
+    public static void addInterceptor(Interceptor interceptor) {
+        getInterceptors().add(interceptor);
+    }
+
+    /**
+     * 初始化
+     */
     private static void tryInit() {
         if (interceptors != null) {
             return;
@@ -27,7 +40,7 @@ public class MybatisPluginManager {
 
         //支持两种配置
         interceptors = MybatisPluginUtils.resolve(Solon.cfg(), "mybatis.plugin");
-        if(interceptors.size() == 0){
+        if (interceptors.size() == 0) {
             //新加
             interceptors = MybatisPluginUtils.resolve(Solon.cfg(), "mybatis.plugins");
         }
