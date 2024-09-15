@@ -73,6 +73,6 @@ public class GraphqlPlugin implements Plugin {
         context.beanMake(GraphqlController.class);
         context.beanMake(GraphqlWebsocket.class);
 
-        EventBus.subscribe(AppLoadEndEvent.class, new AppLoadEndEventListener());
+        context.onEvent(AppLoadEndEvent.class, new AppLoadEndEventListener());
     }
 }

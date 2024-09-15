@@ -45,7 +45,7 @@ public class XPluginImp implements Plugin {
 		ProducerCollector producerBeanBuilder = new ProducerCollector();
 
 		// 晚点启动，让扫描时产生的组件可以注册进来
-		EventBus.subscribe(AppLoadEndEvent.class, e -> {
+		context.onEvent(AppLoadEndEvent.class, e -> {
 			AppContext acontext = e.context();
 
 			acontext.subWrapsOfType(PulsarProducerFactory.class, ppf -> {
