@@ -13,6 +13,8 @@ import org.noear.solon.data.datasource.DsUtils;
 public class DbBeanInjectorImpl implements BeanInjector<Db> {
     @Override
     public void doInject(VarHolder vh, Db anno) {
+        vh.required(true);
+
         DsUtils.observeDs(vh.context(), anno.value(), dsWrap -> {
             inject0(vh, dsWrap);
         });

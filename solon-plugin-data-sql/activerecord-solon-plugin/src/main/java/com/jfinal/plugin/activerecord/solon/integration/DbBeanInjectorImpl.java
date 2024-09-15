@@ -22,6 +22,8 @@ import java.lang.reflect.Proxy;
 public class DbBeanInjectorImpl implements BeanInjector<Db> {
     @Override
     public void doInject(VarHolder vh, Db anno) {
+        vh.required(true);
+
         DsUtils.observeDs(vh.context(), anno.value(), (dsWrap) -> {
             this.injectDo(vh, anno.value(), dsWrap.raw());
         });
