@@ -25,8 +25,10 @@ public class XPluginImp implements Plugin {
             getProxy(wrap.context(), clz, anno, obj -> wrap.context().wrapAndPut(clz, obj));
         });
 
-        context.beanInjectorAdd(FeignClient.class, (varH, anno) -> {
-            getProxy(varH.context(), varH.getType(), anno, obj -> varH.setValue(obj));
+        context.beanInjectorAdd(FeignClient.class, (vh, anno) -> {
+            vh.required(true);
+
+            getProxy(vh.context(), vh.getType(), anno, obj -> vh.setValue(obj));
         });
     }
 
