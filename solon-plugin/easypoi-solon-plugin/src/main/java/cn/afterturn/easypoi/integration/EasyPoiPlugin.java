@@ -1,8 +1,8 @@
 package cn.afterturn.easypoi.integration;
 
+import org.noear.solon.Solon;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.Plugin;
-import org.noear.solon.core.handle.RenderManager;
 
 /**
  * 插件入口
@@ -33,6 +33,6 @@ public class EasyPoiPlugin implements Plugin {
         context.beanScan("cn.afterturn.easypoi");
 
         //注册视图渲染器
-        RenderManager.mapping(".poi", new EasypoiRender());
+        Solon.app().render(".poi", new EasypoiRender());
     }
 }
