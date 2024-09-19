@@ -37,6 +37,8 @@ class DbBeanReactor implements BeanBuilder<Db>, BeanInjector<Db> {
 
     @Override
     public void doInject(VarHolder varH, Db anno) {
+        varH.required(true);
+
         if (Utils.isEmpty(anno.value())) {
             varH.context().getWrapAsync(DataSource.class, (dsBw) -> {
                 inject0(varH, dsBw);

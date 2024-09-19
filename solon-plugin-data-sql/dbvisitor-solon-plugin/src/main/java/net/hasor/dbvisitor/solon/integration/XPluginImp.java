@@ -22,6 +22,8 @@ public class XPluginImp implements Plugin {
     @Override
     public void start(AppContext context) {
         context.beanInjectorAdd(Db.class, (varH, anno) -> {
+            varH.required(true);
+
             if (Utils.isEmpty(anno.value())) {
                 varH.context().getWrapAsync(DataSource.class, (dsBw) -> {
                     inject0(varH, dsBw);
