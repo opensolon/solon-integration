@@ -2,16 +2,14 @@ package demo.product.support;
 
 import demo.product.dto.ProductPriceHistoryDTO;
 import graphql.solon.annotation.QueryMapping;
-import graphql.solon.annotation.SchemaMapping;
 import graphql.solon.annotation.SubscriptionMapping;
+import graphql.solon.constant.OperationType;
+import java.time.Duration;
 import java.util.Date;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
-
-import graphql.solon.constant.OperationType;
-import graphql.solon.util.ConcurrentReferenceHashMap;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Param;
 import reactor.core.publisher.Flux;
@@ -44,17 +42,7 @@ public class ProductService {
 
         // A flux is the publisher of data
         return Flux.fromStream(
-            Stream.generate(() -> {
-
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-
-                return new ProductPriceHistoryDTO(productId, new Date(),
-                        rn.nextInt(10) + 1);
-            }));
-
+            Stream.generate(() -> new ProductPriceHistoryDTO(productId, new Date(),
+                rn.nextInt(10) + 1))).delayElements(Duration.ofSeconds(1));
     }
 }
