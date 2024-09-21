@@ -1,6 +1,7 @@
 package features.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.emptyIterable;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.notNullValue;
 
@@ -10,6 +11,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import org.java_websocket.client.WebSocketClient;
@@ -63,6 +66,8 @@ public class SubscriptionTest extends HttpTester {
             Thread.sleep(1000);
             System.out.println("====");
         }
+
+        client.check();
     }
 
     static class WsClient extends WebSocketClient {
@@ -73,9 +78,15 @@ public class SubscriptionTest extends HttpTester {
 
         private boolean isCompleted = false;
 
+        private final List<Exception> exceptions = new LinkedList<>();
+
         public WsClient(String serverUri) throws URISyntaxException {
             super(new URI(serverUri));
             this.id = UUID.randomUUID().toString();
+        }
+
+        public void check() {
+            assertThat(this.exceptions, emptyIterable());
         }
 
         @Override
@@ -95,22 +106,28 @@ public class SubscriptionTest extends HttpTester {
                 if (Objects.equals(this.id, mesId)) {
                     if (!this.isCompleted) {
                         ONode payload = result.getPayload();
-                        ONode data = payload.get("data");
-                        assertThat(data, notNullValue());
-
-                        ONode notifyProductPriceChange = data.get("notifyProductPriceChange");
-                        assertThat(notifyProductPriceChange, notNullValue());
-
-                        ONode price = notifyProductPriceChange.get("price");
-                        Object priceValue = price.toData();
-                        assertThat(priceValue, instanceOf(Number.class));
+                        try {
+                            this.checkPaload(payload);
+                        } catch (Exception e) {
+                            this.exceptions.add(e);
+                        }
                     } else {
-                        throw new IllegalArgumentException("订阅关闭不应该接收数据");
+                        this.exceptions.add(new IllegalArgumentException("订阅关闭不应该接收数据"));
                     }
-                } else {
-                    throw new IllegalArgumentException("未知id");
                 }
             }
+        }
+
+        private void checkPaload(ONode payload) {
+            ONode data = payload.get("data");
+            assertThat(data, notNullValue());
+
+            ONode notifyProductPriceChange = data.get("notifyProductPriceChange");
+            assertThat(notifyProductPriceChange, notNullValue());
+
+            ONode price = notifyProductPriceChange.get("price");
+            Object priceValue = price.toData();
+            assertThat(priceValue, instanceOf(Number.class));
         }
 
         @Override
@@ -120,7 +137,7 @@ public class SubscriptionTest extends HttpTester {
 
         @Override
         public void onError(Exception e) {
-
+            this.exceptions.add(e);
         }
 
         public void initConnection() throws InterruptedException {
