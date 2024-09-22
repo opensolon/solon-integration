@@ -1,6 +1,5 @@
 package cn.dev33.satoken.solon.integration;
 
-import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.exception.BackResultException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.exception.StopMatchException;
@@ -8,7 +7,7 @@ import cn.dev33.satoken.filter.SaFilter;
 import cn.dev33.satoken.filter.SaFilterAuthStrategy;
 import cn.dev33.satoken.filter.SaFilterErrorStrategy;
 import cn.dev33.satoken.router.SaRouter;
-import cn.dev33.satoken.strategy.SaStrategy;
+import cn.dev33.satoken.strategy.SaAnnotationStrategy;
 import org.noear.solon.Solon;
 import org.noear.solon.core.handle.*;
 import org.noear.solon.core.route.RoutingTable;
@@ -187,16 +186,13 @@ public class SaTokenFilter implements SaFilter, Filter { //之所以改名，为
     private boolean authAnno(Action action) {
         //2.验证注解处理
         if (isAnnotation && action != null) {
-            // 获取此请求对应的 Method 处理函数
-            Method method = action.method().getMethod();
-
-            // 如果此 Method 或其所属 Class 标注了 @SaIgnore，则忽略掉鉴权
-            if (SaStrategy.instance.isAnnotationPresent.apply(method, SaIgnore.class)) {
+            // 注解校验
+            try{
+                Method method = action.method().getMethod();
+                SaAnnotationStrategy.instance.checkMethodAnnotation.accept(method);
+            } catch (StopMatchException ignored) {
                 return false;
             }
-
-            // 注解校验
-            SaStrategy.instance.checkMethodAnnotation.accept(method);
         }
 
         return true;

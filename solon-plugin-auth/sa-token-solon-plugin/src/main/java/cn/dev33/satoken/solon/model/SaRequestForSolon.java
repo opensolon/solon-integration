@@ -8,7 +8,6 @@ import org.noear.solon.core.handle.Context;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author noear
@@ -18,7 +17,7 @@ public class SaRequestForSolon implements SaRequest {
 
     protected Context ctx;
 
-    public SaRequestForSolon(){
+    public SaRequestForSolon() {
         ctx = Context.current();
     }
 
@@ -33,16 +32,17 @@ public class SaRequestForSolon implements SaRequest {
     }
 
     @Override
-    public List<String> getParamNames(){
+    public List<String> getParamNames() {
         return new ArrayList<>(ctx.paramNames());
     }
 
     /**
      * 获取 [请求体] 里提交的所有参数
+     *
      * @return 参数列表
      */
     @Override
-    public Map<String, String> getParamMap(){
+    public Map<String, String> getParamMap() {
         return ctx.paramMap().toValueMap();
     }
 
@@ -52,8 +52,27 @@ public class SaRequestForSolon implements SaRequest {
     }
 
     @Override
-    public String getCookieValue(String s) {
-        return ctx.cookie(s);
+    public String getCookieValue(String name) {
+        return getCookieLastValue(name);
+    }
+
+    /**
+     * 在 [ Cookie作用域 ] 里获取一个值 (第一个此名称的)
+     */
+    @Override
+    public String getCookieFirstValue(String name) {
+        return ctx.cookie(name);
+    }
+
+    /**
+     * 在 [ Cookie作用域 ] 里获取一个值 (最后一个此名称的)
+     *
+     * @param name 键
+     * @return 值
+     */
+    @Override
+    public String getCookieLastValue(String name) {
+        return ctx.cookieMap().holder(name).getLastValue();
     }
 
     @Override
@@ -64,7 +83,7 @@ public class SaRequestForSolon implements SaRequest {
     @Override
     public String getUrl() {
         String currDomain = SaManager.getConfig().getCurrDomain();
-        if( ! SaFoxUtil.isEmpty(currDomain)) {
+        if (!SaFoxUtil.isEmpty(currDomain)) {
             return currDomain + this.getRequestPath();
         }
         return ctx.url();
@@ -80,5 +99,4 @@ public class SaRequestForSolon implements SaRequest {
         ctx.forward(path);
         return null;
     }
-
 }

@@ -23,17 +23,17 @@ import org.noear.solon.core.AppContext;
 public class SaSsoAutoConfigure {
     @Bean
     public void init(AppContext appContext) throws Throwable {
-        appContext.getBeanAsync(SaSsoServerTemplate.class, bean -> {
+        appContext.subBeansOfType(SaSsoServerTemplate.class, bean -> {
             SaSsoServerProcessor.instance.ssoServerTemplate = bean;
         });
-        appContext.getBeanAsync(SaSsoClientTemplate.class, bean -> {
+        appContext.subBeansOfType(SaSsoClientTemplate.class, bean -> {
             SaSsoClientProcessor.instance.ssoClientTemplate = bean;
         });
 
-        appContext.getBeanAsync(SaSsoServerConfig.class, bean -> {
+        appContext.subBeansOfType(SaSsoServerConfig.class, bean -> {
             SaSsoManager.setServerConfig(bean);
         });
-        appContext.getBeanAsync(SaSsoClientConfig.class, bean -> {
+        appContext.subBeansOfType(SaSsoClientConfig.class, bean -> {
             SaSsoManager.setClientConfig(bean);
         });
     }

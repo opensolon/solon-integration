@@ -1,7 +1,6 @@
 package cn.dev33.satoken.solon.dao;
 
 import cn.dev33.satoken.dao.SaTokenDao;
-import cn.dev33.satoken.strategy.SaStrategy;
 import cn.dev33.satoken.util.SaFoxUtil;
 import org.noear.redisx.RedisClient;
 import org.noear.redisx.plus.RedisBucket;
@@ -30,7 +29,6 @@ public class SaTokenDaoOfRedisJson implements SaTokenDao {
 
         // 重写 SaSession 生成策略
         //SaStrategy.instance.createSession = (sessionId) -> new SaSessionForJson(sessionId);
-
     }
 
 

@@ -1,9 +1,8 @@
 package cn.dev33.satoken.solon.oauth2;
 
 import cn.dev33.satoken.oauth2.SaOAuth2Manager;
-import cn.dev33.satoken.oauth2.config.SaOAuth2Config;
-import cn.dev33.satoken.oauth2.logic.SaOAuth2Template;
-import cn.dev33.satoken.oauth2.logic.SaOAuth2Util;
+import cn.dev33.satoken.oauth2.config.SaOAuth2ServerConfig;
+import cn.dev33.satoken.oauth2.template.SaOAuth2Template;
 import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Condition;
 import org.noear.solon.annotation.Configuration;
@@ -17,17 +16,14 @@ import org.noear.solon.core.AppContext;
 @Condition(onClass = SaOAuth2Manager.class)
 @Configuration
 public class SaOAuth2AutoConfigure {
-    /**
-     * @since 2.8
-     * */
     @Bean
     public void init(AppContext appContext) throws Throwable {
-        appContext.getBeanAsync(SaOAuth2Template.class, bean -> {
-            SaOAuth2Util.saOAuth2Template = bean;
+        appContext.subBeansOfType(SaOAuth2Template.class, bean -> {
+            SaOAuth2Manager.setTemplate(bean);
         });
 
-        appContext.getBeanAsync(SaOAuth2Config.class, bean -> {
-            SaOAuth2Manager.setConfig(bean);
+        appContext.subBeansOfType(SaOAuth2ServerConfig.class, bean -> {
+            SaOAuth2Manager.setServerConfig(bean);
         });
     }
 
@@ -35,7 +31,7 @@ public class SaOAuth2AutoConfigure {
      * 获取 OAuth2配置Bean
      */
     @Bean
-    public SaOAuth2Config getConfig(@Inject(value = "${sa-token.oauth2}", required = false) SaOAuth2Config oAuth2Config) {
+    public SaOAuth2ServerConfig getConfig(@Inject(value = "${sa-token.oauth2-server}", required = false) SaOAuth2ServerConfig oAuth2Config) {
         return oAuth2Config;
     }
 }
