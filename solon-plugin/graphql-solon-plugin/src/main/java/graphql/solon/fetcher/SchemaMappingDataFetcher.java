@@ -43,7 +43,7 @@ public class SchemaMappingDataFetcher implements DataFetcher<Object> {
             this.paramWraps = new ParamWrap[parameters.length];
 
             for (int i = 0; i < parameters.length; i++) {
-                this.paramWraps[i] = new ParamWrap(parameters[i]);
+                this.paramWraps[i] = new ParamWrap(parameters[i], method, wrap.rawClz());
             }
         } else {
             this.paramWraps = null;
