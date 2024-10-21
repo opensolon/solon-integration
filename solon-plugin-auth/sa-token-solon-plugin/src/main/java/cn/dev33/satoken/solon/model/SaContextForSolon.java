@@ -5,7 +5,7 @@ import cn.dev33.satoken.context.model.SaRequest;
 import cn.dev33.satoken.context.model.SaResponse;
 import cn.dev33.satoken.context.model.SaStorage;
 import org.noear.solon.core.handle.Context;
-import org.noear.solon.core.util.PathAnalyzer;
+import org.noear.solon.core.util.PathMatcher;
 
 /**
  * @author noear
@@ -41,7 +41,7 @@ public class SaContextForSolon implements SaTokenContext {
      */
     @Override
     public boolean matchPath(String pattern, String path) {
-        return  PathAnalyzer.get(pattern).matches(path);
+        return  PathMatcher.get(pattern).matches(path);
     }
 
     /**
