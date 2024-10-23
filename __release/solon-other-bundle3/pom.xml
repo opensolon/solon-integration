@@ -30,11 +30,5 @@
         <module>../../solon-plugin-job/cron4j-solon-plugin</module>
         <module>../../solon-plugin-job/powerjob-solon-plugin</module>
         <module>../../solon-plugin-job/quartz-solon-plugin</module>
-        <module>../../solon-plugin-weixin/weixin-java-cp-solon-plugin</module>
-        <module>../../solon-plugin-weixin/weixin-java-miniapp-solon-plugin</module>
-        <module>../../solon-plugin-weixin/weixin-java-mp-solon-plugin</module>
-        <module>../../solon-plugin-weixin/weixin-java-open-solon-plugin</module>
-        <module>../../solon-plugin-weixin/weixin-java-pay-solon-plugin</module>
-        <module>../../solon-plugin-weixin/weixin-java-qidian-solon-plugin</module>
     </modules>
 </project>
