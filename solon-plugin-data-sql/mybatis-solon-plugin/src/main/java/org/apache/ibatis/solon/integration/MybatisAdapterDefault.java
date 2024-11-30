@@ -182,7 +182,7 @@ public class MybatisAdapterDefault implements MybatisAdapter {
 
                         mappers.add(val);
 
-                        if (val.endsWith(".xml")) {
+                        if (ResourceUtil.hasClasspath(val)) {
                             //mapper xml， 新方法，替代旧的 *.xml （基于表达式；更自由，更语义化）
                             for (String uri : ResourceUtil.scanResources(val)) {
                                 addMapperByXml(uri);
