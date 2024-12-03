@@ -19,6 +19,7 @@
         <module>../../solon-plugin-data-sql/beetlsql-solon-plugin</module>
         <module>../../solon-plugin-data-sql/dbvisitor-solon-plugin</module>
         <module>../../solon-plugin-data-sql/sqltoy-solon-plugin</module>
+        <module>../../solon-plugin-data-sql/mybatis-solon</module>
         <module>../../solon-plugin-data-sql/mybatis-solon-plugin</module>
         <module>../../solon-plugin-data-sql/mybatis-sqlhelper-solon-plugin</module>
         <module>../../solon-plugin-data-sql/mybatis-pagehelper-solon-plugin</module>

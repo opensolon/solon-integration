@@ -4,9 +4,6 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.noear.solon.core.VarHolder;
-import org.apache.ibatis.solon.integration.MybatisMapperInterceptor;
-
-import java.lang.reflect.Proxy;
 
 /**
  * 适配器

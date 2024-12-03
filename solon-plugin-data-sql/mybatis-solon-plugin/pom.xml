@@ -18,19 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon-data</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
-            <version>${mybatis.version}</version>
+            <artifactId>mybatis-solon</artifactId>
         </dependency>
 
         <dependency>
@@ -44,7 +32,6 @@
             <artifactId>solon-lib</artifactId>
             <scope>test</scope>
         </dependency>
-
 
         <dependency>
             <groupId>com.zaxxer</groupId>
