@@ -335,4 +335,19 @@ public class MybatisAdapterDefault implements MybatisAdapter {
         //    log.warn("Mybatis-新文件表达式提示：'" + val + "' 不包括深度子目录；如有需要可增加'/**/'段");
         //}
     }
+
+    public void mapperBinding() {
+        for (Class<?> clz : getConfiguration().getMapperRegistry().getMappers()) {
+            mapperBindingDo(clz);
+        }
+    }
+
+    private void mapperBindingDo(Class<?> clz) {
+        if (clz != null && clz.isInterface()) {
+            Object mapper = getMapper(clz);
+
+            //进入容器，用于 @Inject 注入
+            dsWrap.context().wrapAndPut(clz, mapper);
+        }
+    }
 }
