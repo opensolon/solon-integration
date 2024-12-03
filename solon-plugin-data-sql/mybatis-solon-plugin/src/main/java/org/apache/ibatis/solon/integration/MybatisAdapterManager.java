@@ -1,6 +1,5 @@
 package org.apache.ibatis.solon.integration;
 
-import org.noear.solon.Solon;
 import org.noear.solon.Utils;
 import org.noear.solon.core.BeanWrap;
 import org.apache.ibatis.solon.MybatisAdapter;
