@@ -51,6 +51,10 @@ public class SolonManagedTransaction implements Transaction {
 
     @Override
     public Integer getTimeout() throws SQLException {
-        return null;
+        if (connection != null) {
+            return connection.getNetworkTimeout();
+        } else {
+            return null;
+        }
     }
 }
