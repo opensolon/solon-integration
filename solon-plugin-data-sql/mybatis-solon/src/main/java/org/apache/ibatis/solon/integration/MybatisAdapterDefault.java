@@ -104,6 +104,9 @@ public class MybatisAdapterDefault implements MybatisAdapter {
         dsWrap.context().getBeanAsync(SqlSessionFactoryBuilder.class, bean -> {
             factoryBuilder = bean;
         });
+
+        //发布 mapper
+        mapperPublish();
     }
 
     public List<String> getMappers() {
@@ -336,13 +339,14 @@ public class MybatisAdapterDefault implements MybatisAdapter {
         //}
     }
 
-    public void mapperBinding() {
+
+    public void mapperPublish() {
         for (Class<?> clz : getConfiguration().getMapperRegistry().getMappers()) {
-            mapperBindingDo(clz);
+            mapperPublishDo(clz);
         }
     }
 
-    private void mapperBindingDo(Class<?> clz) {
+    private void mapperPublishDo(Class<?> clz) {
         if (clz != null && clz.isInterface()) {
             Object mapper = getMapper(clz);
 

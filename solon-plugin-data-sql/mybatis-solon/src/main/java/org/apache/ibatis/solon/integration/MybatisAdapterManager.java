@@ -30,11 +30,11 @@ public class MybatisAdapterManager {
      */
     private static final Map<String, MybatisAdapter> dbMap = new ConcurrentHashMap<>();
 
-    public static MybatisAdapter getOnly(String name){
+    public static MybatisAdapter getOnly(String name) {
         return dbMap.get(name);
     }
 
-    public static Map<String, MybatisAdapter> getAll(){
+    public static Map<String, MybatisAdapter> getAll() {
         return Collections.unmodifiableMap(dbMap);
     }
 
@@ -45,22 +45,32 @@ public class MybatisAdapterManager {
         MybatisAdapter db = dbMap.get(bw.name());
 
         if (db == null) {
-            synchronized (dbMap) {
+            Utils.locker().lock();
+
+            try {
                 db = dbMap.get(bw.name());
                 if (db == null) {
                     db = buildAdapter(bw);
 
-                    dbMap.put(bw.name(), db);
-
-                    if (bw.typed()) {
-                        dbMap.put("", db);
-                    }
+                    register(bw, db);
                 }
+            } finally {
+                Utils.locker().unlock();
             }
-
         }
 
         return db;
+    }
+
+    /**
+     * 注册适配器
+     */
+    public static void register(BeanWrap bw, MybatisAdapter adapter) {
+        dbMap.put(bw.name(), adapter);
+
+        if (bw.typed()) {
+            dbMap.put("", adapter);
+        }
     }
 
     /**
@@ -76,31 +86,10 @@ public class MybatisAdapterManager {
      * 构建适配器
      */
     private static MybatisAdapter buildAdapter(BeanWrap bw) {
-        MybatisAdapter adapter;
-
         if (Utils.isEmpty(bw.name())) {
-            adapter = adapterFactory.create(bw);
+            return adapterFactory.create(bw);
         } else {
-            adapter = adapterFactory.create(bw, bw.context().cfg().getProp("mybatis." + bw.name()));
-        }
-
-        mapperBinding(bw, adapter);
-
-        return adapter;
-    }
-
-    private static void mapperBinding(BeanWrap dsBw, MybatisAdapter adapter) {
-        for (Class<?> clz : adapter.getConfiguration().getMapperRegistry().getMappers()) {
-            mapperBindingDo(dsBw, adapter, clz);
-        }
-    }
-
-    private static void mapperBindingDo(BeanWrap dsBw, MybatisAdapter adapter, Class<?> clz) {
-        if (clz != null && clz.isInterface()) {
-            Object mapper = adapter.getMapper(clz);
-
-            //进入容器，用于 @Inject 注入
-            dsBw.context().wrapAndPut(clz, mapper);
+            return adapterFactory.create(bw, bw.context().cfg().getProp("mybatis." + bw.name()));
         }
     }
 }
