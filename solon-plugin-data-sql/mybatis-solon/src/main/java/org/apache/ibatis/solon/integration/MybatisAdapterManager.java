@@ -86,10 +86,18 @@ public class MybatisAdapterManager {
      * 构建适配器
      */
     private static MybatisAdapter buildAdapter(BeanWrap bw) {
+        MybatisAdapter tmp;
+
         if (Utils.isEmpty(bw.name())) {
-            return adapterFactory.create(bw);
+            tmp = adapterFactory.create(bw);
         } else {
-            return adapterFactory.create(bw, bw.context().cfg().getProp("mybatis." + bw.name()));
+            tmp = adapterFactory.create(bw, bw.context().cfg().getProp("mybatis." + bw.name()));
         }
+
+        if (tmp instanceof MybatisAdapterDefault) {
+            ((MybatisAdapterDefault) tmp).mapperPublish();
+        }
+
+        return tmp;
     }
 }

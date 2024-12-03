@@ -104,9 +104,6 @@ public class MybatisAdapterDefault implements MybatisAdapter {
         dsWrap.context().getBeanAsync(SqlSessionFactoryBuilder.class, bean -> {
             factoryBuilder = bean;
         });
-
-        //发布 mapper
-        mapperPublish();
     }
 
     public List<String> getMappers() {
