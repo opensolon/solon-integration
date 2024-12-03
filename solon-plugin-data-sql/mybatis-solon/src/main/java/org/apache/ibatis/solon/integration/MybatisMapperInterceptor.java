@@ -13,8 +13,8 @@ import java.lang.reflect.Method;
  * @since 1.6
  */
 public class MybatisMapperInterceptor implements InvocationHandler {
-    SqlSessionFactory factory;
-    Class<?> mapperClz;
+    private SqlSessionFactory factory;
+    private Class<?> mapperClz;
 
     public MybatisMapperInterceptor(SqlSessionFactory factory, Class<?> mapperClz) {
         this.factory = factory;
