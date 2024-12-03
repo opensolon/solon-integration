@@ -124,6 +124,22 @@ public class MybatisAdapterDefault implements MybatisAdapter {
         }
     }
 
+    protected boolean isTypeAliasesType(Class<?> type) {
+        return true;
+    }
+
+    protected boolean isTypeAliasesKey(String key){
+        return key.startsWith("typeAliases[") || key.equals("typeAliases");
+    }
+
+    protected boolean isTypeHandlersKey(String key){
+        return key.startsWith("typeHandlers[") || key.equals("typeHandlers");
+    }
+
+    protected boolean isMappersKey(String key){
+        return key.startsWith("mappers[") || key.equals("mappers");
+    }
+
     protected void initDo() {
         //for typeAliases & typeHandlers section
         dsProps.forEach((k, v) -> {
@@ -131,7 +147,7 @@ public class MybatisAdapterDefault implements MybatisAdapter {
                 String key = (String) k;
                 String valStr = (String) v;
 
-                if (key.startsWith("typeAliases[") || key.equals("typeAliases")) {
+                if (isTypeAliasesKey(key)) {
                     for (String val : valStr.split(",")) {
                         val = val.trim();
                         if (val.length() == 0) {
@@ -141,13 +157,15 @@ public class MybatisAdapterDefault implements MybatisAdapter {
                         //package || type class，转为类表达式
                         for (Class<?> clz : ResourceUtil.scanClasses(dsWrap.context().getClassLoader(), val)) {
                             if (clz.isInterface() == false) {
-                                getConfiguration().getTypeAliasRegistry().registerAlias(clz);
+                                if (isTypeAliasesType(clz)) {
+                                    getConfiguration().getTypeAliasRegistry().registerAlias(clz);
+                                }
                             }
                         }
                     }
                 }
 
-                if (key.startsWith("typeHandlers[") || key.equals("typeHandlers")) {
+                if (isTypeHandlersKey(key)) {
                     for (String val : valStr.split(",")) {
                         val = val.trim();
                         if (val.length() == 0) {
@@ -173,7 +191,7 @@ public class MybatisAdapterDefault implements MybatisAdapter {
                 String key = (String) k;
                 String valStr = (String) v;
 
-                if (key.startsWith("mappers[") || key.equals("mappers")) {
+                if (isMappersKey(key)) {
                     for (String val : valStr.split(",")) {
                         val = val.trim();
                         if (val.length() == 0) {
