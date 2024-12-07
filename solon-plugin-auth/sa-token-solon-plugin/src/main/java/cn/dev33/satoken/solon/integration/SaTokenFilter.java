@@ -109,7 +109,7 @@ public class SaTokenFilter implements SaFilter, Filter { //之所以改名，为
 
     /**
      * 前置函数：在每次[认证函数]之前执行
-     *      <b>注意点：前置认证函数将不受 includeList 与 excludeList 的限制，所有路由的请求都会进入 beforeAuth</b>
+     * <b>注意点：前置认证函数将不受 includeList 与 excludeList 的限制，所有路由的请求都会进入 beforeAuth</b>
      */
     public SaFilterAuthStrategy beforeAuth = r -> {
     };
@@ -137,7 +137,11 @@ public class SaTokenFilter implements SaFilter, Filter { //之所以改名，为
     public void doFilter(Context ctx, FilterChain chain) throws Throwable {
         try {
             //查找当前主处理
-            Handler mainHandler = Solon.app().router().matchMain(ctx);
+            Handler mainHandler = ctx.mainHandler();
+            if (mainHandler == null) {
+                mainHandler = Solon.app().router().matchMain(ctx);
+            }
+
             if (mainHandler instanceof Gateway) {
                 //支持网关处理
                 Gateway gateway = (Gateway) mainHandler;
@@ -148,7 +152,7 @@ public class SaTokenFilter implements SaFilter, Filter { //之所以改名，为
             Action action = (mainHandler instanceof Action ? (Action) mainHandler : null);
 
             //1.执行前置处理（主要是一些跨域之类的）
-            if(beforeAuth != null) {
+            if (beforeAuth != null) {
                 beforeAuth.run(mainHandler);
             }
 
@@ -156,7 +160,7 @@ public class SaTokenFilter implements SaFilter, Filter { //之所以改名，为
             Handler finalMainHandler = mainHandler;
             SaRouter.match(includeList).notMatch(excludeList).check(r -> {
                 //2.执行注解处理
-                if(authAnno(action)) {
+                if (authAnno(action)) {
                     //3.执行规则处理（如果没有被 @SaIgnore 忽略）
                     auth.run(finalMainHandler);
                 }
@@ -187,7 +191,7 @@ public class SaTokenFilter implements SaFilter, Filter { //之所以改名，为
         //2.验证注解处理
         if (isAnnotation && action != null) {
             // 注解校验
-            try{
+            try {
                 Method method = action.method().getMethod();
                 SaAnnotationStrategy.instance.checkMethodAnnotation.accept(method);
             } catch (StopMatchException ignored) {
