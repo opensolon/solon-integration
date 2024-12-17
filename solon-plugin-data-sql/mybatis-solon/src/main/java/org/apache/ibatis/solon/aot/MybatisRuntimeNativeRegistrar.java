@@ -26,6 +26,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.solon.MybatisAdapter;
 import org.apache.ibatis.solon.integration.MybatisAdapterDefault;
 import org.apache.ibatis.solon.integration.MybatisAdapterManager;
+import org.apache.ibatis.type.TypeHandler;
 import org.noear.solon.Utils;
 import org.noear.solon.aot.NativeMetadataUtils;
 import org.noear.solon.aot.RuntimeNativeMetadata;
@@ -113,8 +114,8 @@ public class MybatisRuntimeNativeRegistrar implements RuntimeNativeRegistrar {
     protected void registerMybatisAdapter(AppContext context, RuntimeNativeMetadata metadata, MybatisAdapterDefault bean) {
         //注册 xml 资源
         for (String res : bean.getMappers()) {
-            if (res.startsWith(ResourceUtil.TAG_classpath)) {
-                res = res.substring(ResourceUtil.TAG_classpath.length());
+            if (ResourceUtil.hasClasspath(res)) {
+                res = ResourceUtil.remSchema(res);
                 res = res.replace("**", "*");
                 res = res.replace("*", ".*");
                 metadata.registerResourceInclude(res);
@@ -136,6 +137,12 @@ public class MybatisRuntimeNativeRegistrar implements RuntimeNativeRegistrar {
         for (Class<?> clz : bean.getConfiguration().getTypeAliasRegistry().getTypeAliases().values()) {
             metadata.registerReflection(clz, MemberCategory.DECLARED_FIELDS, MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS);
             metadata.registerDefaultConstructor(clz);
+        }
+
+        //注处 typeHandler
+        for (TypeHandler typeHandler : bean.getConfiguration().getTypeHandlerRegistry().getTypeHandlers()) {
+            metadata.registerReflection(typeHandler.getClass(), MemberCategory.DECLARED_FIELDS, MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS);
+            metadata.registerDefaultConstructor(typeHandler.getClass());
         }
     }
 }
