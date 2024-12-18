@@ -1,9 +1,9 @@
 package org.apache.ibatis.solon.integration;
 
-import org.noear.solon.Utils;
-import org.noear.solon.core.BeanWrap;
 import org.apache.ibatis.solon.MybatisAdapter;
 import org.apache.ibatis.solon.MybatisAdapterFactory;
+import org.noear.solon.Utils;
+import org.noear.solon.core.BeanWrap;
 
 import java.util.Collections;
 import java.util.Map;
