@@ -14,6 +14,7 @@ import com.jfinal.plugin.activerecord.solon.annotation.Table;
 
 import javax.sql.DataSource;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * ActiveRecordPlugin 管理器
@@ -22,46 +23,35 @@ import java.util.*;
  * @since 1.10
  */
 public class ArpManager {
-    private static Map<String, ActiveRecordPlugin> arpMap = new HashMap<>();
+    private static Map<String, ActiveRecordPlugin> arpMap = new ConcurrentHashMap<>();
     private static Set<Runnable> startEvents = new LinkedHashSet<>();
 
-    public static void addStartEvent(Runnable event){
+    public static void addStartEvent(Runnable event) {
         startEvents.add(event);
     }
 
     /**
      * 添加数据源
-     * */
+     */
     public static void add(BeanWrap bw) {
-        String name = bw.name();
-        if (Utils.isEmpty(bw.name())) {
-            name = DbKit.MAIN_CONFIG_NAME;
-        }
-
-        addDo(name, bw.raw());
+        getOrAdd(bw.name(), bw);
 
         if (bw.typed()) {
-            addDo(DbKit.MAIN_CONFIG_NAME, bw.raw());
+            getOrAdd(DbKit.MAIN_CONFIG_NAME, bw);
         }
     }
 
-    public static ActiveRecordPlugin getOrAdd(String name, DataSource ds){
+    public static ActiveRecordPlugin getOrAdd(String name, BeanWrap bw) {
         if (Utils.isEmpty(name)) {
             name = DbKit.MAIN_CONFIG_NAME;
         }
 
-        ActiveRecordPlugin arp = arpMap.get(name);
-        if(arp == null){
-            addDo(name, ds);
-            arp = arpMap.get(name);
-        }
-
-        return arp;
+        return arpMap.computeIfAbsent(name, k -> buildDo(k, bw.raw()));
     }
 
     /**
      * 获取 ActiveRecordPlugin
-     * */
+     */
     public static ActiveRecordPlugin get(String name) {
         if (Utils.isEmpty(name)) {
             name = DbKit.MAIN_CONFIG_NAME;
@@ -70,25 +60,19 @@ public class ArpManager {
         return arpMap.get(name);
     }
 
-    private synchronized static void addDo(String name, DataSource ds){
-        if(arpMap.containsKey(name)){
-            return;
-        }
-
+    private static ActiveRecordPlugin buildDo(String name, DataSource ds) {
         // 构建配置
         DataSource arpDs = new DataSourceProxy(ds);
         Config arpCfg = new ConfigImpl(name, arpDs, DbKit.DEFAULT_TRANSACTION_LEVEL);
 
         // 构建arp
-        ActiveRecordPlugin arp = new ActiveRecordPlugin(arpCfg);
-
-        arpMap.put(name, arp);
+        return new ActiveRecordPlugin(arpCfg);
     }
 
 
     /**
      * 开始构建 ActiveRecordPlugin 服务
-     * */
+     */
     public static void start() {
         List<String> sqlUrls = new ArrayList<>();
 
@@ -117,7 +101,7 @@ public class ArpManager {
 
     /**
      * 停止 ActiveRecordPlugin 实例
-     * */
+     */
     public static void stop() throws Throwable {
         for (ActiveRecordPlugin arp : arpMap.values()) {
             arp.stop();

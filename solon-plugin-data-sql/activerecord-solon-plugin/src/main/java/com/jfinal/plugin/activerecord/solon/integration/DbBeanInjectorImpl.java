@@ -6,13 +6,13 @@ import com.jfinal.plugin.activerecord.DbKit;
 import com.jfinal.plugin.activerecord.DbPro;
 import org.noear.solon.Utils;
 import org.noear.solon.core.BeanInjector;
+import org.noear.solon.core.BeanWrap;
 import org.noear.solon.core.VarHolder;
 import com.jfinal.plugin.activerecord.solon.ArpManager;
 import com.jfinal.plugin.activerecord.solon.annotation.Db;
 import com.jfinal.plugin.activerecord.solon.proxy.MapperInvocationHandler;
 import org.noear.solon.data.datasource.DsUtils;
 
-import javax.sql.DataSource;
 import java.lang.reflect.Proxy;
 
 /**
@@ -25,14 +25,14 @@ public class DbBeanInjectorImpl implements BeanInjector<Db> {
         vh.required(true);
 
         DsUtils.observeDs(vh.context(), anno.value(), (dsWrap) -> {
-            this.injectDo(vh, anno.value(), dsWrap.raw());
+            this.injectDo(vh, anno.value(), dsWrap);
         });
     }
 
     /**
      * 字段注入
      */
-    private void injectDo(VarHolder vh, String name, DataSource ds) {
+    private void injectDo(VarHolder vh, String name, BeanWrap bw) {
         //如果是 DbPro
         if (DbPro.class.isAssignableFrom(vh.getType())) {
             if (Utils.isEmpty(name)) {
@@ -53,7 +53,7 @@ public class DbBeanInjectorImpl implements BeanInjector<Db> {
 
         //如果是 ActiveRecordPlugin
         if (ActiveRecordPlugin.class.isAssignableFrom(vh.getType())) {
-            ActiveRecordPlugin arp = ArpManager.getOrAdd(name, ds);
+            ActiveRecordPlugin arp = ArpManager.getOrAdd(name, bw);
             vh.setValue(arp);
             return;
         }
