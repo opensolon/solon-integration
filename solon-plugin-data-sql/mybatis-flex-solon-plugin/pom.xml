@@ -25,12 +25,6 @@
             <groupId>com.mybatis-flex</groupId>
             <artifactId>mybatis-flex-solon-plugin</artifactId>
             <version>${mybatis-flex.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.noear</groupId>
-                    <artifactId>mybatis-solon-plugin</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
 
