@@ -7,6 +7,7 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.solon.MybatisAdapter;
@@ -280,6 +281,15 @@ public class MybatisAdapterDefault implements MybatisAdapter {
         return factory;
     }
 
+    protected MybatisSessionTemplate sessionTemplate = null;
+    public SqlSession getSessionTemplate() {
+        if (sessionTemplate == null) {
+            sessionTemplate = new MybatisSessionTemplate(getFactory());
+        }
+
+        return sessionTemplate;
+    }
+
     Map<Class<?>, Object> mapperCached = new HashMap<>();
 
     @Override
@@ -290,12 +300,7 @@ public class MybatisAdapterDefault implements MybatisAdapter {
             synchronized (mapperClz) {
                 mapper = mapperCached.get(mapperClz);
                 if (mapper == null) {
-                    MybatisMapperInterceptor handler = new MybatisMapperInterceptor(getFactory(), mapperClz);
-
-                    mapper = Proxy.newProxyInstance(
-                            mapperClz.getClassLoader(),
-                            new Class[]{mapperClz},
-                            handler);
+                    mapper = getSessionTemplate().getMapper(mapperClz);
                     mapperCached.put(mapperClz, mapper);
                 }
             }
