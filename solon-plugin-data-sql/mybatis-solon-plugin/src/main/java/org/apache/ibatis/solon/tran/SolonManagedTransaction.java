@@ -6,7 +6,6 @@ import org.noear.solon.data.tran.TranUtils;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.SQLFeatureNotSupportedException;
 
 /**
  * @author noear
@@ -55,7 +54,7 @@ public class SolonManagedTransaction implements Transaction {
         if (connection != null) {
             try {
                 return connection.getNetworkTimeout();
-            } catch (SQLFeatureNotSupportedException e) {
+            } catch (Throwable e) {
                 //有些驱动不支持这个特性
             }
         }
