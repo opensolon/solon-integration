@@ -14,49 +14,28 @@
     <artifactId>mybatis-plus-solon-plugin</artifactId>
     <packaging>jar</packaging>
 
-
     <dependencies>
         <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>mybatis-solon-plugin</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-core</artifactId>
+            <artifactId>mybatis-plus-solon-plugin</artifactId>
             <version>${mybatis-plus.version}</version>
             <exclusions>
                 <exclusion>
-                    <groupId>org.mybatis</groupId>
-                    <artifactId>mybatis</artifactId>
+                    <groupId>org.noear</groupId>
+                    <artifactId>mybatis-solon-plugin</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
 
         <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>solon-aot</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-            <version>${hikaricp.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.31</version>
-            <scope>test</scope>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-jsqlparser-4.9</artifactId>
+            <version>${mybatis-plus.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon-test</artifactId>
-            <scope>test</scope>
+            <artifactId>mybatis-solon-plugin</artifactId>
         </dependency>
     </dependencies>
 
