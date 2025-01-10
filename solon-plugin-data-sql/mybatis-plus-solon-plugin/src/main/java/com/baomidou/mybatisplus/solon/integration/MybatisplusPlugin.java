@@ -21,6 +21,11 @@ public class MybatisplusPlugin implements Plugin {
 
     @Override
     public void start(AppContext context) {
+        if (log == null) {
+            log = LoggerFactory.getLogger(MybatisplusPlugin.class);
+            log.warn("The artifact 'org.noear:mybatis-plus-solon-plugin' is deprecated, suggest use 'com.baomidou:mybatis-plus-solon-plugin'.");
+        }
+
         //
         // 此插件的 solon.plugin.priority 会大于 mybatis-solon-plugin 的值
         //
@@ -31,11 +36,6 @@ public class MybatisplusPlugin implements Plugin {
         // aot
         if (NativeDetector.isAotRuntime() && ClassUtil.hasClass(() -> RuntimeNativeRegistrar.class)) {
             context.wrapAndPut(MybatisPlusRuntimeNativeRegistrar.class);
-        }
-
-        if (log == null) {
-            log = LoggerFactory.getLogger(MybatisplusPlugin.class);
-            log.warn("The artifact 'org.noear:mybatis-plus-solon-plugin' is deprecated, suggest use 'com.baomidou:mybatis-plus-solon-plugin'!");
         }
     }
 }
