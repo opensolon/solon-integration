@@ -9,12 +9,16 @@ import org.noear.solon.core.runtime.NativeDetector;
 import org.noear.solon.core.util.ClassUtil;
 import org.noear.solon.core.util.GenericUtil;
 import org.noear.solon.core.Plugin;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author noear
  * @since 1.5
  */
-public class XPluginImpl implements Plugin {
+public class MybatisplusPlugin implements Plugin {
+    private Logger log;
+
     @Override
     public void start(AppContext context) {
         //
@@ -27,6 +31,11 @@ public class XPluginImpl implements Plugin {
         // aot
         if (NativeDetector.isAotRuntime() && ClassUtil.hasClass(() -> RuntimeNativeRegistrar.class)) {
             context.wrapAndPut(MybatisPlusRuntimeNativeRegistrar.class);
+        }
+
+        if (log == null) {
+            log = LoggerFactory.getLogger(MybatisplusPlugin.class);
+            log.warn("The artifact 'org.noear:mybatis-plus-solon-plugin' is deprecated, suggest use 'com.baomidou:mybatis-plus-solon-plugin'!");
         }
     }
 }
