@@ -49,13 +49,12 @@ Solon
 <hr />
 
 <p align="center">
-并发高 300%；内存省 50%；启动快 10 倍；打包小 90%；同时支持 java8 ~ java22, native 运行时。
+并发高 300%；内存省 50%；启动快 10 倍；打包小 90%；同时支持 java8 ~ java23, native 运行时。
 <br/>
 从零开始构建，有更灵活的接口规范与开放生态
 </p>
 
 <hr />
-
 
 ## 主要代码仓库
 
@@ -64,6 +63,7 @@ Solon
 | https://gitee.com/opensolon/solon               | Solon ,主代码仓库                     | 
 | https://gitee.com/opensolon/solon-examples      | Solon ,官网配套示例代码仓库                |
 |                                                 |                                  |
+| https://gitee.com/opensolon/solon-ai            | Solon Ai ,代码仓库                   | 
 | https://gitee.com/opensolon/solon-cloud         | Solon Cloud ,代码仓库                | 
 | https://gitee.com/opensolon/solon-admin         | Solon Admin ,代码仓库                | 
 | https://gitee.com/opensolon/solon-jakarta       | Solon Jakarta ,代码仓库（base java17） | 
@@ -74,6 +74,5 @@ Solon
 | https://gitee.com/opensolon/solon-vscode-plugin | Solon VsCode ,插件代码仓库             | 
 |                                                 |                                  |
 | https://gitee.com/dromara/solon-plugins         | Solon 第三方扩展插件代码仓库                | 
-
 
 
