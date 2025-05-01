@@ -14,67 +14,106 @@
     <artifactId>seata-solon-plugin</artifactId>
     <packaging>jar</packaging>
 
+    <properties>
+        <seata.version>2.3.0</seata.version>
+        <fastjson2.version>2.0.52</fastjson2.version>
+        <solon.net.httputils.version>3.1.1</solon.net.httputils.version>
+    </properties>
+
     <dependencies>
+        <!--seata-->
         <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>solon</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>nami</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>io.seata</groupId>
+            <groupId>org.apache.seata</groupId>
             <artifactId>seata-all</artifactId>
             <version>${seata.version}</version>
-            <scope>provided</scope>
             <exclusions>
                 <exclusion>
-                    <groupId>org.springframework</groupId>
+                    <artifactId>seata-saga-spring</artifactId>
+                    <groupId>org.apache.seata</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>seata-spring</artifactId>
+                    <groupId>org.apache.seata</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>seata-config-spring-cloud</artifactId>
+                    <groupId>org.apache.seata</groupId>
+                </exclusion>
+                <exclusion>
                     <artifactId>spring-core</artifactId>
+                    <groupId>org.springframework</groupId>
                 </exclusion>
                 <exclusion>
+                    <artifactId>spring-test</artifactId>
                     <groupId>org.springframework</groupId>
-                    <artifactId>spring-context</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-beans</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
                     <artifactId>spring-aop</artifactId>
+                    <groupId>org.springframework</groupId>
                 </exclusion>
                 <exclusion>
+                    <artifactId>spring-jdbc</artifactId>
                     <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-beans</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-context</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-tx</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
                     <artifactId>spring-webmvc</artifactId>
-                </exclusion>
-                <exclusion>
                     <groupId>org.springframework</groupId>
-                    <artifactId>spring-web</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
 
         <dependency>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>${fastjson2.version}</version>
+        </dependency>
+
+        <!--solon-->
+        <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon-web</artifactId>
+            <artifactId>solon-data</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon-expression</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon-net-httputils</artifactId>
+            <version>${solon.net.httputils.version}</version>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>nami</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon-boot-jdkhttp</artifactId>
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon-test</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
-
-    <repositories>
-        <repository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>Sonatype Nexus Snapshots</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </repository>
-    </repositories>
 </project>
