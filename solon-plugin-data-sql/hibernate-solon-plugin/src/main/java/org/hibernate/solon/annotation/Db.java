@@ -5,11 +5,12 @@ import java.lang.annotation.*;
 /**
  * 数据工厂注解
  *
- * 例：
+ * @deprecated 3.2 {@link org.noear.solon.data.annotation.Ds}
  * */
 @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Deprecated
 public @interface Db {
     /**
      * ds bean name
