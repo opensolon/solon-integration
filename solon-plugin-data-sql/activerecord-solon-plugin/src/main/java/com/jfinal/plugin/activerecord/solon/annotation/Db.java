@@ -1,10 +1,6 @@
 package com.jfinal.plugin.activerecord.solon.annotation;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 
 /**
@@ -12,10 +8,12 @@ import java.lang.annotation.Target;
  *
  * @author 胡高 (https://gitee.com/gollyhu)
  * @since 1.10
+ * @deprecated 3.2 {@link org.noear.solon.data.annotation.Ds}
  */
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.TYPE})
+@Deprecated
 public @interface Db {
     /**
      * 数据源Bean实例名称
