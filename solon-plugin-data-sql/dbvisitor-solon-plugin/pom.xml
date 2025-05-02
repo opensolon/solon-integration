@@ -16,15 +16,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>solon-data</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>net.hasor</groupId>
-            <artifactId>dbvisitor</artifactId>
+            <artifactId>dbvisitor-solon</artifactId>
             <version>${dbvisitor.version}</version>
         </dependency>
-
     </dependencies>
 </project>
