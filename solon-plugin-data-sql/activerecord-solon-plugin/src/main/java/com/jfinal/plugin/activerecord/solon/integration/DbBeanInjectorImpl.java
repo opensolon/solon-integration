@@ -30,7 +30,7 @@ public class DbBeanInjectorImpl extends DsInjector<Db> {
      *
      * @since 3.2
      */
-    public boolean injectHandle(VarHolder vh, BeanWrap bw) {
+    public void injectHandle(VarHolder vh, BeanWrap bw) {
         //如果是 DbPro
         if (DbPro.class.isAssignableFrom(vh.getType())) {
             String name = bw.name();
@@ -47,14 +47,12 @@ public class DbBeanInjectorImpl extends DsInjector<Db> {
                     vh.setValue(com.jfinal.plugin.activerecord.Db.use(name2));
                 });
             }
-            return true;
         }
 
         //如果是 ActiveRecordPlugin
         if (ActiveRecordPlugin.class.isAssignableFrom(vh.getType())) {
             ActiveRecordPlugin arp = ArpManager.getOrAdd(bw.name(), bw);
             vh.setValue(arp);
-            return true;
         }
 
         //如果是 interface，则为 Mapper 代理
@@ -66,9 +64,6 @@ public class DbBeanInjectorImpl extends DsInjector<Db> {
                     handler);
 
             vh.setValue(obj);
-            return true;
         }
-
-        return false;
     }
 }

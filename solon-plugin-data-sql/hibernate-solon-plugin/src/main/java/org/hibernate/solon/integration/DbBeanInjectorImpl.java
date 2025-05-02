@@ -16,13 +16,11 @@ public class DbBeanInjectorImpl extends DsInjector<Db> {
         addHandler(this::injectHandle);
     }
 
-    public boolean injectHandle(VarHolder vh, BeanWrap dsBw) {
+    public void injectHandle(VarHolder vh, BeanWrap dsBw) {
         HibernateAdapter adapter = HibernateAdapterManager.get(dsBw);
 
         if (adapter != null) {
             adapter.injectTo(vh);
         }
-
-        return vh.isDone();
     }
 }

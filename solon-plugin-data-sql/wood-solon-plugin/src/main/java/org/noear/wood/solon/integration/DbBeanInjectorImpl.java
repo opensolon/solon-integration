@@ -19,7 +19,7 @@ public class DbBeanInjectorImpl extends DsInjector<Db> {
     }
 
 
-    public boolean injectHandle(VarHolder vh, BeanWrap dsBw) {
+    public void injectHandle(VarHolder vh, BeanWrap dsBw) {
         DbContext db = DbManager.global().get(dsBw);
         Class<?> clz = vh.getType();
 
@@ -34,7 +34,5 @@ public class DbBeanInjectorImpl extends DsInjector<Db> {
                 vh.setValue(obj);
             }
         }
-
-        return vh.isDone();
     }
 }
