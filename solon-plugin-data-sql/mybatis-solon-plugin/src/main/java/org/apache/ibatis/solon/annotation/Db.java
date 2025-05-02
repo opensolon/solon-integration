@@ -9,10 +9,12 @@ import java.lang.annotation.*;
  * @Db("db1") SqlSessionFactory factory;
  * @Db("db1") SqlSession session;
  * @Db("db1") Mapper mapper;
+ * @deprecated 3.2 {@link org.noear.solon.data.annotation.Ds}
  * */
 @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Deprecated
 public @interface Db {
     /**
      * ds bean name
