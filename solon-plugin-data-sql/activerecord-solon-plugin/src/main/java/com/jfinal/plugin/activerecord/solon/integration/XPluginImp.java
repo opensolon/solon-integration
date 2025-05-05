@@ -9,6 +9,7 @@ import com.jfinal.plugin.activerecord.solon.annotation.Table;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.LifecycleIndex;
 import org.noear.solon.core.Plugin;
+import org.noear.solon.data.datasource.DsInjector;
 
 /**
  * @author noear
@@ -22,9 +23,11 @@ public class XPluginImp implements Plugin {
         context.beanBuilderAdd(Table.class, new TableBeanBuilderImpl());
 
         // 注入Bean时的Db标签
-        context.beanInjectorAdd(Db.class,new DbBeanInjectorImpl());
+        DbBeanInjectorImpl dbBeanInjector = new DbBeanInjectorImpl();
+        context.beanInjectorAdd(Db.class, dbBeanInjector);
+        DsInjector.getDefault().addHandler(dbBeanInjector::injectHandle);
 
-        context.subWrapsOfType(DataSource.class, bw->{
+        context.subWrapsOfType(DataSource.class, bw -> {
             ArpManager.add(bw);
         });
 
