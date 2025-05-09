@@ -16,8 +16,6 @@
 
     <properties>
         <seata.version>2.3.0</seata.version>
-        <fastjson2.version>2.0.52</fastjson2.version>
-        <solon.net.httputils.version>3.1.1</solon.net.httputils.version>
     </properties>
 
     <dependencies>
@@ -94,7 +92,6 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon-net-httputils</artifactId>
-            <version>${solon.net.httputils.version}</version>
             <optional>true</optional>
         </dependency>
 
