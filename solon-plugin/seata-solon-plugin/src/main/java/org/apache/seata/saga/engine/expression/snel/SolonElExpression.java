@@ -14,7 +14,8 @@ public class SolonElExpression implements ELExpression {
 
     @Override
     public Object getValue(Object elContext) {
-        String realExpression = expression.replaceAll("#root", "root");
+        String realExpression = expression.replaceAll("#root", "root")
+                .replaceAll("#this", "this");
         return SnEL.eval(realExpression, new StandardContext(elContext));
     }
 
