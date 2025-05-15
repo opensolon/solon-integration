@@ -18,7 +18,6 @@ public class DbBeanInjectorImpl extends DsInjector<Db> {
         addHandler(this::injectHandle);
     }
 
-
     public void injectHandle(VarHolder vh, BeanWrap dsBw) {
         DbContext db = DbManager.global().get(dsBw);
         Class<?> clz = vh.getType();
