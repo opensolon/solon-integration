@@ -8,6 +8,7 @@ import org.noear.solon.Utils;
 import org.noear.solon.core.BeanWrap;
 import org.noear.solon.core.event.EventBus;
 import org.noear.solon.core.util.ScanUtil;
+import org.noear.solon.data.annotation.Ds;
 import org.noear.solon.data.tran.DataSourceProxy;
 import com.jfinal.plugin.activerecord.solon.annotation.Db;
 import com.jfinal.plugin.activerecord.solon.annotation.Table;
@@ -128,11 +129,15 @@ public class ArpManager {
 
     private static String getDbSource(Class<? extends Model<?>> model) {
         Db db = model.getAnnotation(Db.class);
-        if (null == db) {
-            // 没有Db标签，默认为主数据库
-            return DbKit.MAIN_CONFIG_NAME;
+        if (db != null) {
+            return db.value();
         }
 
-        return db.value();
+        Ds ds = model.getAnnotation(Ds.class);
+        if (ds != null) {
+            return ds.value();
+        }
+
+        return DbKit.MAIN_CONFIG_NAME;
     }
 }
