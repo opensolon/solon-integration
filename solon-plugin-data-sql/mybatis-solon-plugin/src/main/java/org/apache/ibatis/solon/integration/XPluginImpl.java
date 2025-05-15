@@ -6,6 +6,7 @@ import org.noear.solon.aot.RuntimeNativeRegistrar;
 import org.noear.solon.core.*;
 import org.noear.solon.core.runtime.NativeDetector;
 import org.noear.solon.core.util.ClassUtil;
+import org.noear.solon.data.datasource.DsBuilder;
 import org.noear.solon.data.datasource.DsInjector;
 
 import javax.sql.DataSource;
@@ -19,7 +20,9 @@ public class XPluginImpl implements Plugin {
         });
 
         //for db
-        context.beanBuilderAdd(Db.class, new DbBeanBuilderImpl());
+        DbBeanBuilderImpl dbBeanBuilder = new DbBeanBuilderImpl();
+        context.beanBuilderAdd(Db.class, dbBeanBuilder);
+        DsBuilder.getDefault().addHandler(dbBeanBuilder::buildHandle);
 
         DbBeanInjectorImpl dbBeanInjector = new DbBeanInjectorImpl();
         context.beanInjectorAdd(Db.class, dbBeanInjector);
