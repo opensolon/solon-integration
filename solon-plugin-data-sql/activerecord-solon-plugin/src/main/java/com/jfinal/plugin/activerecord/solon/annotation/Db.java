@@ -13,7 +13,6 @@ import java.lang.annotation.*;
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.TYPE})
-@Deprecated
 public @interface Db {
     /**
      * 数据源Bean实例名称

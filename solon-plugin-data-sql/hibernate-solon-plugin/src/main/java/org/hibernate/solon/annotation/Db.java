@@ -10,7 +10,6 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Deprecated
 public @interface Db {
     /**
      * ds bean name
