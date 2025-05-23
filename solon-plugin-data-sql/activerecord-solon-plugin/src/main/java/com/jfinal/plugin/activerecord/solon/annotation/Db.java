@@ -8,7 +8,7 @@ import java.lang.annotation.*;
  *
  * @author 胡高 (https://gitee.com/gollyhu)
  * @since 1.10
- * @deprecated 3.2 {@link org.noear.solon.data.annotation.Ds}
+ * {@link org.noear.solon.data.annotation.Ds}
  */
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
