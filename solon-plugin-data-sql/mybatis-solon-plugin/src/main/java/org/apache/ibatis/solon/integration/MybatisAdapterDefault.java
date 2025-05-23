@@ -160,7 +160,8 @@ public class MybatisAdapterDefault implements MybatisAdapter {
 
                         //package || type class，转为类表达式
                         for (Class<?> clz : ResourceUtil.scanClasses(dsWrap.context().getClassLoader(), val)) {
-                            if (clz.isInterface() == false) {
+                            // 排除内部类 https://gitee.com/opensolon/solon/issues/IC9Z56
+                            if (clz.isInterface() == false && !clz.isMemberClass() && !clz.isLocalClass() && !clz.isAnonymousClass()) {
                                 if (isTypeAliasesType(clz)) {
                                     getConfiguration().getTypeAliasRegistry().registerAlias(clz);
                                 }
