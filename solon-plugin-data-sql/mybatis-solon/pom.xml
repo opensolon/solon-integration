@@ -12,6 +12,7 @@
     </parent>
 
     <artifactId>mybatis-solon</artifactId>
+    <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
 

@@ -12,6 +12,7 @@
     </parent>
 
     <artifactId>mybatis-plus-extension-solon-plugin</artifactId>
+    <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
 

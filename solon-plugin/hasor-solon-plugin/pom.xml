@@ -12,6 +12,7 @@
     </parent>
 
     <artifactId>hasor-solon-plugin</artifactId>
+    <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
     <properties>

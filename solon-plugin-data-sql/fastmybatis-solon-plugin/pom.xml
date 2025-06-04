@@ -11,6 +11,7 @@
         <relativePath/>
     </parent>
     <artifactId>fastmybatis-solon-plugin</artifactId>
+    <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
     <dependencies>

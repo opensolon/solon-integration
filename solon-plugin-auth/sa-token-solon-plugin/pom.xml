@@ -12,6 +12,7 @@
     </parent>
 
     <artifactId>sa-token-solon-plugin</artifactId>
+    <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
     <dependencies>

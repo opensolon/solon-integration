@@ -12,6 +12,7 @@
     </parent>
 
     <artifactId>beetlsql-solon-plugin</artifactId>
+    <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
 

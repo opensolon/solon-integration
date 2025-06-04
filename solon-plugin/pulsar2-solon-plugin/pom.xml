@@ -12,6 +12,7 @@
     </parent>
 
     <artifactId>pulsar2-solon-plugin</artifactId>
+    <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
     <properties>

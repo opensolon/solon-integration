@@ -12,6 +12,7 @@
     </parent>
 
     <artifactId>mybatis-sqlhelper-solon-plugin</artifactId>
+    <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
     <properties>

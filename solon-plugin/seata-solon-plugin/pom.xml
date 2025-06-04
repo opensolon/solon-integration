@@ -12,6 +12,7 @@
     </parent>
 
     <artifactId>seata-solon-plugin</artifactId>
+    <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
     <properties>

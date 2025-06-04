@@ -12,6 +12,7 @@
     </parent>
 
     <artifactId>sms4j-solon-plugin</artifactId>
+    <name>${project.artifactId}</name>
     <packaging>jar</packaging>
     <description>https://www.simplejavamail.org/</description>
 

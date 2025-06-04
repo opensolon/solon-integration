@@ -12,6 +12,7 @@
     </parent>
 
     <artifactId>sqltoy-solon-plugin</artifactId>
+    <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
     <dependencies>

@@ -12,7 +12,8 @@
 	</parent>
 
 	<artifactId>bean-searcher-solon-plugin</artifactId>
-	<packaging>jar</packaging>
+	<name>${project.artifactId}</name>
+    <packaging>jar</packaging>
 
     <properties>
         <xjsonkit.version>1.4.2</xjsonkit.version>

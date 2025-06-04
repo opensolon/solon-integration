@@ -9,7 +9,8 @@
 	</parent>
 
 	<artifactId>easypoi-wps-solon</artifactId>
-	<packaging>jar</packaging>
+	<name>${project.artifactId}</name>
+    <packaging>jar</packaging>
 
 	<dependencies>
 		<!--solon -->

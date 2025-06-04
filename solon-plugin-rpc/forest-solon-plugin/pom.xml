@@ -12,6 +12,7 @@
     </parent>
 
     <artifactId>forest-solon-plugin</artifactId>
+    <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
 
