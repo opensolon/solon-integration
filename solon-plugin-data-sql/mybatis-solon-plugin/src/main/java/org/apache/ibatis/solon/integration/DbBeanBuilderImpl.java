@@ -9,9 +9,9 @@ import org.slf4j.LoggerFactory;
 /**
  * @author noear
  * @since 3.0
- * @deprecated 3.2 不再支持加在 Mapper 上（只能通过配置）
+ * //@deprecated 3.2 不再支持加在 Mapper 上（只能通过配置）
  */
-@Deprecated
+//@Deprecated
 public class DbBeanBuilderImpl extends DsBuilder<Db> {
     static final Logger log = LoggerFactory.getLogger(DbBeanBuilderImpl.class);
 
