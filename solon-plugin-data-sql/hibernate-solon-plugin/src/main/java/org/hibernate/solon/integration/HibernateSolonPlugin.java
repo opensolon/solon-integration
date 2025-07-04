@@ -5,6 +5,7 @@ import org.noear.solon.core.AppContext;
 import org.noear.solon.core.Plugin;
 import org.noear.solon.data.datasource.DsInjector;
 
+import javax.persistence.PersistenceContext;
 import javax.persistence.spi.PersistenceProviderResolverHolder;
 import javax.sql.DataSource;
 
@@ -12,7 +13,7 @@ import javax.sql.DataSource;
  * @author noear
  * @since 2.5
  */
-public class XPluginImpl implements Plugin {
+public class HibernateSolonPlugin implements Plugin {
 
     @Override
     public void start(AppContext context) throws Throwable {
@@ -28,5 +29,9 @@ public class XPluginImpl implements Plugin {
         DbBeanInjectorImpl dbBeanInjector = new DbBeanInjectorImpl();
         context.beanInjectorAdd(Db.class, dbBeanInjector);
         DsInjector.getDefault().addHandler(dbBeanInjector::injectHandle);
+
+        // 标准 jpa PersistenceContext 注入支持
+        //PersistenceUnit
+        context.beanInjectorAdd(PersistenceContext.class, new PersistenceContextBeanInjector());
     }
 }
