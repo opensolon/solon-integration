@@ -42,23 +42,6 @@ jpa.test:
       connection:
         isolaction: 4 # 事务隔离级别 4 可重复度
 
-
-# 标准 jpa 持久化单元 配置
-solon.jpa.db1:
-  # 持久化单元绑定数据源 #略
-#  datasource: db1
-  # 持久化单元hibernate配置
-  properties:
-    hibernate:
-      hbm2ddl:
-        auto: create
-      show_sql: false
-      format_sql: true
-      dialect: org.hibernate.dialect.MySQL8Dialect
-      connection:
-        isolaction: 4 # 事务隔离级别 4 可重复度
-
-
 #默认hibernate配置
 # 可选app.yml 或者hibernate.cf.xml
 #hibernate:
