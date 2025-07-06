@@ -145,6 +145,12 @@ public class MybatisAdapterDefault implements MybatisAdapter {
     }
 
     protected void initDo() {
+        //for plugins section
+        List<Interceptor> interceptors = MybatisPluginUtils.resolve(dsProps, "plugins");
+        for (Interceptor itp : interceptors) {
+            getConfiguration().addInterceptor(itp);
+        }
+
         //for typeAliases & typeHandlers section
         dsProps.forEach((k, v) -> {
             if (k instanceof String && v instanceof String) {
@@ -249,12 +255,6 @@ public class MybatisAdapterDefault implements MybatisAdapter {
                     throw new IllegalStateException("Missing mapper registration, please check the mappers configuration. name='" + dsWrap.name() + "'");
                 }
             }
-        }
-
-        //for plugins section
-        List<Interceptor> interceptors = MybatisPluginUtils.resolve(dsProps, "plugins");
-        for (Interceptor itp : interceptors) {
-            getConfiguration().addInterceptor(itp);
         }
     }
 

@@ -37,6 +37,7 @@ public class MybatisPluginUtils {
                         String key = (String) kv.getKey();
                         if (key.endsWith(".class")) {
                             name = key.split("\\.")[0];
+                            break;
                         }
                     }
                 }
