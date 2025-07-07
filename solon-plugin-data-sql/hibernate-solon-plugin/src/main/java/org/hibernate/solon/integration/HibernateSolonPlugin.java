@@ -16,6 +16,7 @@ import javax.sql.DataSource;
 /**
  * @author noear
  * @since 2.5
+ * @since 3.4
  */
 public class HibernateSolonPlugin implements Plugin {
 
