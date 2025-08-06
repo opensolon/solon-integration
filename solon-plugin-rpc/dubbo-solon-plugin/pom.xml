@@ -38,11 +38,6 @@
                 </exclusion>
 
                 <exclusion>
-                    <groupId>log4j</groupId>
-                    <artifactId>log4j</artifactId>
-                </exclusion>
-
-                <exclusion>
                     <groupId>org.apache.dubbo</groupId>
                     <artifactId>dubbo-config-spring</artifactId>
                 </exclusion>
