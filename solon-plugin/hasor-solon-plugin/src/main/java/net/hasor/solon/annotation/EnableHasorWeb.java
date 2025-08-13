@@ -13,27 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.hasor.solon.boot;
+package net.hasor.solon.annotation;
+import net.hasor.solon.HasorWebConfiguration;
+import org.noear.solon.annotation.Import;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Hasor 属性
+ * 启用 Hasor Web，这个插件会配置 Hasor 的全局拦截器和监听器。
  * @version : 2020年02月27日
  * @author 赵永春 (zyc@hasor.net)
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.ANNOTATION_TYPE)
-public @interface Property {
+@Target(ElementType.TYPE)
+@Import(value = { HasorWebConfiguration.class })
+public @interface EnableHasorWeb {
     /**
-     * 属性名
+     * Hasor 全局拦截器工作的目录
      */
-    String name();
+    String path() default "/*";
 
     /**
-     * 属性值
+     * Hasor 全局拦截器的顺序
      */
-    String value();
+    int order() default 0;
 }

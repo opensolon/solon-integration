@@ -74,8 +74,6 @@ This project includes:
   solon-lib under The Apache Software License, Version 2.0
   solon-test under The Apache Software License, Version 2.0
   solon.aot under The Apache Software License, Version 2.0
-  solon.boot under The Apache Software License, Version 2.0
-  solon.boot.smarthttp under The Apache Software License, Version 2.0
   solon.config.yaml under The Apache Software License, Version 2.0
   solon.data under The Apache Software License, Version 2.0
   solon.logging under The Apache Software License, Version 2.0

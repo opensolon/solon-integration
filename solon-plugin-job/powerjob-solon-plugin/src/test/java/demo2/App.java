@@ -52,7 +52,7 @@ public class App {
             //Add anno support
             context.beanBuilderAdd(PowerJob.class, new PowerJobBeanBuilder());
 
-            //::::调后启用服务（重点在这儿，比 solon.boot.undertow 启动要晚）
+            //::::调后启用服务（重点在这儿，比 solon-server-undertow 启动要晚）
             context.onEvent(AppLoadEndEvent.class, e -> {
                 startDo(context, properties);
             });

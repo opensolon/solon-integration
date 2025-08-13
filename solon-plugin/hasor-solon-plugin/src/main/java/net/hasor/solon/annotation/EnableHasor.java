@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.hasor.solon.boot;
+package net.hasor.solon.annotation;
 import net.hasor.core.Module;
+import net.hasor.solon.HasorConfiguration;
+import net.hasor.solon.Property;
 import org.noear.solon.annotation.Import;
 
 import java.lang.annotation.ElementType;

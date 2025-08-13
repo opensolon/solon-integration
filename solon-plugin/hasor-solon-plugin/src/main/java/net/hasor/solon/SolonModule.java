@@ -1,4 +1,4 @@
-package net.hasor.solon.boot;
+package net.hasor.solon;
 
 import net.hasor.core.*;
 import net.hasor.core.Module;

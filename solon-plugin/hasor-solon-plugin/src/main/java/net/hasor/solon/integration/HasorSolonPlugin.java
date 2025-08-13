@@ -1,8 +1,8 @@
-package net.hasor.solon;
+package net.hasor.solon.integration;
 
 import net.hasor.core.DimModule;
 import net.hasor.core.Module;
-import net.hasor.solon.boot.BuildConfig;
+import net.hasor.solon.BuildConfig;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.Plugin;
 
@@ -12,7 +12,7 @@ import org.noear.solon.core.Plugin;
  * @author noear
  * @since 2020.10.10
  * */
-public class XPluginImp implements Plugin {
+public class HasorSolonPlugin implements Plugin {
     @Override
     public void start(AppContext context) {
         //

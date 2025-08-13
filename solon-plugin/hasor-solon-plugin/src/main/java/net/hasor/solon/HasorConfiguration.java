@@ -1,7 +1,9 @@
-package net.hasor.solon.boot;
+package net.hasor.solon;
 
 import net.hasor.core.AppContext;
 import net.hasor.core.Module;
+import net.hasor.solon.annotation.EnableHasor;
+import net.hasor.solon.annotation.EnableHasorWeb;
 import net.hasor.utils.ExceptionUtils;
 import net.hasor.utils.StringUtils;
 import org.noear.solon.Solon;

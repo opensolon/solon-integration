@@ -13,13 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.hasor.solon.boot;
+package net.hasor.solon;
 import net.hasor.core.AppContext;
 import net.hasor.core.Hasor;
 import net.hasor.core.Module;
 import net.hasor.utils.StringUtils;
 import org.noear.solon.Solon;
-import org.noear.solon.Utils;
 import org.noear.solon.core.util.ResourceUtil;
 
 import java.io.IOException;
