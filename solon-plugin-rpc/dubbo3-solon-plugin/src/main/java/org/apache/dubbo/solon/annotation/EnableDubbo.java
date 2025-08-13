@@ -1,11 +1,7 @@
-package org.noear.solon.extend.dubbo3;
+package org.apache.dubbo.solon.annotation;
 
 import java.lang.annotation.*;
 
-/**
- * @deprecated 3.5 {@link org.apache.dubbo.solon.annotation.EnableDubbo}
- * */
-@Deprecated
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

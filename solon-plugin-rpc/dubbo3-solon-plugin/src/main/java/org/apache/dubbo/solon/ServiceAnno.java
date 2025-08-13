@@ -1,6 +1,5 @@
-package org.noear.solon.extend.dubbo3.integration;
+package org.apache.dubbo.solon;
 
-import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.dubbo.config.annotation.Method;
 import org.apache.dubbo.config.annotation.Service;
 import org.noear.solon.Solon;
@@ -8,14 +7,13 @@ import org.noear.solon.Solon;
 import java.lang.annotation.Annotation;
 
 /**
- * 用于配置表达式支持 @DubboService(group="${xxx}")
- *
  * @author noear
- * @since 1.9
+ * @since 1.6
  */
-public class DubboServiceAnno implements DubboService, Service {
-    DubboService anno;
-    public DubboServiceAnno(DubboService anno){
+public class ServiceAnno implements Service {
+    private Service anno;
+
+    public ServiceAnno(Service anno){
         this.anno = anno;
     }
 
@@ -351,36 +349,6 @@ public class DubboServiceAnno implements DubboService, Service {
     @Override
     public Method[] methods() {
         return anno.methods();
-    }
-
-    @Override
-    public String scope() {
-        return anno.scope();
-    }
-
-    @Override
-    public boolean exportAsync() {
-        return anno.exportAsync();
-    }
-
-    @Override
-    public String executor() {
-        return anno.executor();
-    }
-
-    @Override
-    public String payload() {
-        return anno.payload();
-    }
-
-    @Override
-    public String serialization() {
-        return anno.serialization();
-    }
-
-    @Override
-    public String preferSerialization() {
-        return anno.preferSerialization();
     }
 
     @Override

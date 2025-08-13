@@ -1,4 +1,4 @@
-package org.noear.solon.extend.dubbo3.integration;
+package org.apache.dubbo.solon;
 
 import org.apache.dubbo.config.RegistryConfig;
 

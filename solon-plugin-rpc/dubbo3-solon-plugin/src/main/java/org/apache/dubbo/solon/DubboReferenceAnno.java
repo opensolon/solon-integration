@@ -1,5 +1,6 @@
-package org.noear.solon.extend.dubbo3.integration;
+package org.apache.dubbo.solon;
 
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.Method;
 import org.apache.dubbo.config.annotation.Reference;
 import org.noear.solon.Solon;
@@ -7,14 +8,17 @@ import org.noear.solon.Solon;
 import java.lang.annotation.Annotation;
 
 /**
+ * 用于配置表达式支持 @DubboReference(group="${xxx}")
+ *
  * @author noear
- * @since 1.6
+ * @since 1.9
  */
-public class ReferenceAnno implements Reference {
-    private Reference anno;
-    public ReferenceAnno(Reference anno){
+public class DubboReferenceAnno implements DubboReference, Reference {
+    DubboReference anno;
+    public DubboReferenceAnno(DubboReference anno){
         this.anno = anno;
     }
+
 
     @Override
     public Class<?> interfaceClass() {
@@ -334,6 +338,11 @@ public class ReferenceAnno implements Reference {
     }
 
     @Override
+    public String merger() {
+        return anno.merger();
+    }
+
+    @Override
     public Method[] methods() {
         return anno.methods();
     }
@@ -346,6 +355,41 @@ public class ReferenceAnno implements Reference {
         }
 
         return id;
+    }
+
+    @Override
+    public String[] services() {
+        return anno.services();
+    }
+
+    @Override
+    public String[] providedBy() {
+        return anno.providedBy();
+    }
+
+    @Override
+    public int providerPort() {
+        return anno.providerPort();
+    }
+
+    @Override
+    public String providerNamespace() {
+        return anno.providerNamespace();
+    }
+
+    @Override
+    public String scope() {
+        return anno.scope();
+    }
+
+    @Override
+    public boolean referAsync() {
+        return anno.referAsync();
+    }
+
+    @Override
+    public boolean unloadClusterRelated() {
+        return anno.unloadClusterRelated();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package org.noear.solon.extend.dubbo3.integration;
+package org.apache.dubbo.solon.integration;
 
 import org.apache.dubbo.config.*;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -7,6 +7,7 @@ import org.apache.dubbo.config.annotation.Reference;
 import org.apache.dubbo.config.annotation.Service;
 import org.apache.dubbo.config.bootstrap.DubboBootstrap;
 
+import org.apache.dubbo.solon.*;
 import org.noear.solon.Solon;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.Plugin;
@@ -16,7 +17,7 @@ import org.noear.solon.extend.dubbo3.EnableDubbo;
  * @author iYing
  * @since 1.9
  */
-public class XPluginImp implements Plugin {
+public class DubboSolonPlugin implements Plugin {
     private DubboBootstrap bootstrap;
 
     @Override

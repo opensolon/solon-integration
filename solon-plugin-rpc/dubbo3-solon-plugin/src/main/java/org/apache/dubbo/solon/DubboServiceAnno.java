@@ -1,24 +1,23 @@
-package org.noear.solon.extend.dubbo3.integration;
+package org.apache.dubbo.solon;
 
-import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.dubbo.config.annotation.Method;
-import org.apache.dubbo.config.annotation.Reference;
+import org.apache.dubbo.config.annotation.Service;
 import org.noear.solon.Solon;
 
 import java.lang.annotation.Annotation;
 
 /**
- * 用于配置表达式支持 @DubboReference(group="${xxx}")
+ * 用于配置表达式支持 @DubboService(group="${xxx}")
  *
  * @author noear
  * @since 1.9
  */
-public class DubboReferenceAnno implements DubboReference, Reference {
-    DubboReference anno;
-    public DubboReferenceAnno(DubboReference anno){
+public class DubboServiceAnno implements DubboService, Service {
+    DubboService anno;
+    public DubboServiceAnno(DubboService anno){
         this.anno = anno;
     }
-
 
     @Override
     public Class<?> interfaceClass() {
@@ -29,7 +28,6 @@ public class DubboReferenceAnno implements DubboReference, Reference {
     public String interfaceName() {
         return anno.interfaceName();
     }
-
 
     private String version;
     @Override
@@ -51,69 +49,113 @@ public class DubboReferenceAnno implements DubboReference, Reference {
         return group;
     }
 
-    private String url;
+    private String path;
     @Override
-    public String url() {
-        if (url == null) {
-            url = Solon.cfg().getByTmpl(anno.url());
+    public String path() {
+        if (path == null) {
+            path = Solon.cfg().getByTmpl(anno.path());
         }
 
-        return url;
+        return path;
     }
 
-    private String client;
     @Override
-    public String client() {
-        if (client == null) {
-            client = Solon.cfg().getByTmpl(anno.client());
+    public boolean export() {
+        return anno.export();
+    }
+
+
+    private String token;
+    @Override
+    public String token() {
+        if (token == null) {
+            token = Solon.cfg().getByTmpl(anno.token());
         }
 
-        return client;
+        return token;
     }
 
     @Override
-    public boolean generic() {
-        return anno.generic();
+    public boolean deprecated() {
+        return anno.deprecated();
     }
 
     @Override
-    public boolean injvm() {
-        return anno.injvm();
+    public boolean dynamic() {
+        return anno.dynamic();
     }
 
+    private String accesslog;
     @Override
-    public boolean check() {
-        return anno.check();
-    }
-
-    @Override
-    public boolean init() {
-        return anno.init();
-    }
-
-    @Override
-    public boolean lazy() {
-        return anno.lazy();
-    }
-
-    @Override
-    public boolean stubevent() {
-        return anno.stubevent();
-    }
-
-    private String reconnect;
-    @Override
-    public String reconnect() {
-        if (reconnect == null) {
-            reconnect = Solon.cfg().getByTmpl(anno.reconnect());
+    public String accesslog() {
+        if (accesslog == null) {
+            accesslog = Solon.cfg().getByTmpl(anno.accesslog());
         }
 
-        return reconnect;
+        return accesslog;
     }
 
     @Override
-    public boolean sticky() {
-        return anno.sticky();
+    public int executes() {
+        return anno.executes();
+    }
+
+    @Override
+    public boolean register() {
+        return anno.register();
+    }
+
+    @Override
+    public int weight() {
+        return anno.weight();
+    }
+
+    private String document;
+    @Override
+    public String document() {
+        if (document == null) {
+            document = Solon.cfg().getByTmpl(anno.document());
+        }
+
+        return document;
+    }
+
+    @Override
+    public int delay() {
+        return anno.delay();
+    }
+
+
+    private String local;
+    @Override
+    public String local() {
+        if (local == null) {
+            local = Solon.cfg().getByTmpl(anno.local());
+        }
+
+        return local;
+    }
+
+
+    private String stub;
+    @Override
+    public String stub() {
+        if (stub == null) {
+            stub = Solon.cfg().getByTmpl(anno.stub());
+        }
+
+        return stub;
+    }
+
+
+    private String cluster;
+    @Override
+    public String cluster() {
+        if (cluster == null) {
+            cluster = Solon.cfg().getByTmpl(anno.cluster());
+        }
+
+        return cluster;
     }
 
     private String proxy;
@@ -126,26 +168,6 @@ public class DubboReferenceAnno implements DubboReference, Reference {
         return proxy;
     }
 
-    private String stub;
-    @Override
-    public String stub() {
-        if (stub == null) {
-            stub = Solon.cfg().getByTmpl(anno.stub());
-        }
-
-        return stub;
-    }
-
-    private String cluster;
-    @Override
-    public String cluster() {
-        if (cluster == null) {
-            cluster = Solon.cfg().getByTmpl(anno.cluster());
-        }
-
-        return cluster;
-    }
-
     @Override
     public int connections() {
         return anno.connections();
@@ -155,7 +177,6 @@ public class DubboReferenceAnno implements DubboReference, Reference {
     public int callbacks() {
         return anno.callbacks();
     }
-
 
     private String onconnect;
     @Override
@@ -187,14 +208,9 @@ public class DubboReferenceAnno implements DubboReference, Reference {
         return owner;
     }
 
-    private String layer;
     @Override
     public String layer() {
-        if (layer == null) {
-            layer = Solon.cfg().getByTmpl(anno.layer());
-        }
-
-        return layer;
+        return anno.layer();
     }
 
     @Override
@@ -277,9 +293,14 @@ public class DubboReferenceAnno implements DubboReference, Reference {
         return anno.parameters();
     }
 
+    private String application;
     @Override
     public String application() {
-        return anno.application();
+        if (application == null) {
+            application = Solon.cfg().getByTmpl(anno.application());
+        }
+
+        return application;
     }
 
     private String module;
@@ -292,39 +313,29 @@ public class DubboReferenceAnno implements DubboReference, Reference {
         return module;
     }
 
-    private String consumer;
+    private String provider;
     @Override
-    public String consumer() {
-        if (consumer == null) {
-            consumer = Solon.cfg().getByTmpl(anno.consumer());
+    public String provider() {
+        if (provider == null) {
+            provider = Solon.cfg().getByTmpl(anno.provider());
         }
 
-        return consumer;
+        return provider;
     }
 
-    private String monitor;
+    @Override
+    public String[] protocol() {
+        return anno.protocol();
+    }
+
     @Override
     public String monitor() {
-        if (monitor == null) {
-            monitor = Solon.cfg().getByTmpl(anno.monitor());
-        }
-
-        return monitor;
+        return anno.monitor();
     }
 
     @Override
     public String[] registry() {
         return anno.registry();
-    }
-
-    private String protocol;
-    @Override
-    public String protocol() {
-        if (protocol == null) {
-            protocol = Solon.cfg().getByTmpl(anno.protocol());
-        }
-
-        return protocol;
     }
 
     private String tag;
@@ -338,43 +349,8 @@ public class DubboReferenceAnno implements DubboReference, Reference {
     }
 
     @Override
-    public String merger() {
-        return anno.merger();
-    }
-
-    @Override
     public Method[] methods() {
         return anno.methods();
-    }
-
-    private String id;
-    @Override
-    public String id() {
-        if (id == null) {
-            id = Solon.cfg().getByTmpl(anno.id());
-        }
-
-        return id;
-    }
-
-    @Override
-    public String[] services() {
-        return anno.services();
-    }
-
-    @Override
-    public String[] providedBy() {
-        return anno.providedBy();
-    }
-
-    @Override
-    public int providerPort() {
-        return anno.providerPort();
-    }
-
-    @Override
-    public String providerNamespace() {
-        return anno.providerNamespace();
     }
 
     @Override
@@ -383,13 +359,28 @@ public class DubboReferenceAnno implements DubboReference, Reference {
     }
 
     @Override
-    public boolean referAsync() {
-        return anno.referAsync();
+    public boolean exportAsync() {
+        return anno.exportAsync();
     }
 
     @Override
-    public boolean unloadClusterRelated() {
-        return anno.unloadClusterRelated();
+    public String executor() {
+        return anno.executor();
+    }
+
+    @Override
+    public String payload() {
+        return anno.payload();
+    }
+
+    @Override
+    public String serialization() {
+        return anno.serialization();
+    }
+
+    @Override
+    public String preferSerialization() {
+        return anno.preferSerialization();
     }
 
     @Override
