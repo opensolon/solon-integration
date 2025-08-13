@@ -8,10 +8,10 @@ import org.apache.dubbo.config.annotation.Service;
 import org.apache.dubbo.config.bootstrap.DubboBootstrap;
 
 import org.apache.dubbo.solon.*;
+import org.apache.dubbo.solon.annotation.EnableDubbo;
 import org.noear.solon.Solon;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.Plugin;
-import org.noear.solon.extend.dubbo3.EnableDubbo;
 
 /**
  * @author iYing
@@ -21,8 +21,9 @@ public class DubboSolonPlugin implements Plugin {
     private DubboBootstrap bootstrap;
 
     @Override
-    public void start(AppContext context){
-        if (Solon.app().source().getAnnotation(EnableDubbo.class) == null) {
+    public void start(AppContext context) {
+        if (Solon.app().source().getAnnotation(EnableDubbo.class) == null &&
+                Solon.app().source().getAnnotation(org.noear.solon.extend.dubbo3.EnableDubbo.class) == null) {
             return;
         }
 
