@@ -1,4 +1,4 @@
-package org.noear.solon.extend.dubbo.integration;
+package org.apache.dubbo.solon;
 
 import io.opentracing.Scope;
 import io.opentracing.Span;

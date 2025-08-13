@@ -1,21 +1,26 @@
-package org.noear.solon.extend.dubbo.integration;
+package org.apache.dubbo.solon.integration;
 
 import org.apache.dubbo.config.*;
 import org.apache.dubbo.config.annotation.Reference;
 import org.apache.dubbo.config.annotation.Service;
 import org.apache.dubbo.config.bootstrap.DubboBootstrap;
+import org.apache.dubbo.solon.Protocols;
+import org.apache.dubbo.solon.ReferenceAnno;
+import org.apache.dubbo.solon.Registries;
+import org.apache.dubbo.solon.ServiceAnno;
+import org.apache.dubbo.solon.annotation.EnableDubbo;
 import org.noear.solon.Solon;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.Plugin;
-import org.noear.solon.extend.dubbo.EnableDubbo;
 
 
-public class XPluginImp implements Plugin {
+public class DubboSolonPlugin implements Plugin {
     private DubboBootstrap bootstrap;
 
     @Override
     public void start(AppContext context){
-        if (Solon.app().source().getAnnotation(EnableDubbo.class) == null) {
+        if (Solon.app().source().getAnnotation(EnableDubbo.class) == null &&
+                Solon.app().source().getAnnotation(org.noear.solon.extend.dubbo.EnableDubbo.class) == null) {
             return;
         }
 
