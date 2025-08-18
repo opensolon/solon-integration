@@ -1,4 +1,10 @@
 
+### v3.5.0
+
+* 优化 dubbo-solon-plugin 包名结构
+* 优化 dubbo3-solon-plugin 包名结构
+* 调整 包结构 (solon-server)solon.server 部分替代 solon.boot
+
 ### v3.4.0
 
 * 移除 mybatis-solon（与 mybatis-solon-plugin 重复）
