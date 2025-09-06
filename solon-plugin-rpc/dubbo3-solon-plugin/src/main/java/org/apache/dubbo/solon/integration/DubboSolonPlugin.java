@@ -12,6 +12,9 @@ import org.apache.dubbo.solon.annotation.EnableDubbo;
 import org.noear.solon.Solon;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.Plugin;
+import org.noear.solon.core.runtime.NativeDetector;
+
+import java.lang.reflect.Method;
 
 /**
  * @author iYing
@@ -125,6 +128,14 @@ public class DubboSolonPlugin implements Plugin {
             holder.required(true);
 
             if (holder.getType().isInterface()) {
+                if (NativeDetector.isAotRuntime()) {
+                    //如果是 aot 则注册函数
+                    for (Method m : holder.getType().getMethods()) {
+                        holder.context().methodGet(m);
+                    }
+                }
+
+
                 ReferenceConfig<?> config = new ReferenceConfig<>(new DubboReferenceAnno(anno));
                 config.setInterface(holder.getType());
 
