@@ -37,10 +37,8 @@ public class XPluginImp implements Plugin {
     private void getProxy(AppContext ctx, Class<?> clz, FeignClient anno, Consumer consumer) {
         if (NativeDetector.isAotRuntime()) {
             //如果是 aot 则注册函数
-            if (Solon.app() != null) {
-                for (Method m : clz.getMethods()) {
-                    Solon.context().methodGet(m);
-                }
+            for (Method m : clz.getMethods()) {
+                ctx.methodGet(m);
             }
         }
 
