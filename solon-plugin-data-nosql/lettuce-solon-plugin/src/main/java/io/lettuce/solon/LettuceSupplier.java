@@ -4,6 +4,7 @@ import io.lettuce.core.AbstractRedisClient;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.RedisURI;
 import io.lettuce.core.cluster.RedisClusterClient;
+import org.noear.solon.core.runtime.NativeDetector;
 
 import java.time.Duration;
 import java.util.function.Consumer;
@@ -26,6 +27,12 @@ public class LettuceSupplier extends LettuceProperties implements Supplier<Abstr
 
     @Override
     public AbstractRedisClient get() {
+        // Disable JMX for Apache Commons Pool2 which is used by Redis connection pools
+        if (NativeDetector.inNativeImage()) {
+            System.setProperty("org.apache.commons.pool2.impl.BaseGenericObjectPool.jmxEnabled", "false");
+        }
+
+
         RedisMode redisMode = RedisMode.getRedisMode(this.getRedisMode());
         RedisURI redisUri = getRedisURI();
 
