@@ -1,4 +1,11 @@
 
+### v3.5.2
+
+* 添加 feign-solon-plugin aot 自动注册
+* 添加 dubbo-solon-plugin aot 自动注册
+* 添加 lettuce-solon-plugin aot 配置
+
+
 ### v3.5.0
 
 * 优化 dubbo-solon-plugin 包名结构
