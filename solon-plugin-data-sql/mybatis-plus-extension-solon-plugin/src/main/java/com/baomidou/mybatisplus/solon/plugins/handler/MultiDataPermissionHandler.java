@@ -22,7 +22,7 @@ import net.sf.jsqlparser.schema.Table;
  * 支持多表的数据权限处理器
  *
  * @author houkunlin
- * @since 3.5.2 +
+ * @since 3.5.3 +
  */
 public interface MultiDataPermissionHandler extends DataPermissionHandler {
     /**

@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
  * 多表条件处理基对象，从原有的 {@link TenantLineInnerInterceptor} 拦截器中提取出来
  *
  * @author houkunlin
- * @since 3.5.2
+ * @since 3.5.3
  */
 @Data
 @NoArgsConstructor
