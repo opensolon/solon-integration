@@ -7,7 +7,7 @@ import com.jfinal.plugin.activerecord.solon.annotation.Db;
 import com.jfinal.plugin.activerecord.solon.annotation.Table;
 
 import org.noear.solon.core.AppContext;
-import org.noear.solon.core.LifecycleIndex;
+import org.noear.solon.core.Constants;
 import org.noear.solon.core.Plugin;
 import org.noear.solon.data.datasource.DsInjector;
 
@@ -32,7 +32,7 @@ public class XPluginImp implements Plugin {
         });
 
         // 通过DataSource类型获取Bean实例
-        context.lifecycle(LifecycleIndex.PLUGIN_BEAN_USES, () -> {
+        context.lifecycle(Constants.LF_IDX_PLUGIN_BEAN_USES, () -> {
             ArpManager.start();
         });
     }

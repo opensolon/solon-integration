@@ -30,7 +30,7 @@ import static org.apache.seata.common.ConfigurationKeys.SEATA_PREFIX;
 import static org.apache.seata.common.Constants.BEAN_NAME_FAILURE_HANDLER;
 
 @Configuration
-@Condition(onProperty = "${"+SEATA_PREFIX+".enabled:true} = true")
+@Condition(onExpression = "${"+SEATA_PREFIX+".enabled:true} == 'true'")
 public class SeataAutoConfiguration {
     private static final Logger LOGGER = LoggerFactory.getLogger(SeataAutoConfiguration.class);
 

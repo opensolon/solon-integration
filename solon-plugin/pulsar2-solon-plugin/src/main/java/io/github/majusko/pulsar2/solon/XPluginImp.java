@@ -6,8 +6,6 @@ import org.noear.solon.core.AppContext;
 import org.noear.solon.core.BeanWrap;
 import org.noear.solon.core.Plugin;
 import org.noear.solon.core.event.AppLoadEndEvent;
-import org.noear.solon.core.event.EventBus;
-import org.noear.solon.core.util.LogUtil;
 
 import io.github.majusko.pulsar2.solon.annotation.PulsarConsumer;
 import io.github.majusko.pulsar2.solon.collector.ConsumerCollector;

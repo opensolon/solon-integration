@@ -35,7 +35,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import static org.apache.seata.solon.autoconfigure.StarterConstants.SAGA_STATE_MACHINE_PREFIX;
 
 @Configuration
-@Condition(onProperty = "${" + StarterConstants.SAGA_PREFIX + ".enabled:true} = true")
+@Condition(onExpression = "${" + StarterConstants.SAGA_PREFIX + ".enabled:true} == 'true'")
 public class SeataSagaAutoConfiguration {
     private static final Logger LOGGER = LoggerFactory.getLogger(SeataSagaAutoConfiguration.class);
 

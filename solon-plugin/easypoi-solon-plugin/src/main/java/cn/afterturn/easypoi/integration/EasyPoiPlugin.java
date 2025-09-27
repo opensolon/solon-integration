@@ -33,6 +33,6 @@ public class EasyPoiPlugin implements Plugin {
         context.beanScan("cn.afterturn.easypoi");
 
         //注册视图渲染器
-        Solon.app().render(".poi", new EasypoiRender());
+        context.app().renders().register(".poi", new EasypoiRender());
     }
 }

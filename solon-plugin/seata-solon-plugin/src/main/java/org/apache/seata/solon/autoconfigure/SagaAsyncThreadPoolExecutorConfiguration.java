@@ -20,7 +20,7 @@ import static org.apache.seata.solon.autoconfigure.StarterConstants.SAGA_ASYNC_T
  * The saga async thread pool executor configuration.
  */
 @Configuration
-@Condition(onProperty = "${" + SAGA_ASYNC_THREAD_POOL_PREFIX + ".enableAsync} = true")
+@Condition(onExpression = "${" + SAGA_ASYNC_THREAD_POOL_PREFIX + ".enableAsync:false} == 'true'")
 public class SagaAsyncThreadPoolExecutorConfiguration {
 
     /**
