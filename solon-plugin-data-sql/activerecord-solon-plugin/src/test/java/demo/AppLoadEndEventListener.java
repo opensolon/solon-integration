@@ -14,7 +14,7 @@ public class AppLoadEndEventListener implements EventListener<AppLoadEndEvent> {
     @Override
     public void onEvent(AppLoadEndEvent e) throws Throwable {
         //定制 json 序列化输出（使用新的处理接管 "@json" 指令）
-        e.app().renders().register(Constants.RENDER_JSON, (data, ctx) -> {
+        e.app().renders().register("@json", (data, ctx) -> {
             String json = JFinalJson.getJson().toJson(data);
             ctx.outputAsJson(json);
         });
