@@ -19,7 +19,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 import org.apache.commons.collections.CollectionUtils;
-import org.noear.snack.ONode;
+import org.noear.snack4.ONode;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.lang.Nullable;
 import org.noear.solon.net.annotation.ServerEndpoint;
@@ -90,8 +90,8 @@ public class GraphqlWebsocket extends SimpleWebSocketListener implements SubProt
 
     @Override
     public void onMessage(WebSocket socket, String text) throws IOException {
-        GraphQlWebSocketMessage graphQlWebSocketMessage = ONode.loadStr(text)
-            .toObject(GraphQlWebSocketMessage.class);
+        GraphQlWebSocketMessage graphQlWebSocketMessage = ONode.ofJson(text)
+            .toBean(GraphQlWebSocketMessage.class);
         String id = graphQlWebSocketMessage.getId();
         SessionState state = getSessionInfo(socket);
 
@@ -99,7 +99,7 @@ public class GraphqlWebsocket extends SimpleWebSocketListener implements SubProt
             case CONNECTION_INIT:
                 GraphQlWebSocketMessage respMessage = GraphQlWebSocketMessage
                     .connectionAck(Collections.emptyMap());
-                String respStr = ONode.stringify(respMessage);
+                String respStr = ONode.serialize(respMessage);
                 socket.send(respStr);
                 break;
             case SUBSCRIBE:
@@ -131,7 +131,7 @@ public class GraphqlWebsocket extends SimpleWebSocketListener implements SubProt
                 }
                 break;
             case PING:
-                socket.send(ONode.stringify(GraphQlWebSocketMessage
+                socket.send(ONode.serialize(GraphQlWebSocketMessage
                     .pong(null)));
                 break;
             default:
@@ -215,9 +215,9 @@ public class GraphqlWebsocket extends SimpleWebSocketListener implements SubProt
         }
 
         return responseFlux
-            .map(responseMap -> ONode.stringify(GraphQlWebSocketMessage.next(id, responseMap)))
+            .map(responseMap -> ONode.serialize(GraphQlWebSocketMessage.next(id, responseMap)))
             .concatWith(
-                Mono.fromCallable(() -> ONode.stringify(GraphQlWebSocketMessage.complete(id))))
+                Mono.fromCallable(() -> ONode.serialize(GraphQlWebSocketMessage.complete(id))))
             .onErrorResume((ex) -> {
                 if (ex instanceof SubscriptionExistsException) {
                     session.close();
@@ -225,7 +225,7 @@ public class GraphqlWebsocket extends SimpleWebSocketListener implements SubProt
                 }
                 String message = ex.getMessage();
                 GraphQLError error = GraphqlErrorBuilder.newError().message(message).build();
-                return Mono.just(ONode.stringify(GraphQlWebSocketMessage.error(id, error)));
+                return Mono.just(ONode.serialize(GraphQlWebSocketMessage.error(id, error)));
             });
     }
 

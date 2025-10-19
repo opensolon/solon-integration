@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedJdbcTypes;
 import org.apache.ibatis.type.MappedTypes;
-import org.noear.snack.ONode;
+import org.noear.snack4.ONode;
 
 /**
  * Jackson 实现 JSON 字段类型处理器
@@ -49,6 +49,6 @@ public class SnackTypeHandler extends AbstractJsonTypeHandler<Object> {
 
     @Override
     protected String toJson(Object obj) {
-        return ONode.stringify(obj);
+        return ONode.serialize(obj);
     }
 }

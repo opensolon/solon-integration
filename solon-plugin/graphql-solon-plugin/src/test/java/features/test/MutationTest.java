@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import org.junit.jupiter.api.Test;
-import org.noear.snack.ONode;
+import org.noear.snack4.ONode;
 import org.noear.solon.core.util.ResourceUtil;
 import org.noear.solon.test.HttpTester;
 import org.noear.solon.test.SolonTest;
@@ -60,7 +60,7 @@ public class MutationTest extends HttpTester {
         String json = param.toJson();
 
         String content = path("/graphql").bodyJson(json).post();
-        return ONode.loadStr(content).get("data");
+        return ONode.ofJson(content).get("data");
     }
 
     private ONode removeProduct(Long productId) throws IOException {
@@ -76,6 +76,6 @@ public class MutationTest extends HttpTester {
         String json = param.toJson();
 
         String content = path("/graphql").bodyJson(json).post();
-        return ONode.loadStr(content).get("data");
+        return ONode.ofJson(content).get("data");
     }
 }

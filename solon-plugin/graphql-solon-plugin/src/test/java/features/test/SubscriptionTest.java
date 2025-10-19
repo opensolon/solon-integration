@@ -18,7 +18,7 @@ import java.util.UUID;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 import org.junit.jupiter.api.Test;
-import org.noear.snack.ONode;
+import org.noear.snack4.ONode;
 import org.noear.solon.core.util.ResourceUtil;
 import org.noear.solon.test.HttpTester;
 import org.noear.solon.test.SolonTest;
@@ -126,7 +126,7 @@ public class SubscriptionTest extends HttpTester {
             assertThat(notifyProductPriceChange, notNullValue());
 
             ONode price = notifyProductPriceChange.get("price");
-            Object priceValue = price.toData();
+            Object priceValue = price.toBean();
             assertThat(priceValue, instanceOf(Number.class));
         }
 

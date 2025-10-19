@@ -23,7 +23,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import org.noear.snack.core.utils.StringUtil;
+
+import org.noear.solon.Utils;
 import org.noear.solon.lang.Nullable;
 
 
@@ -69,7 +70,7 @@ public abstract class AbstractGraphQlResponse implements GraphQlResponse {
         }
 
         private static List<Object> parsePath(String path) {
-            if (StringUtil.isEmpty(path)) {
+            if (Utils.isEmpty(path)) {
                 return Collections.emptyList();
             }
 

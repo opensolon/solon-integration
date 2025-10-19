@@ -1,7 +1,7 @@
 package org.noear.solon.extend.vaptcha.http.request.validators;
 
 import okhttp3.*;
-import org.noear.snack.ONode;
+import org.noear.snack4.ONode;
 import org.noear.solon.Solon;
 import org.noear.solon.Utils;
 import org.noear.solon.core.Props;

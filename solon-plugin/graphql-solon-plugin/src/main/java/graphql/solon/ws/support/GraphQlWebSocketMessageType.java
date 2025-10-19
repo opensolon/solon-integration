@@ -17,7 +17,7 @@
 package graphql.solon.ws.support;
 
 
-import org.noear.snack.annotation.ONodeAttr;
+import org.noear.snack4.annotation.ONodeAttr;
 
 /**
  * copy from {@link org.springframework.graphql.server.support.GraphQlWebSocketMessageType}
@@ -57,7 +57,6 @@ public enum GraphQlWebSocketMessageType {
 	static {
 		VALUES = values();
 	}
-
 
 	@ONodeAttr
 	private final String value;

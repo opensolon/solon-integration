@@ -7,11 +7,9 @@ import demo.App;
 import demo.book.component.BookService;
 import java.io.IOException;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.noear.snack.ONode;
+import org.noear.snack4.ONode;
 import org.noear.solon.core.util.ResourceUtil;
 import org.noear.solon.test.HttpTester;
-import org.noear.solon.test.SolonJUnit5Extension;
 import org.noear.solon.test.SolonTest;
 
 /**
@@ -37,7 +35,7 @@ public class QueryTest extends HttpTester {
         String json = param.toJson();
 
         String content = path("/graphql").bodyJson(json).post();
-        ONode oNode = ONode.loadStr(content).get("data");
+        ONode oNode = ONode.ofJson(content).get("data");
 
         assertThat(oNode.get("bookById").isNull(), is(false));
         assertThat(oNode.select("bookById.name").getString(), is("book-1"));

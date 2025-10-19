@@ -11,11 +11,10 @@ import demo.course.entity.Course;
 import java.io.IOException;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.noear.snack.ONode;
+import org.noear.snack4.ONode;
+import org.noear.snack4.codec.TypeRef;
 import org.noear.solon.core.util.ResourceUtil;
 import org.noear.solon.test.HttpTester;
-import org.noear.solon.test.SolonJUnit5Extension;
 import org.noear.solon.test.SolonTest;
 
 /**
@@ -38,9 +37,9 @@ public class BatchListTest extends HttpTester {
         String json = param.toJson();
 
         String content = path("/graphql").bodyJson(json).post();
-        ONode oNode = ONode.loadStr(content).get("data");
+        ONode oNode = ONode.ofJson(content).get("data");
 
-        List<Course> courses = oNode.get("courses").toObjectList(Course.class);
+        List<Course> courses = oNode.get("courses").toBean(new TypeRef<List<Course>>() {});
         assertThat(courses, iterableWithSize(2));
         Course course0 = courses.get(0);
         Course course1 = courses.get(1);
@@ -71,9 +70,9 @@ public class BatchListTest extends HttpTester {
         String json = param.toJson();
 
         String content = path("/graphql").bodyJson(json).post();
-        ONode oNode = ONode.loadStr(content);
+        ONode oNode = ONode.ofJson(content);
 
-        List<Course> courses = oNode.get("data").get("courses").toObjectList(Course.class);
+        List<Course> courses = oNode.get("data").get("courses").toBean(new TypeRef<List<Course>>() {});
         assertThat(courses, iterableWithSize(2));
         Course course0 = courses.get(0);
         Course course1 = courses.get(1);
