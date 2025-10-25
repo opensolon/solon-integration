@@ -7,9 +7,12 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.noear.eggg.MethodEggg;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.BeanExtractor;
 import org.noear.solon.core.BeanWrap;
+import org.noear.solon.core.util.EgggUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,22 +40,22 @@ public abstract class BaseSchemaMappingAnnoHandler<T extends Annotation> impleme
 
 
     @Override
-    public void doExtract(BeanWrap wrap, Method method,
-            T schemaMapping) throws Throwable {
+    public void doExtract(BeanWrap wrap, Method method, T schemaMapping) throws Throwable {
         String typeName = this.getTypeName(wrap, method, schemaMapping);
         String fieldName = this.getFieldName(wrap, method, schemaMapping);
 
-        DataFetcher<Object> dataFetcher = this.getDataFetcher(context, wrap, method);
+        MethodEggg methodEggg = EgggUtil.getClassEggg(wrap.rawClz()).findMethodEgggOrNew(method);
+
+        DataFetcher<Object> dataFetcher = this.getDataFetcher(context, wrap, methodEggg);
         DataFetcherWrap fetcherWrap = new DataFetcherWrap(typeName, fieldName, dataFetcher);
         log.debug("扫描到 typeName: [{}],fieldName: [{}] 的 SchemaMappingDataFetcher", typeName,
                 fieldName);
         this.wrapList.add(fetcherWrap);
     }
 
-    protected DataFetcher<Object> getDataFetcher(AppContext context, BeanWrap wrap,
-        Method method) {
+    protected DataFetcher<Object> getDataFetcher(AppContext context, BeanWrap wrap, MethodEggg methodEggg) {
         boolean isBatch = this.isBatch();
-        return new SchemaMappingDataFetcher(context, wrap, method, isBatch);
+        return new SchemaMappingDataFetcher(context, wrap, methodEggg, isBatch);
     }
 
     protected boolean isBatch() {
@@ -64,8 +67,8 @@ public abstract class BaseSchemaMappingAnnoHandler<T extends Annotation> impleme
     }
 
     abstract String getTypeName(BeanWrap wrap, Method method,
-        T schemaMapping);
+                                T schemaMapping);
 
     abstract String getFieldName(BeanWrap wrap, Method method,
-        T schemaMapping);
+                                 T schemaMapping);
 }

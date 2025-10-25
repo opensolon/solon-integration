@@ -11,9 +11,11 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import org.apache.commons.lang3.StringUtils;
+import org.noear.eggg.MethodEggg;
 import org.noear.solon.Utils;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.BeanWrap;
+import org.noear.solon.core.util.EgggUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
@@ -32,8 +34,7 @@ public class BatchMappingAnnoHandler extends BaseSchemaMappingAnnoHandler<BatchM
     }
 
     @Override
-    public void doExtract(BeanWrap wrap, Method method,
-            BatchMapping schemaMapping) throws Throwable {
+    public void doExtract(BeanWrap wrap, Method method, BatchMapping schemaMapping) throws Throwable {
         String typeName = this.getTypeName(wrap, method, schemaMapping);
         String fieldName = this.getFieldName(wrap, method, schemaMapping);
 
@@ -49,7 +50,9 @@ public class BatchMappingAnnoHandler extends BaseSchemaMappingAnnoHandler<BatchM
             }
         }
 
-        DataFetcher<Object> dataFetcher = registerBatchLoader(wrap, method, typeName, fieldName);
+        MethodEggg methodEggg = EgggUtil.getClassEggg(wrap.rawClz()).findMethodEgggOrNew(method);
+
+        DataFetcher<Object> dataFetcher = registerBatchLoader(wrap, methodEggg, typeName, fieldName);
 
         DataFetcherWrap fetcherWrap = new DataFetcherWrap(typeName, fieldName, dataFetcher);
         log.debug("扫描到 typeName: [{}],fieldName: [{}] 的 SchemaMappingDataFetcher", typeName,
@@ -57,16 +60,16 @@ public class BatchMappingAnnoHandler extends BaseSchemaMappingAnnoHandler<BatchM
         this.wrapList.add(fetcherWrap);
     }
 
-    private DataFetcher<Object> registerBatchLoader(BeanWrap wrap, Method method, String typeName,
-            String fieldName) {
+    private DataFetcher<Object> registerBatchLoader(BeanWrap wrap, MethodEggg methodEggg, String typeName,
+                                                    String fieldName) {
         String dataLoaderKey = String.format("%s.%s", typeName, fieldName);
         BatchLoaderRegistry registry = this.context.getBean(BatchLoaderRegistry.class);
 
-        Class<?> returnType = method.getReturnType();
+        Class<?> returnType = methodEggg.getReturnTypeEggg().getType();
         Class<?> nestedClass = (returnType.equals(Callable.class) ? ClazzUtil.getGenericReturnClass(
-                method.getGenericReturnType()) : returnType);
+                methodEggg.getReturnTypeEggg().getGenericType()) : returnType);
         BatchMappingDataFetcher result = new BatchMappingDataFetcher(this.context,
-                wrap, method, true, dataLoaderKey);
+                wrap, methodEggg, true, dataLoaderKey);
 
         if (returnType.equals(Flux.class) || Collection.class.isAssignableFrom(nestedClass)) {
             registry.forName(dataLoaderKey).registerBatchLoader(result::invokeForIterable);
@@ -81,14 +84,12 @@ public class BatchMappingAnnoHandler extends BaseSchemaMappingAnnoHandler<BatchM
     }
 
     @Override
-    String getTypeName(BeanWrap wrap, Method method,
-            BatchMapping schemaMapping) {
+    String getTypeName(BeanWrap wrap, Method method, BatchMapping schemaMapping) {
         return schemaMapping.typeName();
     }
 
     @Override
-    String getFieldName(BeanWrap wrap, Method method,
-            BatchMapping schemaMapping) {
+    String getFieldName(BeanWrap wrap, Method method, BatchMapping schemaMapping) {
         String fieldName = Utils.annoAlias(schemaMapping.field(), schemaMapping.value());
 
         if (StringUtils.isBlank(fieldName)) {

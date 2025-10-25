@@ -24,9 +24,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.dataloader.BatchLoaderEnvironment;
 import org.dataloader.DataLoader;
+import org.noear.eggg.MethodEggg;
+import org.noear.eggg.ParamEggg;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.BeanWrap;
-import org.noear.solon.core.wrap.ParamWrap;
 import org.noear.solon.lang.Nullable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -41,9 +42,9 @@ public class BatchMappingDataFetcher extends SchemaMappingDataFetcher {
 
     private final String dataLoaderKey;
 
-    public BatchMappingDataFetcher(AppContext context, BeanWrap wrap, Method method,
+    public BatchMappingDataFetcher(AppContext context, BeanWrap wrap, MethodEggg methodEggg,
             boolean isBatch, String dataLoaderKey) {
-        super(context, wrap, method, isBatch);
+        super(context, wrap, methodEggg, isBatch);
         this.dataLoaderKey = dataLoaderKey;
     }
 
@@ -84,19 +85,18 @@ public class BatchMappingDataFetcher extends SchemaMappingDataFetcher {
     private <K> Object[] getMethodArgumentValues(Collection<K> keys,
             BatchLoaderEnvironment environment) {
 
-        Object[] args = new Object[this.paramWraps.length];
-        for (int i = 0; i < this.paramWraps.length; i++) {
-            ParamWrap paramWrap = this.paramWraps[i];
-            args[i] = resolve(keys, paramWrap, environment);
+        Object[] args = new Object[methodEgg.getParamCount()];
+        for (int i = 0; i < methodEgg.getParamCount(); i++) {
+            ParamEggg pe = methodEgg.getParamEgggAry().get(i);
+            args[i] = resolve(keys, pe, environment);
         }
         return args;
     }
 
-    private <K> Object resolve(Collection<K> keys, ParamWrap paramWrap,
+    private <K> Object resolve(Collection<K> keys, ParamEggg pe,
             BatchLoaderEnvironment environment) {
-        Class<?> parameterType = paramWrap.getType();
-        Parameter parameter = paramWrap.getParameter();
-        String name = parameter.getName();
+        Class<?> parameterType = pe.getType();
+        String name = pe.getName();
 
         if (Collection.class.isAssignableFrom(parameterType)) {
             if (parameterType.isInstance(keys)) {

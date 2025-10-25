@@ -5,15 +5,15 @@ import graphql.schema.DataFetchingEnvironment;
 import graphql.solon.resolver.argument.HandlerMethodArgumentResolver;
 import graphql.solon.resolver.argument.HandlerMethodArgumentResolverCollect;
 import graphql.solon.util.ReflectionUtils;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.noear.eggg.MethodEggg;
+import org.noear.eggg.ParamEggg;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.BeanWrap;
-import org.noear.solon.core.wrap.ParamWrap;
 
 /**
  * @author fuzi1996
@@ -23,31 +23,18 @@ public class SchemaMappingDataFetcher implements DataFetcher<Object> {
 
     protected final AppContext context;
     protected final BeanWrap wrap;
-    protected final Method method;
-    protected final ParamWrap[] paramWraps;
+    protected final MethodEggg methodEgg;
     protected final HandlerMethodArgumentResolverCollect collect;
-    protected final Map<ParamWrap, HandlerMethodArgumentResolver> argumentResolverCache;
+    protected final Map<ParamEggg, HandlerMethodArgumentResolver> argumentResolverCache;
     protected final boolean isBatch;
 
-    public SchemaMappingDataFetcher(AppContext context, BeanWrap wrap, Method method,
-            boolean isBatch) {
+    public SchemaMappingDataFetcher(AppContext context, BeanWrap wrap, MethodEggg methodEggg, boolean isBatch) {
         this.context = context;
         this.wrap = wrap;
-        this.method = method;
+        this.methodEgg = methodEggg;
         this.collect = this.context
                 .getBean(HandlerMethodArgumentResolverCollect.class);
         this.argumentResolverCache = new ConcurrentHashMap<>(256);
-
-        Parameter[] parameters = this.method.getParameters();
-        if (Objects.nonNull(parameters) && parameters.length > 0) {
-            this.paramWraps = new ParamWrap[parameters.length];
-
-            for (int i = 0; i < parameters.length; i++) {
-                this.paramWraps[i] = new ParamWrap(parameters[i], method, wrap.rawClz());
-            }
-        } else {
-            this.paramWraps = null;
-        }
 
         this.isBatch = isBatch;
     }
@@ -56,15 +43,14 @@ public class SchemaMappingDataFetcher implements DataFetcher<Object> {
      * 构建执行参数
      */
     protected Object[] buildArgs(DataFetchingEnvironment environment) throws Exception {
-        if (Objects.nonNull(this.paramWraps)) {
-            Object[] arguments = new Object[this.paramWraps.length];
+        if (methodEgg.getParamCount() > 0) {
+            Object[] arguments = new Object[methodEgg.getParamCount()];
 
             if (this.getMethodArgLength() > 0) {
 
-                for (int i = 0; i < this.paramWraps.length; i++) {
-                    ParamWrap paramWrap = this.paramWraps[i];
-                    arguments[i] = this
-                            .getArgument(environment, this.method, this.paramWraps, i, paramWrap);
+                for (int i = 0; i < methodEgg.getParamCount(); i++) {
+                    ParamEggg pe = methodEgg.getParamEgggAry().get(i);
+                    arguments[i] = this.getArgument(environment, pe, i);
                 }
             }
 
@@ -73,38 +59,31 @@ public class SchemaMappingDataFetcher implements DataFetcher<Object> {
         return null;
     }
 
-    protected Object getArgument(DataFetchingEnvironment environment, Method method,
-            ParamWrap[] paramWraps,
-            int index,
-            ParamWrap paramWrap) throws Exception {
+    protected Object getArgument(DataFetchingEnvironment environment, ParamEggg pe, int index) throws Exception {
+        HandlerMethodArgumentResolver resolver = this.argumentResolverCache.get(pe);
 
-        HandlerMethodArgumentResolver resolver = this.argumentResolverCache
-                .get(paramWrap);
         if (Objects.isNull(resolver)) {
             List<HandlerMethodArgumentResolver> allCollector = this.collect.getAllCollector();
             // 从后往前判断,这样可以使得后加的优先级高
             for (int i = allCollector.size() - 1; i >= 0; i--) {
                 HandlerMethodArgumentResolver item = allCollector.get(i);
-                if (item.supportsParameter(method, paramWrap)) {
+                if (item.supportsParameter(methodEgg.getMethod(), pe)) {
                     resolver = item;
-                    this.argumentResolverCache.put(paramWrap, resolver);
+                    this.argumentResolverCache.put(pe, resolver);
                     break;
                 }
             }
         }
+
         if (Objects.nonNull(resolver)) {
-            return resolver.resolveArgument(environment, method, paramWraps, index, paramWrap);
+            return resolver.resolveArgument(environment, pe, index);
         }
 
         throw new IllegalArgumentException("not support resolve method argument");
     }
 
     private int getMethodArgLength() {
-        if (Objects.nonNull(this.paramWraps)) {
-            return this.paramWraps.length;
-        } else {
-            return 0;
-        }
+        return methodEgg.getParamCount();
     }
 
     @Override
@@ -114,7 +93,6 @@ public class SchemaMappingDataFetcher implements DataFetcher<Object> {
     }
 
     protected Object invokeMethod(Object[] args) {
-        return ReflectionUtils.invokeMethod(this.method, wrap.get(), args);
+        return ReflectionUtils.invokeMethod(methodEgg.getMethod(), wrap.get(), args);
     }
-
 }

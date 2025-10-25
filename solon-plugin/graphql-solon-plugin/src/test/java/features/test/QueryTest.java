@@ -38,11 +38,11 @@ public class QueryTest extends HttpTester {
         ONode oNode = ONode.ofJson(content).get("data");
 
         assertThat(oNode.get("bookById").isNull(), is(false));
-        assertThat(oNode.select("bookById.name").getString(), is("book-1"));
-        assertThat(oNode.select("bookById.pageCount").getInt(), is(1));
-        assertThat(oNode.select("bookById.author").isNull(), is(false));
-        assertThat(oNode.select("bookById.author.firstName").getString(), is("J"));
-        assertThat(oNode.select("bookById.author.lastName").getString(), is("K"));
+        assertThat(oNode.select("$.bookById.name").getString(), is("book-1"));
+        assertThat(oNode.select("$.bookById.pageCount").getInt(), is(1));
+        assertThat(oNode.select("$.bookById.author").isNull(), is(false));
+        assertThat(oNode.select("$.bookById.author.firstName").getString(), is("J"));
+        assertThat(oNode.select("$.bookById.author.lastName").getString(), is("K"));
 
     }
 }

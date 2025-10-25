@@ -10,9 +10,9 @@ import demo.course.support.CourseSupport;
  */
 public class Person {
 
-    private Long id;
+    private final Long id;
 
-    private String firstName;
+    private final String firstName;
 
     private final String lastName;
 

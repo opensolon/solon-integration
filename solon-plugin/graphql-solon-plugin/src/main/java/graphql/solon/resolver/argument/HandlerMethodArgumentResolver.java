@@ -2,7 +2,8 @@ package graphql.solon.resolver.argument;
 
 import graphql.schema.DataFetchingEnvironment;
 import java.lang.reflect.Method;
-import org.noear.solon.core.wrap.ParamWrap;
+
+import org.noear.eggg.ParamEggg;
 import org.noear.solon.lang.Nullable;
 
 /**
@@ -11,10 +12,8 @@ import org.noear.solon.lang.Nullable;
  */
 public interface HandlerMethodArgumentResolver {
 
-    boolean supportsParameter(Method method, ParamWrap paramWrap);
+    boolean supportsParameter(Method method, ParamEggg paramEggg);
 
     @Nullable
-    Object resolveArgument(DataFetchingEnvironment environment, Method method,
-            ParamWrap[] paramWraps, int index, ParamWrap paramWrap)
-            throws Exception;
+    Object resolveArgument(DataFetchingEnvironment environment, ParamEggg paramEggg, int index) throws Exception;
 }

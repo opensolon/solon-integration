@@ -74,6 +74,13 @@
 
         <dependency>
             <groupId>org.noear</groupId>
+            <artifactId>snack4-jsonpath</artifactId>
+            <version>${snack4.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
             <artifactId>solon-view-thymeleaf</artifactId>
             <scope>test</scope>
         </dependency>

@@ -11,11 +11,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import org.apache.commons.beanutils.ConvertUtils;
+import org.noear.eggg.ParamEggg;
 import org.noear.solon.annotation.Param;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.UploadedFile;
 import org.noear.solon.core.wrap.ParamWrap;
+import org.noear.solon.core.wrap.VarSpec;
 
 /**
  * @author fuzi1996
@@ -24,20 +26,16 @@ import org.noear.solon.core.wrap.ParamWrap;
 public class ArgumentMethodArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
-    public boolean supportsParameter(Method method,
-            ParamWrap paramWrap) {
-        Parameter parameter = paramWrap.getParameter();
-        Param declaredAnnotation = parameter.getDeclaredAnnotation(Param.class);
+    public boolean supportsParameter(Method method, ParamEggg paramEggg) {
+        Param declaredAnnotation = paramEggg.getParam().getDeclaredAnnotation(Param.class);
         return Objects.nonNull(declaredAnnotation);
     }
 
     @Override
-    public Object resolveArgument(DataFetchingEnvironment environment, Method method,
-            ParamWrap[] paramWraps, int index,
-            ParamWrap paramWrap) throws Exception {
+    public Object resolveArgument(DataFetchingEnvironment environment, ParamEggg paramEggg, int index) throws Exception {
         GraphQLContext graphQlContext = environment.getGraphQlContext();
         Context ctx = (Context) graphQlContext.get(Context.class);
-        return this.buildArgs(environment, ctx, paramWrap);
+        return this.buildArgs(environment, ctx, paramEggg);
     }
 
     /**
@@ -46,12 +44,12 @@ public class ArgumentMethodArgumentResolver implements HandlerMethodArgumentReso
      * @param ctx 上下文
      */
     protected Object buildArgs(DataFetchingEnvironment environment, Context ctx,
-            ParamWrap paramWrap) throws IOException {
+                               ParamEggg paramEggg) throws IOException {
 
-        String name = paramWrap.getName();
+        String name = paramEggg.getName();
         Object argumentRowValue = environment.getArgument(name);
 
-        Class<?> argumentTragetType = paramWrap.getType();
+        Class<?> argumentTragetType = paramEggg.getType();
 
         Object tv = null;
         if (argumentTragetType.isInstance(argumentRowValue)) {
@@ -71,7 +69,7 @@ public class ArgumentMethodArgumentResolver implements HandlerMethodArgumentReso
         } else if (UploadedFile.class == argumentTragetType) {
             //如果是 UploadedFile
             //
-            tv = ctx.file(paramWrap.getName());
+            tv = ctx.file(paramEggg.getName());
         } else if (argumentTragetType.isInstance(
                 ctx.request())) { //getTypeName().equals("javax.servlet.http.HttpServletRequest")
             tv = ctx.request();
@@ -79,7 +77,7 @@ public class ArgumentMethodArgumentResolver implements HandlerMethodArgumentReso
                 ctx.response())) { //getTypeName().equals("javax.servlet.http.HttpServletResponse")
             tv = ctx.response();
         } else {
-            if (paramWrap.spec().isRequiredBody()) {
+            if (paramEggg.<VarSpec>getDigest().isRequiredBody()) {
                 //需要 body 数据
                 if (String.class.equals(argumentTragetType)) {
                     tv = ctx.bodyNew();
@@ -128,15 +126,15 @@ public class ArgumentMethodArgumentResolver implements HandlerMethodArgumentReso
                         //其它类型不支持
                         //
                         throw new IllegalArgumentException(
-                                "Please enter a valid parameter @" + paramWrap.getName());
+                                "Please enter a valid parameter @" + paramEggg.getName());
                     }
                 }
             }
 
             if (tv == null) {
-                if (paramWrap.spec().isRequiredInput()) {
+                if (paramEggg.<VarSpec>getDigest().isRequiredInput()) {
                     ctx.status(400);
-                    throw new IllegalArgumentException(paramWrap.spec().getRequiredHint());
+                    throw new IllegalArgumentException(paramEggg.<VarSpec>getDigest().getRequiredHint());
                 }
             }
 

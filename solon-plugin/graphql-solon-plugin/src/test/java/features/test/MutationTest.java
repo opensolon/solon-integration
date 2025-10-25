@@ -30,9 +30,9 @@ public class MutationTest extends HttpTester {
 
         // addProduct 指定义的 GraphQL 操作名称
         assertThat(oNode.get("addProduct").isNull(), is(false));
-        assertThat(oNode.select("addProduct.id").getLong(), is(product.getId()));
-        assertThat(oNode.select("addProduct.price").getInt(), is(product.getPrice()));
-        assertThat(oNode.select("addProduct.startDate").getString(), is(product.getStartDate().toString()));
+        assertThat(oNode.select("$.addProduct.id").getLong(), is(product.getId()));
+        assertThat(oNode.select("$.addProduct.price").getInt(), is(product.getPrice()));
+        assertThat(oNode.select("$.addProduct.startDate").getString(), is(product.getStartDate().toString()));
     }
 
     @Test
@@ -42,9 +42,9 @@ public class MutationTest extends HttpTester {
         ONode oNode = removeProduct(product.getId());
 
         assertThat(oNode.get("removeProduct").isNull(), is(false));
-        assertThat(oNode.select("removeProduct.id").getLong(), is(product.getId()));
-        assertThat(oNode.select("removeProduct.price").getInt(), is(product.getPrice()));
-        assertThat(oNode.select("removeProduct.startDate").getString(), is(product.getStartDate().toString()));
+        assertThat(oNode.select("$.removeProduct.id").getLong(), is(product.getId()));
+        assertThat(oNode.select("$.removeProduct.price").getInt(), is(product.getPrice()));
+        assertThat(oNode.select("$.removeProduct.startDate").getString(), is(product.getStartDate().toString()));
     }
     
     private ONode addProduct(ProductPriceHistoryDTO product) throws IOException {

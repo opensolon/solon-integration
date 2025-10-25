@@ -4,9 +4,11 @@ import graphql.schema.DataFetcher;
 import graphql.solon.fetcher.DataFetcherWrap;
 import java.lang.reflect.Method;
 import org.apache.commons.lang3.StringUtils;
+import org.noear.eggg.MethodEggg;
 import org.noear.solon.Utils;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.BeanWrap;
+import org.noear.solon.core.util.EgggUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,12 +26,12 @@ public class SubscriptionMappingAnnoHandler extends
     }
 
     @Override
-    public void doExtract(BeanWrap wrap, Method method, SubscriptionMapping schemaMapping)
-        throws Throwable {
+    public void doExtract(BeanWrap wrap, Method method, SubscriptionMapping schemaMapping) throws Throwable {
         String typeName = this.getTypeName(wrap, method, schemaMapping);
         String fieldName = this.getFieldName(wrap, method, schemaMapping);
 
-        DataFetcher<Object> dataFetcher = this.getDataFetcher(context, wrap, method);
+        MethodEggg methodEggg = EgggUtil.getClassEggg(wrap.rawClz()).findMethodEgggOrNew(method);
+        DataFetcher<Object> dataFetcher = this.getDataFetcher(context, wrap, methodEggg);
         DataFetcherWrap fetcherWrap = new DataFetcherWrap(typeName, fieldName, dataFetcher);
         log.debug("扫描到 typeName: [{}],fieldName: [{}] 的 SchemaMappingDataFetcher", typeName,
             fieldName);
