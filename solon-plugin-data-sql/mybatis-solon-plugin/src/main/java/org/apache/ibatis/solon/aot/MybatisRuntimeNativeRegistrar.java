@@ -27,6 +27,7 @@ import org.apache.ibatis.solon.MybatisAdapter;
 import org.apache.ibatis.solon.integration.MybatisAdapterDefault;
 import org.apache.ibatis.solon.integration.MybatisAdapterManager;
 import org.apache.ibatis.type.TypeHandler;
+import org.noear.eggg.MethodEggg;
 import org.noear.solon.Utils;
 import org.noear.solon.aot.NativeMetadataUtils;
 import org.noear.solon.aot.RuntimeNativeMetadata;
@@ -34,8 +35,8 @@ import org.noear.solon.aot.RuntimeNativeRegistrar;
 import org.noear.solon.aot.hint.ExecutableMode;
 import org.noear.solon.aot.hint.MemberCategory;
 import org.noear.solon.core.AppContext;
+import org.noear.solon.core.util.EgggUtil;
 import org.noear.solon.core.util.ResourceUtil;
-import org.noear.solon.core.wrap.MethodWrap;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -126,10 +127,8 @@ public class MybatisRuntimeNativeRegistrar implements RuntimeNativeRegistrar {
         for (Class<?> clz : bean.getConfiguration().getMapperRegistry().getMappers()) {
             metadata.registerJdkProxy(clz);
             metadata.registerReflection(clz, MemberCategory.INTROSPECT_PUBLIC_METHODS);
-            Method[] declaredMethods = clz.getDeclaredMethods();
-            for (Method method : declaredMethods) {
-                MethodWrap methodWrap = context.methodGet(method);
-                NativeMetadataUtils.registerMethodAndParamAndReturnType(metadata, methodWrap);
+            for (MethodEggg me : EgggUtil.getClassEggg(clz).getDeclaredMethodEgggs()) {
+                NativeMetadataUtils.registerMethodAndParamAndReturnType(metadata, me);
             }
         }
 
