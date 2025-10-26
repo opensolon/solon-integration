@@ -7,8 +7,6 @@ import org.noear.wood.BaseMapper;
 import org.noear.wood.DbContext;
 import org.noear.wood.annotation.Db;
 
-import java.lang.reflect.ParameterizedType;
-
 /**
  * @author noear
  * @since 3.0
@@ -28,7 +26,7 @@ public class DbBeanInjectorImpl extends DsInjector<Db> {
             vh.setValue(db);
         } else if (clz.isInterface()) {
             if (clz == BaseMapper.class) {
-                Object obj = db.mapperBase((Class<?>) ((ParameterizedType) vh.getGenericType()).getActualTypeArguments()[0]);
+                Object obj = db.mapperBase((Class<?>) vh.getGenericType().getActualTypeArguments()[0]);
                 vh.setValue(obj);
             } else {
                 Object obj = db.mapper(clz);
