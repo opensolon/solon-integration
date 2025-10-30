@@ -87,7 +87,7 @@ public class BatchMappingDataFetcher extends SchemaMappingDataFetcher {
 
         Object[] args = new Object[methodEgg.getParamCount()];
         for (int i = 0; i < methodEgg.getParamCount(); i++) {
-            ParamEggg pe = methodEgg.getParamEgggAry().get(i);
+            ParamEggg pe = methodEgg.getParamEgggAt(i);
             args[i] = resolve(keys, pe, environment);
         }
         return args;

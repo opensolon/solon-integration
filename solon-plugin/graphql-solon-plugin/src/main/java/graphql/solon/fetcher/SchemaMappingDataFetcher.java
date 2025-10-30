@@ -49,7 +49,7 @@ public class SchemaMappingDataFetcher implements DataFetcher<Object> {
             if (this.getMethodArgLength() > 0) {
 
                 for (int i = 0; i < methodEgg.getParamCount(); i++) {
-                    ParamEggg pe = methodEgg.getParamEgggAry().get(i);
+                    ParamEggg pe = methodEgg.getParamEgggAt(i);
                     arguments[i] = this.getArgument(environment, pe, i);
                 }
             }
