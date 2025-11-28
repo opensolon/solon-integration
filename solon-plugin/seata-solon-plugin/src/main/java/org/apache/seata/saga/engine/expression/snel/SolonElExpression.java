@@ -1,7 +1,7 @@
 package org.apache.seata.saga.engine.expression.snel;
 
 import org.apache.seata.saga.engine.expression.ELExpression;
-import org.noear.solon.expression.context.StandardContext;
+import org.noear.solon.expression.context.EnhanceContext;
 import org.noear.solon.expression.snel.SnEL;
 
 public class SolonElExpression implements ELExpression {
@@ -16,7 +16,8 @@ public class SolonElExpression implements ELExpression {
     public Object getValue(Object elContext) {
         String realExpression = expression.replaceAll("#root", "root")
                 .replaceAll("#this", "this");
-        return SnEL.eval(realExpression, new StandardContext(elContext));
+
+        return SnEL.eval(realExpression, new EnhanceContext(elContext));
     }
 
     @Override

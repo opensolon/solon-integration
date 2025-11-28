@@ -248,11 +248,10 @@ public class MybatisAdapterDefault implements MybatisAdapter {
         } else {
             //如果有配置，但是没有 mapper 注册成功；说明有问题了
             if (config.getMapperRegistry().getMappers().size() == 0) {
-                //log.warn("Mybatis: Missing mapper registration, please check the mappers configuration!");
                 if (Utils.isEmpty(dsWrap.name())) {
-                    throw new IllegalStateException("Missing mapper registration, please check the mappers configuration!");
+                    log.warn("Mybatis: Missing mapper registration, please check the mappers configuration!");
                 } else {
-                    throw new IllegalStateException("Missing mapper registration, please check the mappers configuration. name='" + dsWrap.name() + "'");
+                    log.warn("Mybatis: Missing mapper registration, please check the mappers configuration. name='" + dsWrap.name() + "'");
                 }
             }
         }
