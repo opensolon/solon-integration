@@ -17,7 +17,7 @@ import org.apache.ibatis.type.TypeHandler;
 import org.noear.solon.Solon;
 import org.noear.solon.Utils;
 import org.noear.solon.core.BeanWrap;
-import org.noear.solon.core.LifecycleIndex;
+import org.noear.solon.core.Constants;
 import org.noear.solon.core.Props;
 import org.noear.solon.core.VarHolder;
 import org.noear.solon.core.event.EventBus;
@@ -91,7 +91,7 @@ public class MybatisAdapterDefault implements MybatisAdapter {
         }
 
         //加载插件（通过Bean）
-        dsWrap.context().lifecycle(LifecycleIndex.PLUGIN_BEAN_USES, () -> {
+        dsWrap.context().lifecycle(Constants.LF_IDX_PLUGIN_BEAN_USES, () -> {
             dsWrap.context().beanForeach(bw -> {
                 if (bw.raw() instanceof Interceptor) {
                     config.addInterceptor(bw.raw());
@@ -248,11 +248,10 @@ public class MybatisAdapterDefault implements MybatisAdapter {
         } else {
             //如果有配置，但是没有 mapper 注册成功；说明有问题了
             if (config.getMapperRegistry().getMappers().size() == 0) {
-                //log.warn("Mybatis: Missing mapper registration, please check the mappers configuration!");
                 if (Utils.isEmpty(dsWrap.name())) {
-                    throw new IllegalStateException("Missing mapper registration, please check the mappers configuration!");
+                    log.warn("Mybatis: Missing mapper registration, please check the mappers configuration!");
                 } else {
-                    throw new IllegalStateException("Missing mapper registration, please check the mappers configuration. name='" + dsWrap.name() + "'");
+                    log.warn("Mybatis: Missing mapper registration, please check the mappers configuration. name='" + dsWrap.name() + "'");
                 }
             }
         }
