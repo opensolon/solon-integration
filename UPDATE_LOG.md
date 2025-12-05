@@ -3,6 +3,11 @@
 
 * 调整 mybatis-solon-plugin 当配置的 mapper 没有对应注册时改为 warn 日志打印（之前为异常）
 
+### v3.5.10
+
+* 调整 mybatis-solon-plugin 当配置的 mapper 没有对应注册时改为 warn 日志打印（之前为异常）
+
+
 ### v3.5.2
 
 * 添加 feign-solon-plugin aot 自动注册
