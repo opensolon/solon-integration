@@ -13,6 +13,10 @@ import java.util.Collection;
 import java.util.Properties;
 
 /**
+ * Hibernate配置类（继承自Hibernate的Configuration）
+ * 
+ * <p>用于构建Hibernate的SessionFactory，提供便捷的配置方法</p>
+ * 
  * @author lingkang
  * @author bai
  * @since 2.5
@@ -20,7 +24,7 @@ import java.util.Properties;
 public class HibernateConfiguration extends Configuration {
 
     public HibernateConfiguration() {
-
+        super();
     }
 
     /**

@@ -20,8 +20,6 @@
             <groupId>org.noear</groupId>
             <artifactId>solon</artifactId>
         </dependency>
-
-
         <dependency>
             <groupId>com.usthe.sureness</groupId>
             <artifactId>sureness-core</artifactId>
