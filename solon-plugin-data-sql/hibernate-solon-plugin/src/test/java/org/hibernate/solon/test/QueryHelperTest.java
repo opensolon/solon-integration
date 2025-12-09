@@ -7,8 +7,10 @@ import org.hibernate.solon.integration.query.DynamicQueryBuilder;
 import org.hibernate.solon.integration.query.HibernateQueryHelper;
 import org.hibernate.solon.integration.query.PageQuery;
 import org.hibernate.solon.test.entity.User;
-import org.noear.solon.annotation.Component;
-import org.noear.solon.data.annotation.Tran;
+import org.junit.jupiter.api.Test;
+import org.noear.solon.annotation.Inject;
+import org.noear.solon.data.annotation.Transaction;
+import org.noear.solon.test.SolonTest;
 
 import java.util.List;
 import java.util.Map;
@@ -16,19 +18,34 @@ import java.util.Map;
 /**
  * 查询助手测试类
  * 
+ * <p><b>⚠️ 测试前准备：</b></p>
+ * <ol>
+ *   <li>确保数据库表已创建（test_user表）</li>
+ *   <li>创建方式：
+ *     <ul>
+ *       <li>方式1：配置 hbm2ddl.auto=create 或 update，启动时自动创建</li>
+ *       <li>方式2：执行 SQL脚本：src/test/resources/test_schema.sql</li>
+ *       <li>方式3：运行 DdlGeneratorTest 生成DDL后手动执行</li>
+ *     </ul>
+ *   </li>
+ *   <li>详细说明请参考：TEST_GUIDE.md</li>
+ * </ol>
+ * 
  * @author noear
  * @since 3.4
  */
-@Component
+@SolonTest(TestApp.class)
 public class QueryHelperTest {
     
     @Db
+    @Inject
     private SessionFactory sessionFactory;
     
     /**
      * 测试基本查询
      */
-    @Tran
+    @Test
+    @Transaction
     public void testBasicQuery() {
         Session session = sessionFactory.getCurrentSession();
         HibernateQueryHelper helper = new HibernateQueryHelper(session);
@@ -49,7 +66,8 @@ public class QueryHelperTest {
     /**
      * 测试分页查询
      */
-    @Tran
+    @Test
+    @Transaction
     public void testPageQuery() {
         Session session = sessionFactory.getCurrentSession();
         HibernateQueryHelper helper = new HibernateQueryHelper(session);
@@ -72,7 +90,8 @@ public class QueryHelperTest {
     /**
      * 测试动态查询构建器
      */
-    @Tran
+    @Test
+    @Transaction
     public void testDynamicQuery() {
         Session session = sessionFactory.getCurrentSession();
         HibernateQueryHelper helper = new HibernateQueryHelper(session);

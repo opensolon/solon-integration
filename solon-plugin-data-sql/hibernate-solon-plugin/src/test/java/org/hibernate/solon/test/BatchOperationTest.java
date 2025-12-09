@@ -5,8 +5,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.solon.annotation.Db;
 import org.hibernate.solon.integration.batch.BatchOperationHelper;
 import org.hibernate.solon.test.entity.User;
-import org.noear.solon.annotation.Component;
-import org.noear.solon.data.annotation.Tran;
+import org.junit.jupiter.api.Test;
+import org.noear.solon.annotation.Inject;
+import org.noear.solon.data.annotation.Transaction;
+import org.noear.solon.test.SolonTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,19 +16,34 @@ import java.util.List;
 /**
  * 批量操作测试类
  * 
+ * <p><b>⚠️ 测试前准备：</b></p>
+ * <ol>
+ *   <li>确保数据库表已创建（test_user表）</li>
+ *   <li>创建方式：
+ *     <ul>
+ *       <li>方式1：配置 hbm2ddl.auto=create 或 update，启动时自动创建</li>
+ *       <li>方式2：执行 SQL脚本：src/test/resources/test_schema.sql</li>
+ *       <li>方式3：运行 DdlGeneratorTest 生成DDL后手动执行</li>
+ *     </ul>
+ *   </li>
+ *   <li>详细说明请参考：TEST_GUIDE.md</li>
+ * </ol>
+ * 
  * @author noear
  * @since 3.4
  */
-@Component
+@SolonTest(TestApp.class)
 public class BatchOperationTest {
     
     @Db
+    @Inject
     private SessionFactory sessionFactory;
     
     /**
      * 测试批量保存
      */
-    @Tran
+    @Test
+    @Transaction
     public void testBatchSave() {
         Session session = sessionFactory.getCurrentSession();
         BatchOperationHelper helper = new BatchOperationHelper(session, 50);
@@ -52,7 +69,8 @@ public class BatchOperationTest {
     /**
      * 测试批量更新
      */
-    @Tran
+    @Test
+    @Transaction
     public void testBatchUpdate() {
         Session session = sessionFactory.getCurrentSession();
         BatchOperationHelper helper = new BatchOperationHelper(session);
@@ -76,7 +94,8 @@ public class BatchOperationTest {
     /**
      * 测试批量删除
      */
-    @Tran
+    @Test
+    @Transaction
     public void testBatchDelete() {
         Session session = sessionFactory.getCurrentSession();
         BatchOperationHelper helper = new BatchOperationHelper(session);
@@ -98,7 +117,8 @@ public class BatchOperationTest {
     /**
      * 测试使用StatelessSession的批量插入
      */
-    @Tran
+    @Test
+    @Transaction
     public void testStatelessBatchInsert() {
         Session session = sessionFactory.getCurrentSession();
         BatchOperationHelper helper = new BatchOperationHelper(session);
@@ -121,4 +141,3 @@ public class BatchOperationTest {
         System.out.println("StatelessSession批量插入 " + users.size() + " 条记录，耗时: " + (endTime - startTime) + " ms");
     }
 }
-

@@ -4,7 +4,7 @@ import org.hibernate.solon.test.entity.User;
 import org.hibernate.solon.test.repository.UserRepository;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
-import org.noear.solon.data.annotation.Tran;
+import org.noear.solon.data.annotation.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class UserService {
     /**
      * 保存用户
      */
-    @Tran
+    @Transaction
     public User saveUser(User user) {
         return userRepository.save(user);
     }
@@ -32,7 +32,7 @@ public class UserService {
     /**
      * 批量保存用户
      */
-    @Tran
+    @Transaction
     public void batchSaveUsers(List<User> users) {
         userRepository.saveAll(users);
     }
@@ -40,7 +40,7 @@ public class UserService {
     /**
      * 批量保存用户（使用自定义批量大小）
      */
-    @Tran
+    @Transaction
     public void batchSaveUsersWithSize(List<User> users, int batchSize) {
         // 注意：getBatchHelper是protected方法，需要通过Session创建
         // 这里仅作为示例，实际使用时建议直接使用saveAll方法
@@ -92,7 +92,7 @@ public class UserService {
     /**
      * 删除用户
      */
-    @Tran
+    @Transaction
     public void deleteUser(User user) {
         userRepository.delete(user);
     }
@@ -100,7 +100,7 @@ public class UserService {
     /**
      * 批量删除用户
      */
-    @Tran
+    @Transaction
     public void batchDeleteUsers(List<User> users) {
         userRepository.deleteAll(users);
     }
@@ -108,7 +108,7 @@ public class UserService {
     /**
      * 创建测试数据
      */
-    @Tran
+    @Transaction
     public List<User> createTestUsers(int count) {
         List<User> users = new ArrayList<>();
         for (int i = 1; i <= count; i++) {

@@ -4,23 +4,41 @@ import org.hibernate.SessionFactory;
 import org.hibernate.solon.annotation.Db;
 import org.hibernate.solon.integration.monitor.PerformanceMonitor;
 import org.hibernate.solon.integration.monitor.SlowQueryDetector;
-import org.noear.solon.annotation.Component;
+import org.junit.jupiter.api.Test;
+import org.noear.solon.annotation.Inject;
+import org.noear.solon.test.SolonTest;
 
 /**
  * 性能监控测试类
  * 
+ * <p><b>⚠️ 测试前准备：</b></p>
+ * <ol>
+ *   <li>确保数据库表已创建（test_user表）</li>
+ *   <li>创建方式：
+ *     <ul>
+ *       <li>方式1：配置 hbm2ddl.auto=create 或 update，启动时自动创建</li>
+ *       <li>方式2：执行 SQL脚本：src/test/resources/test_schema.sql</li>
+ *       <li>方式3：运行 DdlGeneratorTest 生成DDL后手动执行</li>
+ *     </ul>
+ *   </li>
+ *   <li>建议在配置中启用统计：hibernate.generate_statistics=true</li>
+ *   <li>详细说明请参考：TEST_GUIDE.md</li>
+ * </ol>
+ * 
  * @author noear
  * @since 3.4
  */
-@Component
+@SolonTest(TestApp.class)
 public class PerformanceMonitorTest {
     
     @Db
+    @Inject
     private SessionFactory sessionFactory;
     
     /**
      * 测试性能监控
      */
+    @Test
     public void testPerformanceMonitor() {
         PerformanceMonitor monitor = new PerformanceMonitor(sessionFactory);
         
@@ -41,6 +59,7 @@ public class PerformanceMonitorTest {
     /**
      * 测试慢查询检测
      */
+    @Test
     public void testSlowQueryDetector() {
         SlowQueryDetector detector = new SlowQueryDetector(sessionFactory, 1000); // 阈值1秒
         

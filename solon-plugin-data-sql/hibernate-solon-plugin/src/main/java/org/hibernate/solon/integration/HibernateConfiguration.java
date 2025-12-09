@@ -9,7 +9,9 @@ import org.noear.solon.Utils;
 import org.noear.solon.core.util.ResourceUtil;
 
 import javax.sql.DataSource;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -22,9 +24,21 @@ import java.util.Properties;
  * @since 2.5
  */
 public class HibernateConfiguration extends Configuration {
+    
+    /**
+     * 保存已注册的实体类列表（用于DDL生成）
+     */
+    private final List<Class<?>> registeredClasses = new ArrayList<>();
 
     public HibernateConfiguration() {
         super();
+    }
+    
+    /**
+     * 获取已注册的实体类列表
+     */
+    public List<Class<?>> getRegisteredClasses() {
+        return new ArrayList<>(registeredClasses);
     }
 
     /**
@@ -33,8 +47,22 @@ public class HibernateConfiguration extends Configuration {
     public HibernateConfiguration addMapping(String basePackage) {
         if (Utils.isNotEmpty(basePackage)) {
             Collection<Class<?>> classes = ResourceUtil.scanClasses(basePackage);
-            for (Class<?> clazz : classes)
+            for (Class<?> clazz : classes) {
                 addAnnotatedClass(clazz);
+                registeredClasses.add(clazz);
+            }
+        }
+        return this;
+    }
+    
+    /**
+     * 添加实体类（重写以保存类列表）
+     */
+    @Override
+    public Configuration addAnnotatedClass(Class annotatedClass) {
+        super.addAnnotatedClass(annotatedClass);
+        if (!registeredClasses.contains(annotatedClass)) {
+            registeredClasses.add(annotatedClass);
         }
         return this;
     }

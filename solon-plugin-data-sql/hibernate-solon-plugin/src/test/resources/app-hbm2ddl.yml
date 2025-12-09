@@ -1,0 +1,62 @@
+# Hibernate hbm2ddl.auto 配置示例
+# 
+# 此配置文件展示了如何使用 hbm2ddl.auto 功能
+# 根据实体类注解自动生成数据库表结构
+
+# 数据源配置
+test.db1:
+  jdbcUrl: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8mb4&useSSL=false&serverTimezone=Asia/Shanghai
+  driverClassName: com.mysql.cj.jdbc.Driver
+  username: root
+  password: root
+  maximumPoolSize: 10
+  minimumIdle: 5
+
+# Hibernate配置
+jpa.db1:
+  # 实体类映射包（支持多个包）
+  mappings:
+    - org.hibernate.solon.test.entity.*
+  
+  # Hibernate属性配置
+  properties:
+    hibernate:
+      # 数据库方言（必须配置）
+      dialect: org.hibernate.dialect.MySQL8Dialect
+      
+      # ============================================
+      # DDL自动执行策略（核心配置）
+      # ============================================
+      # 可选值：
+      #   none        - 不执行任何DDL操作（默认，生产环境推荐）
+      #   create      - 启动时创建所有表（会删除已存在的表）
+      #   create-drop - 启动时创建，关闭时删除（测试环境）
+      #   update      - 启动时更新表结构（开发环境推荐）
+      #   validate    - 启动时验证表结构，不修改数据库（生产环境推荐）
+      # ============================================
+      hbm2ddl:
+        auto: update
+      
+      # SQL日志配置
+      show_sql: true              # 显示SQL语句
+      format_sql: true           # 格式化SQL
+      use_sql_comments: true      # 显示SQL注释
+      
+      # 字符集配置
+      connection:
+        characterEncoding: utf8mb4
+        useUnicode: true
+      
+      # 批量操作配置
+      jdbc:
+        batch_size: 50
+        batch_versioned_data: true
+      
+      # 二级缓存（可选）
+      cache:
+        use_second_level_cache: false
+        use_query_cache: false
+      
+      # 性能监控（可选）
+      generate_statistics: false
+
