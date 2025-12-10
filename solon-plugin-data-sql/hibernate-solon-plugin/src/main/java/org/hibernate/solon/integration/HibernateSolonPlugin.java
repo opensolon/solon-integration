@@ -39,6 +39,15 @@ public class HibernateSolonPlugin implements Plugin {
         //PersistenceUnit
         context.beanInjectorAdd(PersistenceContext.class, this::persistenceContextInject);
         context.beanInjectorAdd(PersistenceUnit.class, this::persistenceUnitInject);
+        
+        // 注册Schema自动执行器（用于hbm2ddl.auto功能）
+        context.beanMake(org.hibernate.solon.integration.schema.SchemaAutoExecutor.class);
+        
+        // 注册自动表配置
+        context.beanMake(org.hibernate.solon.integration.schema.AutoTableConfig.class);
+        
+        // 注册自动表增强器
+        context.beanMake(org.hibernate.solon.integration.schema.AutoTableEnhancer.class);
     }
 
     private void persistenceContextInject(VarHolder vh, PersistenceContext anno) {
