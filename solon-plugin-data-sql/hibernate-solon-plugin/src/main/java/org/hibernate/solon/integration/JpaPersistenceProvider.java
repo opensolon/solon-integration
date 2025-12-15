@@ -61,7 +61,7 @@ public class JpaPersistenceProvider implements PersistenceProvider {
 
         @Override
         public LoadState isLoaded(Object o) {
-            return PersistenceUtilHelper.getLoadState(o);
+            return PersistenceUtilHelper.isLoaded(o);
         }
     };
 }
