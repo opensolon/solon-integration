@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * 数据工厂注解
  *
- * {@link org.noear.solon.data.annotation.Ds}
+ * 例：
  * */
 @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

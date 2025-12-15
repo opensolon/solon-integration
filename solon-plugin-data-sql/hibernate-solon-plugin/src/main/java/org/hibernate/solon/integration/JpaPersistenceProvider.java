@@ -7,6 +7,7 @@ import javax.persistence.spi.LoadState;
 import javax.persistence.spi.PersistenceProvider;
 import javax.persistence.spi.PersistenceUnitInfo;
 import javax.persistence.spi.ProviderUtil;
+
 import java.util.Map;
 
 /**
@@ -59,8 +60,8 @@ public class JpaPersistenceProvider implements PersistenceProvider {
         }
 
         @Override
-        public LoadState isLoaded(Object reference) {
-            return PersistenceUtilHelper.isLoaded(reference);
+        public LoadState isLoaded(Object o) {
+            return PersistenceUtilHelper.getLoadState(o);
         }
     };
 }

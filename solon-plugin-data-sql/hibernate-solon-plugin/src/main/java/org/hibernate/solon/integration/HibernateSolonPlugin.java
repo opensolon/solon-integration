@@ -1,5 +1,9 @@
 package org.hibernate.solon.integration;
 
+import javax.persistence.spi.PersistenceProviderResolverHolder;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
+
 import org.hibernate.solon.annotation.Db;
 import org.noear.solon.Utils;
 import org.noear.solon.core.AppContext;
@@ -8,9 +12,6 @@ import org.noear.solon.core.VarHolder;
 import org.noear.solon.data.datasource.DsInjector;
 import org.noear.solon.data.datasource.DsUtils;
 
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceUnit;
-import javax.persistence.spi.PersistenceProviderResolverHolder;
 import javax.sql.DataSource;
 
 /**
@@ -39,15 +40,6 @@ public class HibernateSolonPlugin implements Plugin {
         //PersistenceUnit
         context.beanInjectorAdd(PersistenceContext.class, this::persistenceContextInject);
         context.beanInjectorAdd(PersistenceUnit.class, this::persistenceUnitInject);
-        
-        // 注册Schema自动执行器（用于hbm2ddl.auto功能）
-        context.beanMake(org.hibernate.solon.integration.schema.SchemaAutoExecutor.class);
-        
-        // 注册自动表配置
-        context.beanMake(org.hibernate.solon.integration.schema.AutoTableConfig.class);
-        
-        // 注册自动表增强器
-        context.beanMake(org.hibernate.solon.integration.schema.AutoTableEnhancer.class);
     }
 
     private void persistenceContextInject(VarHolder vh, PersistenceContext anno) {

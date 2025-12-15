@@ -71,6 +71,17 @@ public class HibernateAdapterManager {
         } else {
             adapter = new HibernateAdapter(bw, Solon.cfg().getProp("jpa." + bw.name()));
         }
+        // 在创建适配器时立即初始化 SessionFactory，触发建表
+        // 确保注入时 SessionFactory 已经创建
+        try {
+            adapter.getSessionFactory();
+            org.slf4j.LoggerFactory.getLogger(HibernateAdapterManager.class)
+                    .debug("Hibernate SessionFactory initialized for datasource: {}", bw.name());
+        } catch (Exception e) {
+            // 记录错误但不阻止适配器创建，因为可能后续会修复配置
+            org.slf4j.LoggerFactory.getLogger(HibernateAdapterManager.class)
+                    .error("Failed to initialize Hibernate SessionFactory for datasource: {}", bw.name(), e);
+        }
 
         return adapter;
     }

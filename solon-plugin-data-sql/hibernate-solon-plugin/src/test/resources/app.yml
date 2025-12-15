@@ -41,6 +41,7 @@ jpa.test:
       dialect: org.hibernate.dialect.MySQL8Dialect
       connection:
         isolaction: 4 # 事务隔离级别 4 可重复度
+      physical_naming_strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy # 命名策略
 
 #默认hibernate配置
 # 可选app.yml 或者hibernate.cf.xml
