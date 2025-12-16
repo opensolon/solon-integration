@@ -1,10 +1,12 @@
 
 ### v3.8.0
 
+* 添加 `hibernate-solon-plugin` EntityManager 注入支持
 * 修复 `hibernate-solon-plugin` 无法自动建表的问题,修改SessionFactory初始化时机
 
 ### v3.7.4
 
+* 添加 `hibernate-solon-plugin` EntityManager 注入支持
 * 修复 `hibernate-solon-plugin` 无法自动建表的问题,修改SessionFactory初始化时机
 
 ### v3.7.3

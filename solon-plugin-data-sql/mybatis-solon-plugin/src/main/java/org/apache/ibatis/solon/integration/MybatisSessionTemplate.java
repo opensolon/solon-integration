@@ -27,7 +27,10 @@ public class MybatisSessionTemplate implements SqlSession {
     public MybatisSessionTemplate(SqlSessionFactory sqlSessionFactory, ExecutorType executorType) {
         this.sqlSessionFactory = sqlSessionFactory;
         this.executorType = executorType;
-        this.sqlSessionProxy = (SqlSession) Proxy.newProxyInstance(SqlSessionFactory.class.getClassLoader(), new Class[]{SqlSession.class}, new SqlSessionInterceptor());
+        this.sqlSessionProxy = (SqlSession) Proxy.newProxyInstance(
+                SqlSessionFactory.class.getClassLoader(),
+                new Class[]{SqlSession.class},
+                new SqlSessionInterceptor());
     }
 
     public SqlSessionFactory getSqlSessionFactory() {

@@ -1,5 +1,6 @@
 package org.hibernate.solon.integration;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.noear.solon.Solon;
@@ -8,10 +9,12 @@ import org.noear.solon.core.Props;
 import org.noear.solon.core.VarHolder;
 import org.noear.solon.core.util.ResourceUtil;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import javax.security.auth.login.Configuration;
 import javax.sql.DataSource;
+import java.lang.reflect.Proxy;
 
 /**
  * @author lingkang
@@ -54,6 +57,19 @@ public class HibernateAdapter {
 
         return sessionFactory;
     }
+
+    private Session sessionProxy;
+    public Session getSessionProxy() {
+        if (sessionProxy == null) {
+            sessionProxy = (Session) Proxy.newProxyInstance(
+                    Session.class.getClassLoader(),
+                    new Class[]{Session.class},
+                    new HibernateSessionInterceptor(getSessionFactory()));
+        }
+
+        return sessionProxy;
+    }
+
 
     public HibernateConfiguration getConfiguration() {
         return configuration;
@@ -104,6 +120,10 @@ public class HibernateAdapter {
 
         if (EntityManagerFactory.class.isAssignableFrom(vh.getType())) {
             vh.setValue(getSessionFactory());
+        }
+
+        if (EntityManager.class.isAssignableFrom(vh.getType())) {
+            vh.setValue(getSessionProxy());
         }
     }
 }
