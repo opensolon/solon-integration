@@ -3,6 +3,8 @@ package org.hibernate.solon.integration;
 import org.noear.solon.Solon;
 import org.noear.solon.Utils;
 import org.noear.solon.core.BeanWrap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.Map;
@@ -13,9 +15,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 2.5
  */
 public class HibernateAdapterManager {
-    /**
-     * 缓存适配器
-     */
+    private static final Logger log = LoggerFactory.getLogger(HibernateAdapterManager.class);
+
     private static final Map<String, HibernateAdapter> dbMap = new ConcurrentHashMap<>();
 
     public static HibernateAdapter getOnly(String name) {
@@ -75,12 +76,10 @@ public class HibernateAdapterManager {
         // 确保注入时 SessionFactory 已经创建
         try {
             adapter.getSessionFactory();
-            org.slf4j.LoggerFactory.getLogger(HibernateAdapterManager.class)
-                    .debug("Hibernate SessionFactory initialized for datasource: {}", bw.name());
+            log.debug("Hibernate SessionFactory initialized for datasource: {}", bw.name());
         } catch (Exception e) {
             // 记录错误但不阻止适配器创建，因为可能后续会修复配置
-            org.slf4j.LoggerFactory.getLogger(HibernateAdapterManager.class)
-                    .error("Failed to initialize Hibernate SessionFactory for datasource: {}", bw.name(), e);
+            log.warn("Failed to initialize Hibernate SessionFactory for datasource: {}", bw.name(), e);
         }
 
         return adapter;
