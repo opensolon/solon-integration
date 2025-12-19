@@ -18,6 +18,7 @@
 
     <modules>
         <module>../../solon-plugin-auth/sa-token-solon-plugin</module>
+        <module>../../solon-plugin-auth/sa-token-snack4</module>
         <module>../../solon-plugin-auth/sa-token-dao-redisson-jackson</module>
         <module>../../solon-plugin-auth/captcha-solon-plugin</module>
         <module>../../solon-plugin-auth/vaptcha-solon-plugin</module>
