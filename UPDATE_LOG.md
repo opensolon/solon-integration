@@ -4,11 +4,6 @@
 * 添加 `hibernate-solon-plugin` EntityManager 注入支持
 * 修复 `hibernate-solon-plugin` 无法自动建表的问题,修改SessionFactory初始化时机
 
-### v3.7.4
-
-* 添加 `hibernate-solon-plugin` EntityManager 注入支持
-* 修复 `hibernate-solon-plugin` 无法自动建表的问题,修改SessionFactory初始化时机
-
 ### v3.7.3
 
 * 调整 mybatis-solon-plugin 当配置的 mapper 没有对应注册时改为 warn 日志打印（之前为异常）
