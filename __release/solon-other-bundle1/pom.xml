@@ -26,11 +26,16 @@
         <module>../../solon-plugin/easypoi-wps-solon</module>
         <module>../../solon-plugin/hasor-solon-plugin</module>
         <module>../../solon-plugin/orika-solon-plugin</module>
-        <module>../../solon-plugin/pulsar2-solon-plugin</module>
         <module>../../solon-plugin/sureness-solon-plugin</module>
         <module>../../solon-plugin/simplejavamail-solon-plugin</module>
         <module>../../solon-plugin/sms4j-solon-plugin</module>
         <module>../../solon-plugin-data-nosql/redisson-solon-plugin</module>
         <module>../../solon-plugin-data-nosql/lettuce-solon-plugin</module>
+
+        <module>../../solon-plugin-messaging/activemq-solon-plugin</module>
+        <module>../../solon-plugin-messaging/kafka-solon-plugin</module>
+        <module>../../solon-plugin-messaging/pulsar2-solon-plugin</module>
+        <module>../../solon-plugin-messaging/rabbitmq-solon-plugin</module>
+        <module>../../solon-plugin-messaging/rocketmq-solon-plugin</module>
     </modules>
 </project>
