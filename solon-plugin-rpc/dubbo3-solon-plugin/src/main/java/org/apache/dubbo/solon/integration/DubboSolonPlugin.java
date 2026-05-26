@@ -25,8 +25,7 @@ public class DubboSolonPlugin implements Plugin {
 
     @Override
     public void start(AppContext context) {
-        if (Solon.app().source().getAnnotation(EnableDubbo.class) == null &&
-                Solon.app().source().getAnnotation(org.noear.solon.extend.dubbo3.EnableDubbo.class) == null) {
+        if (Solon.app().source().getAnnotation(EnableDubbo.class) == null) {
             return;
         }
 

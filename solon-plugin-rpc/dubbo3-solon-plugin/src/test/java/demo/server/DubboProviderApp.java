@@ -2,9 +2,9 @@ package demo.server;
 
 import demo.protocol.HelloService;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.solon.annotation.EnableDubbo;
 import org.noear.solon.Solon;
 import org.noear.solon.annotation.Managed;
-import org.noear.solon.extend.dubbo3.EnableDubbo;
 
 @EnableDubbo
 @Managed

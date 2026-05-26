@@ -54,21 +54,10 @@ public class KieTemplate extends KieAccessor {
     private static Map<String, BlockingQueue<KieSession>> SESSION = new ConcurrentHashMap<>();
     private static Map<String, BlockingQueue<KieBase>> BASE = new ConcurrentHashMap<>();
 
-//    @Deprecated
-//    private ClassLoader classLoader;
 
     public KieTemplate() {
         setCharset("UTF-8");
     }
-
-
-
-
-//    @Deprecated
-//    public void setBeanClassLoader(ClassLoader classLoader) {
-//        this.classLoader = classLoader;
-//    }
-
 
     /**
      * 根据文件名获取KieSession

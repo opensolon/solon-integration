@@ -19,7 +19,6 @@
     <modules>
         <module>../../solon-plugin/graphql-solon-plugin</module>
         <module>../../solon-plugin/seata-solon-plugin</module>
-        <module>../../solon-plugin/easy-trans-solon-plugin</module>
         <module>../../solon-plugin/drools-solon-plugin</module>
         <module>../../solon-plugin/easypoi-solon-plugin</module>
         <module>../../solon-plugin/easypoi-web-solon</module>
@@ -28,7 +27,6 @@
         <module>../../solon-plugin/orika-solon-plugin</module>
         <module>../../solon-plugin/sureness-solon-plugin</module>
         <module>../../solon-plugin/simplejavamail-solon-plugin</module>
-        <module>../../solon-plugin/sms4j-solon-plugin</module>
         <module>../../solon-plugin-data-nosql/redisson-solon-plugin</module>
         <module>../../solon-plugin-data-nosql/lettuce-solon-plugin</module>
 
