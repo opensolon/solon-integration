@@ -30,8 +30,9 @@ public class MybatisplusPlugin implements Plugin {
         // 此插件的 solon.plugin.priority 会大于 mybatis-solon-plugin 的值
         //
         MybatisAdapterManager.setAdapterFactory(new MybatisAdapterFactoryPlus());
-        GenericTypeUtils.setGenericTypeResolver(((clazz, genericIfc) ->
-                GenericUtil.resolveTypeArguments(clazz, genericIfc)));
+        GenericTypeUtils.setGenericTypeResolver((clazz, genericIfc) -> {
+            return GenericUtil.resolveTypeArguments(clazz, genericIfc);
+        });
 
         // aot
         if (NativeDetector.isAotRuntime() && ClassUtil.hasClass(() -> RuntimeNativeRegistrar.class)) {

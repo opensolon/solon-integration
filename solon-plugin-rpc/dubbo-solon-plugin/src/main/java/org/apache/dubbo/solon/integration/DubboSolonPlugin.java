@@ -128,7 +128,7 @@ public class DubboSolonPlugin implements Plugin {
                 if (NativeDetector.isAotRuntime()) {
                     //如果是 aot 则注册函数
                     for (Method m : holder.getType().getMethods()) {
-                        holder.context().methodGet(m);
+                        holder.context().methodWrap(holder.getType(), m);
                     }
                 }
 
@@ -144,7 +144,7 @@ public class DubboSolonPlugin implements Plugin {
     }
 
     @Override
-    public void prestop() throws Throwable {
+    public void preStop() throws Throwable {
         if (bootstrap != null) {
             bootstrap.stop();
             bootstrap = null;

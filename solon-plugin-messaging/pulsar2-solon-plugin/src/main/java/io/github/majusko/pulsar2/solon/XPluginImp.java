@@ -62,7 +62,7 @@ public class XPluginImp implements Plugin {
 	}
 
 //	@Override
-//	public void prestop() throws Throwable {
+//	public void preStop() throws Throwable {
 //		AppContext context = Solon.app().context();
 //		log.info("[Solon] APP Bean Plugin Load End...");
 //		ProducerCollector producerBeanBuilder = new ProducerCollector(context);

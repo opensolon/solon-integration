@@ -3,7 +3,7 @@ package org.hibernate.solon.test.demo;
 import org.hibernate.solon.annotation.Db;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
-import org.noear.solon.data.annotation.Tran;
+import org.noear.solon.data.annotation.Transaction;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -18,7 +18,7 @@ public class JapController {
         return sessionFactory.createEntityManager();
     }
 
-    @Tran
+    @Transaction
     @Mapping("/t")
     public void t1() {
         HttpEntity entity = new HttpEntity();

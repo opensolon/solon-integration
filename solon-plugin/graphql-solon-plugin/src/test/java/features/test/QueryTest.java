@@ -34,7 +34,7 @@ public class QueryTest extends HttpTester {
         param.set("variables", variables);
         String json = param.toJson();
 
-        String content = path("/graphql").bodyJson(json).post();
+        String content = path("/graphql").bodyOfJson(json).post();
         ONode oNode = ONode.ofJson(content).get("data");
 
         assertThat(oNode.get("bookById").isNull(), is(false));

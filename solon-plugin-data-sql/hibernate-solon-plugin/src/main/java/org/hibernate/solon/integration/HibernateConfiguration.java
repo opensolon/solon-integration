@@ -6,7 +6,7 @@ import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.context.internal.ThreadLocalSessionContext;
 import org.noear.solon.Utils;
-import org.noear.solon.core.util.ResourceUtil;
+import org.noear.solon.core.util.ClassUtil;
 
 import javax.sql.DataSource;
 import java.util.Collection;
@@ -28,7 +28,7 @@ public class HibernateConfiguration extends Configuration {
      */
     public HibernateConfiguration addMapping(String basePackage) {
         if (Utils.isNotEmpty(basePackage)) {
-            Collection<Class<?>> classes = ResourceUtil.scanClasses(basePackage);
+            Collection<Class<?>> classes = ClassUtil.scanClasses(basePackage);
             for (Class<?> clazz : classes)
                 addAnnotatedClass(clazz);
         }

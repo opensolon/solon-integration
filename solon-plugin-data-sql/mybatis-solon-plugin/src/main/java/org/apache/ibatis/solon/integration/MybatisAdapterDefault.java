@@ -21,13 +21,13 @@ import org.noear.solon.core.Constants;
 import org.noear.solon.core.Props;
 import org.noear.solon.core.VarHolder;
 import org.noear.solon.core.event.EventBus;
+import org.noear.solon.core.util.ClassUtil;
 import org.noear.solon.core.util.ResourceUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.io.InputStream;
-import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -165,7 +165,7 @@ public class MybatisAdapterDefault implements MybatisAdapter {
                         }
 
                         //package || type class，转为类表达式
-                        for (Class<?> clz : ResourceUtil.scanClasses(dsWrap.context().getClassLoader(), val)) {
+                        for (Class<?> clz : ClassUtil.scanClasses(dsWrap.context().getClassLoader(), val)) {
                             // 排除内部类 https://gitee.com/opensolon/solon/issues/IC9Z56
                             if (clz.isInterface() == false && !clz.isMemberClass() && !clz.isLocalClass() && !clz.isAnonymousClass()) {
                                 if (isTypeAliasesType(clz)) {
@@ -184,7 +184,7 @@ public class MybatisAdapterDefault implements MybatisAdapter {
                         }
 
                         //package || type class，转为类表达式
-                        for (Class<?> clz : ResourceUtil.scanClasses(dsWrap.context().getClassLoader(), val)) {
+                        for (Class<?> clz : ClassUtil.scanClasses(dsWrap.context().getClassLoader(), val)) {
                             if (TypeHandler.class.isAssignableFrom(clz)) {
                                 getConfiguration().getTypeHandlerRegistry().register(clz);
                             }
@@ -221,7 +221,7 @@ public class MybatisAdapterDefault implements MybatisAdapter {
                             compatibilityTipsOfXml(val);
                         } else {
                             //package || type class，转为类表达式
-                            for (Class<?> clz : ResourceUtil.scanClasses(dsWrap.context().getClassLoader(), val)) {
+                            for (Class<?> clz : ClassUtil.scanClasses(dsWrap.context().getClassLoader(), val)) {
                                 if (clz.isInterface()) {
                                     if (mapperVerifyEnabled) {
                                         if (isMapper(clz)) {

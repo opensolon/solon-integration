@@ -37,7 +37,7 @@ import org.noear.nami.NamiManager;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.Plugin;
 import org.noear.solon.core.util.ClassUtil;
-import org.noear.solon.net.http.HttpExtensionManager;
+import org.noear.solon.net.http.HttpConfiguration;
 
 import javax.sql.DataSource;
 
@@ -75,12 +75,12 @@ public class SeataPlugin implements Plugin {
         }
 
         //for http-utils
-        if (ClassUtil.hasClass(() -> HttpExtensionManager.class)) {
-            HttpExtensionManager.add(new SeataHttpExtension());
+        if (ClassUtil.hasClass(() -> HttpConfiguration.class)) {
+            HttpConfiguration.addExtension(new SeataHttpExtension());
         }
 
         //for solon
-        context.app().routerInterceptor(Integer.MIN_VALUE, new SeataSolonRouterInterceptor());
+        context.app().router().routerInterceptor(Integer.MIN_VALUE, new SeataSolonRouterInterceptor());
 
         //for annotation
         GlobalTransactionalInterceptor globalTransactionalInterceptor = new GlobalTransactionalInterceptor();

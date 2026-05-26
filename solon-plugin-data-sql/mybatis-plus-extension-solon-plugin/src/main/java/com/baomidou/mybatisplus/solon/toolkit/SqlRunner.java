@@ -24,7 +24,7 @@ import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.noear.solon.data.annotation.Tran;
+import org.noear.solon.data.annotation.Transaction;
 
 import java.io.Closeable;
 import java.util.List;
@@ -78,7 +78,7 @@ public class SqlRunner implements ISqlRunner, Closeable {
         return new SqlRunner(clazz);
     }
 
-    @Tran
+    @Transaction
     @Override
     public boolean insert(String sql, Object... args) {
         SqlSession sqlSession = sqlSession();
@@ -89,7 +89,7 @@ public class SqlRunner implements ISqlRunner, Closeable {
         }
     }
 
-    @Tran
+    @Transaction
     @Override
     public boolean delete(String sql, Object... args) {
         SqlSession sqlSession = sqlSession();
@@ -128,7 +128,7 @@ public class SqlRunner implements ISqlRunner, Closeable {
         return sqlMap;
     }
 
-    @Tran
+    @Transaction
     @Override
     public boolean update(String sql, Object... args) {
         SqlSession sqlSession = sqlSession();

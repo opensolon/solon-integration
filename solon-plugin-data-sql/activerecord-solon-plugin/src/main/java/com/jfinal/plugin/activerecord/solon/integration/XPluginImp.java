@@ -39,7 +39,7 @@ public class XPluginImp implements Plugin {
 
 
     @Override
-    public void prestop() throws Throwable {
+    public void preStop() throws Throwable {
         // 循环停止ActiveRecordPlugin
         ArpManager.stop();
     }

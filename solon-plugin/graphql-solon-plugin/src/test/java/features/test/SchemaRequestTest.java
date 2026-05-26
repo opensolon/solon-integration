@@ -26,7 +26,7 @@ public class SchemaRequestTest extends HttpTester {
      */
     @Test
     public void testSchemaReqeust() throws IOException {
-        String content = path("/schema").bodyTxt("").post();
+        String content = path("/schema").bodyOfTxt("").post();
         assertThat(content, notNullValue());
     }
 }

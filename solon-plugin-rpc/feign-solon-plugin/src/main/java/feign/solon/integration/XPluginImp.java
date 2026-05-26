@@ -38,7 +38,7 @@ public class XPluginImp implements Plugin {
         if (NativeDetector.isAotRuntime()) {
             //如果是 aot 则注册函数
             for (Method m : clz.getMethods()) {
-                ctx.methodGet(m);
+                ctx.methodWrap(clz, m);
             }
         }
 

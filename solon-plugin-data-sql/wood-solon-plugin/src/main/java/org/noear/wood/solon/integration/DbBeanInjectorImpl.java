@@ -26,7 +26,7 @@ public class DbBeanInjectorImpl extends DsInjector<Db> {
             vh.setValue(db);
         } else if (clz.isInterface()) {
             if (clz == BaseMapper.class) {
-                Object obj = db.mapperBase((Class<?>) vh.getGenericType().getActualTypeArguments()[0]);
+                Object obj = db.mapperBase((Class<?>) vh.getTypeEggg().getActualTypeArguments()[0]);
                 vh.setValue(obj);
             } else {
                 Object obj = db.mapper(clz);

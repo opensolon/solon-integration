@@ -36,7 +36,7 @@ public class BatchListTest extends HttpTester {
                 ResourceUtil.getResourceAsString("/query/queryInstructorOneToOne.gqls"));
         String json = param.toJson();
 
-        String content = path("/graphql").bodyJson(json).post();
+        String content = path("/graphql").bodyOfJson(json).post();
         ONode oNode = ONode.ofJson(content).get("data");
 
         List<Course> courses = oNode.get("courses").toBean(new TypeRef<List<Course>>() {});
@@ -69,7 +69,7 @@ public class BatchListTest extends HttpTester {
                 ResourceUtil.getResourceAsString("/query/queryInstructorOneToMany.gqls"));
         String json = param.toJson();
 
-        String content = path("/graphql").bodyJson(json).post();
+        String content = path("/graphql").bodyOfJson(json).post();
         ONode oNode = ONode.ofJson(content);
 
         List<Course> courses = oNode.get("data").get("courses").toBean(new TypeRef<List<Course>>() {});

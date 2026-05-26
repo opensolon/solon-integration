@@ -31,7 +31,7 @@ public class IntrospectionQueryTest extends HttpTester {
             ResourceUtil.getResourceAsString("/query/introspectionQuery.gqls"));
         String json = param.toJson();
 
-        String content = path("/graphql").bodyJson(json).post();
+        String content = path("/graphql").bodyOfJson(json).post();
         ONode oNode = ONode.ofJson(content).get("data");
         ONode schema = oNode.get("__schema");
         assertThat(schema.isNull(), is(false));

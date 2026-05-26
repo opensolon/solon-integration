@@ -29,19 +29,19 @@ public class XPluginImpl implements Plugin {
         context.wrapAndPut(IdsContext.class, idsContext);
 
         //添加控制器
-        Solon.app().add(IdsProps.BAST_PATH, ApprovalController.class);
-        Solon.app().add(IdsProps.BAST_PATH, AuthorizationController.class);
-        Solon.app().add(IdsProps.BAST_PATH, CheckSessionController.class);
-        Solon.app().add(IdsProps.BAST_PATH, ErrorController.class);
-        Solon.app().add(IdsProps.BAST_PATH, LoginController.class);
-        Solon.app().add(IdsProps.BAST_PATH, LogoutController.class);
-        Solon.app().add(IdsProps.BAST_PATH, TokenController.class);
-        Solon.app().add(IdsProps.BAST_PATH, UserController.class);
+        Solon.app().router().add(IdsProps.BAST_PATH, ApprovalController.class);
+        Solon.app().router().add(IdsProps.BAST_PATH, AuthorizationController.class);
+        Solon.app().router().add(IdsProps.BAST_PATH, CheckSessionController.class);
+        Solon.app().router().add(IdsProps.BAST_PATH, ErrorController.class);
+        Solon.app().router().add(IdsProps.BAST_PATH, LoginController.class);
+        Solon.app().router().add(IdsProps.BAST_PATH, LogoutController.class);
+        Solon.app().router().add(IdsProps.BAST_PATH, TokenController.class);
+        Solon.app().router().add(IdsProps.BAST_PATH, UserController.class);
 
-        Solon.app().add(IdsProps.WELL_PATH, DiscoveryController.class);
+        Solon.app().router().add(IdsProps.WELL_PATH, DiscoveryController.class);
 
         //添加过滤器
-        Solon.app().filter(new ErrorFilter());
+        Solon.app().router().filter(new ErrorFilter());
     }
 
 }

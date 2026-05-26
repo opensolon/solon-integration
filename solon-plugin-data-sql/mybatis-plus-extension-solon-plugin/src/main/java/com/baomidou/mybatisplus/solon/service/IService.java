@@ -12,7 +12,7 @@ import com.baomidou.mybatisplus.solon.conditions.update.LambdaUpdateChainWrapper
 import com.baomidou.mybatisplus.solon.conditions.update.UpdateChainWrapper;
 import com.baomidou.mybatisplus.solon.toolkit.ChainWrappers;
 import com.baomidou.mybatisplus.solon.toolkit.SqlHelper;
-import org.noear.solon.data.annotation.Tran;
+import org.noear.solon.data.annotation.Transaction;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -49,7 +49,7 @@ public interface IService<T> {
      *
      * @param entityList 实体对象集合
      */
-    @Tran
+    @Transaction
     default boolean saveBatch(Collection<T> entityList) {
         return saveBatch(entityList, DEFAULT_BATCH_SIZE);
     }
@@ -67,7 +67,7 @@ public interface IService<T> {
      *
      * @param entityList 实体对象集合
      */
-    @Tran
+    @Transaction
     default boolean saveOrUpdateBatch(Collection<T> entityList) {
         return saveOrUpdateBatch(entityList, DEFAULT_BATCH_SIZE);
     }
@@ -150,7 +150,7 @@ public interface IService<T> {
      * @return 删除结果
      * @since 3.5.0
      */
-    @Tran
+    @Transaction
     default boolean removeByIds(Collection<?> list, boolean useFill) {
         if (CollectionUtils.isEmpty(list)) {
             return false;
@@ -168,7 +168,7 @@ public interface IService<T> {
      * @return 删除结果
      * @since 3.5.0
      */
-    @Tran
+    @Transaction
     default boolean removeBatchByIds(Collection<?> list) {
         return removeBatchByIds(list, DEFAULT_BATCH_SIZE);
     }
@@ -181,7 +181,7 @@ public interface IService<T> {
      * @return 删除结果
      * @since 3.5.0
      */
-    @Tran
+    @Transaction
     default boolean removeBatchByIds(Collection<?> list, boolean useFill) {
         return removeBatchByIds(list, DEFAULT_BATCH_SIZE, useFill);
     }
@@ -244,7 +244,7 @@ public interface IService<T> {
      *
      * @param entityList 实体对象集合
      */
-    @Tran
+    @Transaction
     default boolean updateBatchById(Collection<T> entityList) {
         return updateBatchById(entityList, DEFAULT_BATCH_SIZE);
     }

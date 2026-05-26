@@ -13,7 +13,7 @@ import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
 import org.noear.solon.annotation.Inject;
-import org.noear.solon.data.annotation.Tran;
+import org.noear.solon.data.annotation.Transaction;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -123,7 +123,7 @@ public class ServiceImpl<M extends BaseMapper<T>, T> implements IService<T> {
      * @param batchSize  ignore
      * @return ignore
      */
-    @Tran
+    @Transaction
     @Override
     public boolean saveBatch(Collection<T> entityList, int batchSize) {
         String sqlStatement = getSqlStatement(SqlMethod.INSERT_ONE);
@@ -147,7 +147,7 @@ public class ServiceImpl<M extends BaseMapper<T>, T> implements IService<T> {
      * @param entity 实体对象
      * @return boolean
      */
-    @Tran
+    @Transaction
     @Override
     public boolean saveOrUpdate(T entity) {
         if (null != entity) {
@@ -161,7 +161,7 @@ public class ServiceImpl<M extends BaseMapper<T>, T> implements IService<T> {
         return false;
     }
 
-    @Tran
+    @Transaction
     @Override
     public boolean saveOrUpdateBatch(Collection<T> entityList, int batchSize) {
         TableInfo tableInfo = TableInfoHelper.getTableInfo(entityClass);
@@ -179,7 +179,7 @@ public class ServiceImpl<M extends BaseMapper<T>, T> implements IService<T> {
         });
     }
 
-    @Tran
+    @Transaction
     @Override
     public boolean updateBatchById(Collection<T> entityList, int batchSize) {
         String sqlStatement = getSqlStatement(SqlMethod.UPDATE_BY_ID);
@@ -257,7 +257,7 @@ public class ServiceImpl<M extends BaseMapper<T>, T> implements IService<T> {
     }
 
     @Override
-    @Tran
+    @Transaction
     public boolean removeByIds(Collection<?> list) {
         if (CollectionUtils.isEmpty(list)) {
             return false;
@@ -283,14 +283,14 @@ public class ServiceImpl<M extends BaseMapper<T>, T> implements IService<T> {
     }
 
     @Override
-    @Tran
+    @Transaction
     public boolean removeBatchByIds(Collection<?> list, int batchSize) {
         TableInfo tableInfo = TableInfoHelper.getTableInfo(entityClass);
         return removeBatchByIds(list, batchSize, tableInfo.isWithLogicDelete() && tableInfo.isWithUpdateFill());
     }
 
     @Override
-    @Tran
+    @Transaction
     public boolean removeBatchByIds(Collection<?> list, int batchSize, boolean useFill) {
         String sqlStatement = getSqlStatement(SqlMethod.DELETE_BY_ID);
         TableInfo tableInfo = TableInfoHelper.getTableInfo(entityClass);

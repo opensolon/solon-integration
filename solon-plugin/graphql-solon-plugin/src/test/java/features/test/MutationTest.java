@@ -59,7 +59,7 @@ public class MutationTest extends HttpTester {
         param.set("operationName", "testAdd");  // 有多个操作时，需指定需要执行的哪一个操作
         String json = param.toJson();
 
-        String content = path("/graphql").bodyJson(json).post();
+        String content = path("/graphql").bodyOfJson(json).post();
         return ONode.ofJson(content).get("data");
     }
 
@@ -75,7 +75,7 @@ public class MutationTest extends HttpTester {
         param.set("operationName", "testRemove");
         String json = param.toJson();
 
-        String content = path("/graphql").bodyJson(json).post();
+        String content = path("/graphql").bodyOfJson(json).post();
         return ONode.ofJson(content).get("data");
     }
 }
