@@ -95,7 +95,7 @@ public final class JobManager {
      * 注册 job（on start）
      */
     private static void regJob(JobHolder jobEntity) throws SchedulerException {
-        String jobGroup = Utils.annoAlias(Solon.cfg().appName(), "solon");
+        String jobGroup = Utils.valueOr(Solon.cfg().appName(), "solon");
 
         if (jobEntity.cronx.indexOf(" ") < 0) {
             if (jobEntity.cronx.endsWith("ms")) {

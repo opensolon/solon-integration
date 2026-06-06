@@ -47,7 +47,7 @@ public class QuartzBeanBuilder implements BeanBuilder<Quartz>, BeanExtractor<Qua
         }
 
         AbstractJob job = new BeanJob(bw.raw());
-        String name = Utils.annoAlias(nameOfAnno, job.getJobId());
+        String name = Utils.valueOr(nameOfAnno, job.getJobId());
 
         JobManager.addJob(name, cronx, enable, job);
     }
@@ -87,7 +87,7 @@ public class QuartzBeanBuilder implements BeanBuilder<Quartz>, BeanExtractor<Qua
         }
 
         AbstractJob job = new MethodJob(bw.raw(), method);
-        String name = Utils.annoAlias(nameOfAnno, job.getJobId());
+        String name = Utils.valueOr(nameOfAnno, job.getJobId());
 
         JobManager.addJob(name, cronx, enable, job);
     }

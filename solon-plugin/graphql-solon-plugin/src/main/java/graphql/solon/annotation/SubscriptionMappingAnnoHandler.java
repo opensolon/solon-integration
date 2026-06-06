@@ -47,7 +47,7 @@ public class SubscriptionMappingAnnoHandler extends
     @Override
     String getFieldName(BeanWrap wrap, Method method,
         SubscriptionMapping schemaMapping) {
-        String fieldName = Utils.annoAlias(schemaMapping.name(), schemaMapping.value());
+        String fieldName = Utils.valueOr(schemaMapping.name(), schemaMapping.value());
 
         if (StringUtils.isBlank(fieldName)) {
             // 注解没标就使用方法名

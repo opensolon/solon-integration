@@ -44,7 +44,7 @@ public class HibernateSolonPlugin implements Plugin {
 
     private void persistenceContextInject(VarHolder vh, PersistenceContext anno) {
         //@PersistenceContext注解‌：用于注入EntityManager实例。
-        String unitName = Utils.annoAlias(anno.unitName(), anno.name());
+        String unitName = Utils.valueOr(anno.unitName(), anno.name());
 
         DsUtils.observeDs(vh.context(), unitName, dsBw -> {
             HibernateAdapter adapter = HibernateAdapterManager.get(dsBw);
@@ -57,7 +57,7 @@ public class HibernateSolonPlugin implements Plugin {
 
     private void persistenceUnitInject(VarHolder vh, PersistenceUnit anno) {
         //@PersistenceUnit注解‌：用于注入EntityManagerFactory实例。
-        String unitName = Utils.annoAlias(anno.unitName(), anno.name());
+        String unitName = Utils.valueOr(anno.unitName(), anno.name());
 
         DsUtils.observeDs(vh.context(), unitName, dsBw -> {
             HibernateAdapter adapter = HibernateAdapterManager.get(dsBw);

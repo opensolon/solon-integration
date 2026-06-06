@@ -29,7 +29,7 @@ public class SchemaMappingAnnoHandler extends BaseSchemaMappingAnnoHandler<Schem
     @Override
     String getFieldName(BeanWrap wrap, Method method,
             SchemaMapping schemaMapping) {
-        String fieldName = Utils.annoAlias(schemaMapping.field(), schemaMapping.value());
+        String fieldName = Utils.valueOr(schemaMapping.field(), schemaMapping.value());
 
         if (StringUtils.isBlank(fieldName)) {
             // 注解没标就使用方法名
