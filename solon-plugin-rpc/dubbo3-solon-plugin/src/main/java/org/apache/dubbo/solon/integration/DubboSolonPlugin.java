@@ -148,6 +148,8 @@ public class DubboSolonPlugin implements Plugin {
         context.beanBuilderAdd(DubboService.class, ((clz, bw, anno) -> {
             ServiceConfig<?> config = new ServiceConfig<>(new DubboServiceAnno(anno));
             ensureServiceInterface(config, anno.interfaceClass(), anno.interfaceName(), clz);
+            // parameters / methods: align with Spring (appendAnnotation alone is not enough)
+            DubboAnnotationSupport.apply(config, anno.parameters(), anno.methods());
             config.setRef(bw.get());
             // do NOT export here; bootstrap.start() will export
             bootstrap.service(config);
@@ -165,6 +167,7 @@ public class DubboSolonPlugin implements Plugin {
 
                 ReferenceConfig<?> config = new ReferenceConfig<>(new DubboReferenceAnno(anno));
                 config.setInterface(holder.getType());
+                DubboAnnotationSupport.apply(config, anno.parameters(), anno.methods());
                 holder.setValue(refer(config));
             }
         }));
@@ -173,6 +176,7 @@ public class DubboSolonPlugin implements Plugin {
         context.beanBuilderAdd(Service.class, ((clz, bw, anno) -> {
             ServiceConfig<?> config = new ServiceConfig<>(new ServiceAnno(anno));
             ensureServiceInterface(config, anno.interfaceClass(), anno.interfaceName(), clz);
+            DubboAnnotationSupport.apply(config, anno.parameters(), anno.methods());
             config.setRef(bw.get());
             bootstrap.service(config);
         }));
@@ -189,6 +193,7 @@ public class DubboSolonPlugin implements Plugin {
 
                 ReferenceConfig<?> config = new ReferenceConfig<>(new ReferenceAnno(anno));
                 config.setInterface(holder.getType());
+                DubboAnnotationSupport.apply(config, anno.parameters(), anno.methods());
                 holder.setValue(refer(config));
             }
         }));

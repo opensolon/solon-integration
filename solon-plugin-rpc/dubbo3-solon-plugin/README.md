@@ -124,10 +124,34 @@ Solon.start(App.class, args, app -> app.enableHttp(false));
 |---|---|
 | 服务导出 | 由 `DubboBootstrap.start()` 统一导出；扫描阶段只注册 `ServiceConfig` |
 | 接口解析 | 优先 `interfaceName` / `interfaceClass`；否则取实现类层次中**直接**业务接口（不展开父接口；多接口并存时保留最具体者）；仍有 0 个或多接口时启动失败 |
+| parameters | 注解 `parameters` 转为 Map，兼容 `{"a","b"}` / `{"a=b"}` / `{"a:b"}` 混写；值支持 `${...}` 模板 |
+| methods | 注解 `methods=@Method(...)` 转为 `MethodConfig`（timeout/retries/loadbalance/parameters 等）；字符串字段支持 `${...}` |
 | Reference 缓存 | 相同 interface/group/version/url/protocol/scope/tag/filter 等参数复用代理 |
 | 默认注册中心 | 未配置 address 时补 `N/A` |
 | 默认协议 | 未配置 name 时补 `dubbo`；未配置 port 时补 `server.port + 20000` |
 | 远程引用 | 建议 `consumer.check=false` 或显式 url，避免启动期强依赖注册中心 |
+
+### 注解 parameters / methods 示例
+
+```java
+@DubboService(
+    group = "demo",
+    parameters = {"token", "abc", "route=gray"},
+    methods = {
+        @Method(name = "sayHello", timeout = 1000, retries = 0)
+    }
+)
+public class HelloServiceImpl implements HelloService { ... }
+
+@DubboReference(
+    group = "demo",
+    parameters = {"tag:gray"},
+    methods = {
+        @Method(name = "sayHello", timeout = 2000)
+    }
+)
+HelloService helloService;
+```
 
 ## Tracing
 

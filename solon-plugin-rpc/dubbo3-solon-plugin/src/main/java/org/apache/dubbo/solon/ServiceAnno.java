@@ -288,7 +288,9 @@ public class ServiceAnno implements Service {
 
     @Override
     public String[] parameters() {
-        return anno.parameters();
+        // Empty here: AbstractConfig.appendAnnotation uses toStringMap (even pairs only).
+        // DubboAnnotationSupport re-applies flexible convertParameters after construction.
+        return new String[0];
     }
 
     private String application;
@@ -348,7 +350,9 @@ public class ServiceAnno implements Service {
 
     @Override
     public Method[] methods() {
-        return anno.methods();
+        // Empty here: ServiceConfigBase also constructs methods via MethodConfig.constructMethodConfig.
+        // DubboAnnotationSupport re-applies MethodAnno + flexible parameters after construction.
+        return new Method[0];
     }
 
     @Override

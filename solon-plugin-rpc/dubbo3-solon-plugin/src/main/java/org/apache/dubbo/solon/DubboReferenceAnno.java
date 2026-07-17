@@ -274,7 +274,9 @@ public class DubboReferenceAnno implements DubboReference, Reference {
 
     @Override
     public String[] parameters() {
-        return anno.parameters();
+        // Empty here: AbstractConfig.appendAnnotation uses toStringMap (even pairs only).
+        // DubboAnnotationSupport re-applies flexible convertParameters after construction.
+        return new String[0];
     }
 
     @Override
@@ -344,7 +346,9 @@ public class DubboReferenceAnno implements DubboReference, Reference {
 
     @Override
     public Method[] methods() {
-        return anno.methods();
+        // Empty here: ReferenceConfigBase also constructs methods via MethodConfig.constructMethodConfig.
+        // DubboAnnotationSupport re-applies MethodAnno + flexible parameters after construction.
+        return new Method[0];
     }
 
     private String id;
