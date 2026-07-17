@@ -1,9 +1,14 @@
 package org.apache.dubbo.solon;
 
+import org.apache.dubbo.config.ApplicationConfig;
+import org.apache.dubbo.config.ConsumerConfig;
 import org.apache.dubbo.config.MethodConfig;
+import org.apache.dubbo.config.ProviderConfig;
 import org.apache.dubbo.config.ReferenceConfig;
 import org.apache.dubbo.config.ServiceConfig;
 import org.apache.dubbo.config.annotation.Method;
+import org.apache.dubbo.config.bootstrap.DubboBootstrap;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -94,6 +99,85 @@ public class DubboAnnotationSupportTest {
      * Without empty parameters()/methods() on Anno wrappers, AbstractConfig.appendAnnotation
      * would call toStringMap and throw "pairs must be even".
      */
+    @AfterEach
+    public void resetBootstrap() {
+        try {
+            DubboBootstrap.reset();
+        } catch (Throwable ignore) {
+            try {
+                DubboBootstrap.getInstance().stop();
+            } catch (Throwable ignored) {
+            }
+        }
+    }
+
+    @Test
+    public void applyProvider_setsProviderIds() {
+        ServiceConfig<?> service = new ServiceConfig<>();
+        DubboAnnotationSupport.applyProvider(service, "p1");
+        Assertions.assertEquals("p1", service.getProviderIds());
+
+        // empty / already set should no-op override
+        DubboAnnotationSupport.applyProvider(service, "");
+        Assertions.assertEquals("p1", service.getProviderIds());
+        DubboAnnotationSupport.applyProvider(service, "p2");
+        Assertions.assertEquals("p1", service.getProviderIds());
+    }
+
+    @Test
+    public void applyConsumer_looksUpNamedConfig() {
+        DubboBootstrap bootstrap = DubboBootstrap.getInstance();
+        ApplicationConfig application = new ApplicationConfig();
+        application.setName("anno-consumer-lookup");
+        bootstrap.application(application);
+
+        ConsumerConfig c1 = new ConsumerConfig();
+        c1.setId("c1");
+        c1.setTimeout(2000);
+        c1.setCheck(false);
+        bootstrap.consumer(c1);
+
+        ConsumerConfig c2 = new ConsumerConfig();
+        c2.setId("c2");
+        c2.setTimeout(8000);
+        c2.setCheck(false);
+        bootstrap.consumer(c2);
+
+        ReferenceConfig<?> ref1 = new ReferenceConfig<>();
+        DubboAnnotationSupport.applyConsumer(ref1, "c1");
+        Assertions.assertNotNull(ref1.getConsumer());
+        Assertions.assertEquals("c1", ref1.getConsumer().getId());
+        Assertions.assertEquals(Integer.valueOf(2000), ref1.getConsumer().getTimeout());
+
+        ReferenceConfig<?> ref2 = new ReferenceConfig<>();
+        DubboAnnotationSupport.applyConsumer(ref2, "c2");
+        Assertions.assertEquals("c2", ref2.getConsumer().getId());
+        Assertions.assertEquals(Integer.valueOf(8000), ref2.getConsumer().getTimeout());
+
+        Assertions.assertThrows(IllegalStateException.class,
+                () -> DubboAnnotationSupport.applyConsumer(new ReferenceConfig<>(), "missing"));
+    }
+
+    @Test
+    public void ensureProviderExists_checksNamedConfig() {
+        DubboBootstrap bootstrap = DubboBootstrap.getInstance();
+        ApplicationConfig application = new ApplicationConfig();
+        application.setName("anno-provider-lookup");
+        bootstrap.application(application);
+
+        ProviderConfig p1 = new ProviderConfig();
+        p1.setId("p1");
+        p1.setGroup("g1");
+        bootstrap.provider(p1);
+
+        // exists: no throw
+        DubboAnnotationSupport.ensureProviderExists("p1");
+        // empty: no throw
+        DubboAnnotationSupport.ensureProviderExists("");
+        Assertions.assertThrows(IllegalStateException.class,
+                () -> DubboAnnotationSupport.ensureProviderExists("missing"));
+    }
+
     @Test
     public void construct_viaAnnoWrappers_bypassesStrictToStringMap() {
         Method method = method("sayHello", 1000, 0, "leastactive",

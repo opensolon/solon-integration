@@ -86,10 +86,18 @@ public class DubboSolonPlugin implements Plugin {
             bootstrap.registries(registries);
         }
 
-        // provider
-        ProviderConfig provider = DubboConfigBinder.bindOptional(cfg, "dubbo.provider", ProviderConfig.class);
-        if (provider != null) {
-            bootstrap.provider(provider);
+        // providers (map / list / single) — map key becomes id for @DubboService(provider="...")
+        List<ProviderConfig> providers = DubboConfigBinder.bindMultiOrSingle(
+                cfg,
+                "dubbo.providers",
+                "dubbo.provider",
+                ProviderConfig.class,
+                false,
+                null);
+        if (providers.size() == 1) {
+            bootstrap.provider(providers.get(0));
+        } else if (providers.size() > 1) {
+            bootstrap.providers(providers);
         }
 
         // protocols (map / list / single) — post-process fills name/port when missing
@@ -113,10 +121,18 @@ public class DubboSolonPlugin implements Plugin {
             bootstrap.protocols(protocols);
         }
 
-        // consumer
-        ConsumerConfig consumer = DubboConfigBinder.bindOptional(cfg, "dubbo.consumer", ConsumerConfig.class);
-        if (consumer != null) {
-            bootstrap.consumer(consumer);
+        // consumers (map / list / single) — map key becomes id for @DubboReference(consumer="...")
+        List<ConsumerConfig> consumers = DubboConfigBinder.bindMultiOrSingle(
+                cfg,
+                "dubbo.consumers",
+                "dubbo.consumer",
+                ConsumerConfig.class,
+                false,
+                null);
+        if (consumers.size() == 1) {
+            bootstrap.consumer(consumers.get(0));
+        } else if (consumers.size() > 1) {
+            bootstrap.consumers(consumers);
         }
 
         // monitor (optional)
@@ -146,10 +162,15 @@ public class DubboSolonPlugin implements Plugin {
 
     private void register(AppContext context) {
         context.beanBuilderAdd(DubboService.class, ((clz, bw, anno) -> {
-            ServiceConfig<?> config = new ServiceConfig<>(new DubboServiceAnno(anno));
+            DubboServiceAnno serviceAnno = new DubboServiceAnno(anno);
+            ServiceConfig<?> config = new ServiceConfig<>(serviceAnno);
             ensureServiceInterface(config, anno.interfaceClass(), anno.interfaceName(), clz);
             // parameters / methods: align with Spring (appendAnnotation alone is not enough)
             DubboAnnotationSupport.apply(config, anno.parameters(), anno.methods());
+            // provider="id" → providerIds (appendAnnotation cannot bind String provider)
+            String providerId = serviceAnno.provider();
+            DubboAnnotationSupport.ensureProviderExists(providerId);
+            DubboAnnotationSupport.applyProvider(config, providerId);
             config.setRef(bw.get());
             // do NOT export here; bootstrap.start() will export
             bootstrap.service(config);
@@ -165,18 +186,25 @@ public class DubboSolonPlugin implements Plugin {
                     }
                 }
 
-                ReferenceConfig<?> config = new ReferenceConfig<>(new DubboReferenceAnno(anno));
+                DubboReferenceAnno referenceAnno = new DubboReferenceAnno(anno);
+                ReferenceConfig<?> config = new ReferenceConfig<>(referenceAnno);
                 config.setInterface(holder.getType());
                 DubboAnnotationSupport.apply(config, anno.parameters(), anno.methods());
+                // consumer="id" → lookup ConsumerConfig (no setConsumer(String) in Dubbo)
+                DubboAnnotationSupport.applyConsumer(config, referenceAnno.consumer());
                 holder.setValue(refer(config));
             }
         }));
 
         // compatible with legacy annotations
         context.beanBuilderAdd(Service.class, ((clz, bw, anno) -> {
-            ServiceConfig<?> config = new ServiceConfig<>(new ServiceAnno(anno));
+            ServiceAnno serviceAnno = new ServiceAnno(anno);
+            ServiceConfig<?> config = new ServiceConfig<>(serviceAnno);
             ensureServiceInterface(config, anno.interfaceClass(), anno.interfaceName(), clz);
             DubboAnnotationSupport.apply(config, anno.parameters(), anno.methods());
+            String providerId = serviceAnno.provider();
+            DubboAnnotationSupport.ensureProviderExists(providerId);
+            DubboAnnotationSupport.applyProvider(config, providerId);
             config.setRef(bw.get());
             bootstrap.service(config);
         }));
@@ -191,9 +219,11 @@ public class DubboSolonPlugin implements Plugin {
                     }
                 }
 
-                ReferenceConfig<?> config = new ReferenceConfig<>(new ReferenceAnno(anno));
+                ReferenceAnno referenceAnno = new ReferenceAnno(anno);
+                ReferenceConfig<?> config = new ReferenceConfig<>(referenceAnno);
                 config.setInterface(holder.getType());
                 DubboAnnotationSupport.apply(config, anno.parameters(), anno.methods());
+                DubboAnnotationSupport.applyConsumer(config, referenceAnno.consumer());
                 holder.setValue(refer(config));
             }
         }));

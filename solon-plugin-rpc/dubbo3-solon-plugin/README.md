@@ -69,9 +69,33 @@ dubbo:
     triple:
       name: tri
       port: 50051
+  providers:
+    p1:
+      group: g1
+      timeout: 3000
+    p2:
+      group: g2
+      filter: solonTracing
+  consumers:
+    c1:
+      check: false
+      timeout: 2000
+    c2:
+      check: false
+      timeout: 5000
 ```
 
-Map 的 key 会写入 config 的 `id`（若未显式配置 id），便于注解 `registry="reg1"` 引用。
+Map 的 key 会写入 config 的 `id`（若未显式配置 id），便于注解按名称引用：
+
+```java
+@DubboService(provider = "p1")
+public class HelloServiceImpl implements HelloService { ... }
+
+@DubboReference(consumer = "c1", check = false)
+HelloService helloService;
+```
+
+单配置 `dubbo.provider` / `dubbo.consumer` 仍可用；若同时存在 multi（`providers`/`consumers`），**优先 multi**。
 
 ### 多配置 - List 风格（兼容）
 
@@ -83,6 +107,8 @@ dubbo:
   registries.1.address: nacos://127.0.0.1:8848
   protocols.0.name: dubbo
   protocols.0.port: 20880
+  providers.0.group: g1
+  consumers.0.check: false
 ```
 
 YAML 数组写法（`-`）在部分加载路径下也会扁平化为 `0/1` key，一般可用；若遇兼容问题请改用上面的索引写法。
@@ -126,6 +152,7 @@ Solon.start(App.class, args, app -> app.enableHttp(false));
 | 接口解析 | 优先 `interfaceName` / `interfaceClass`；否则取实现类层次中**直接**业务接口（不展开父接口；多接口并存时保留最具体者）；仍有 0 个或多接口时启动失败 |
 | parameters | 注解 `parameters` 转为 Map，兼容 `{"a","b"}` / `{"a=b"}` / `{"a:b"}` 混写；值支持 `${...}` 模板 |
 | methods | 注解 `methods=@Method(...)` 转为 `MethodConfig`（timeout/retries/loadbalance/parameters 等）；字符串字段支持 `${...}` |
+| multi providers/consumers | 支持 `dubbo.providers.*` / `dubbo.consumers.*`（及 single 回退）；`@DubboService(provider)` / `@DubboReference(consumer)` 按 id 关联 |
 | Reference 缓存 | 相同 interface/group/version/url/protocol/scope/tag/filter 等参数复用代理 |
 | 默认注册中心 | 未配置 address 时补 `N/A` |
 | 默认协议 | 未配置 name 时补 `dubbo`；未配置 port 时补 `server.port + 20000` |

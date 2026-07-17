@@ -1,21 +1,30 @@
 package org.apache.dubbo.solon;
 
 import org.apache.dubbo.config.AbstractInterfaceConfig;
+import org.apache.dubbo.config.ConsumerConfig;
 import org.apache.dubbo.config.MethodConfig;
+import org.apache.dubbo.config.ProviderConfig;
+import org.apache.dubbo.config.ReferenceConfig;
+import org.apache.dubbo.config.ServiceConfig;
 import org.apache.dubbo.config.annotation.Method;
+import org.apache.dubbo.config.bootstrap.DubboBootstrap;
+import org.apache.dubbo.config.context.ModuleConfigManager;
 import org.noear.solon.Solon;
+import org.noear.solon.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Align annotation extras with Spring's Dubbo handling:
  * <ul>
  *   <li>{@code parameters} string array → {@code Map} (supports key/value pairs and {@code k=v}/{@code k:v})</li>
  *   <li>{@code methods} → {@link MethodConfig} list</li>
+ *   <li>{@code provider}/{@code consumer} name → named multi config (appendAnnotation cannot bind these)</li>
  * </ul>
  * Also resolves Solon config templates ({@code ${...}}) for parameter values and method string fields.
  *
@@ -44,6 +53,69 @@ public final class DubboAnnotationSupport {
         if (!methodConfigs.isEmpty()) {
             config.setMethods(methodConfigs);
         }
+    }
+
+    /**
+     * Resolve {@code @DubboService(provider="id")} like Spring:
+     * annotation attribute {@code provider} → {@code ServiceConfig.providerIds},
+     * then Dubbo {@code convertProviderIdToProvider()} looks it up at refresh time.
+     */
+    public static void applyProvider(ServiceConfig<?> config, String providerId) {
+        if (config == null || Utils.isEmpty(providerId)) {
+            return;
+        }
+        // Prefer providerIds (String). setProvider(ProviderConfig) is a different path.
+        if (Utils.isEmpty(config.getProviderIds())) {
+            config.setProviderIds(providerId);
+        }
+    }
+
+    /**
+     * Resolve {@code @DubboReference(consumer="id")} like Spring ReferenceCreator:
+     * look up named {@link ConsumerConfig} from ModuleConfigManager and set it.
+     * <p>
+     * Note: Dubbo {@code appendAnnotation} cannot bind annotation {@code consumer} string
+     * (no {@code setConsumer(String)}); ReferenceConfig also has no {@code consumerIds} field,
+     * so lookup must happen here before refer/export.
+     */
+    public static void applyConsumer(ReferenceConfig<?> config, String consumerId) {
+        if (config == null || Utils.isEmpty(consumerId)) {
+            return;
+        }
+        if (config.getConsumer() != null) {
+            return;
+        }
+
+        ModuleConfigManager manager = moduleConfigManager();
+        Optional<ConsumerConfig> found = manager.getConsumer(consumerId);
+        if (!found.isPresent()) {
+            throw new IllegalStateException("Consumer config not found: " + consumerId
+                    + " (define dubbo.consumers." + consumerId + ".* or dubbo.consumer with id)");
+        }
+        config.setConsumer(found.get());
+    }
+
+    /**
+     * Optional helper: verify provider id exists early (fail-fast). Provider resolution itself
+     * still goes through providerIds at ServiceConfig refresh.
+     */
+    public static void ensureProviderExists(String providerId) {
+        if (Utils.isEmpty(providerId)) {
+            return;
+        }
+        ModuleConfigManager manager = moduleConfigManager();
+        Optional<ProviderConfig> found = manager.getProvider(providerId);
+        if (!found.isPresent()) {
+            throw new IllegalStateException("Provider config not found: " + providerId
+                    + " (define dubbo.providers." + providerId + ".* or dubbo.provider with id)");
+        }
+    }
+
+    private static ModuleConfigManager moduleConfigManager() {
+        return DubboBootstrap.getInstance()
+                .getApplicationModel()
+                .getDefaultModule()
+                .getConfigManager();
     }
 
     /**

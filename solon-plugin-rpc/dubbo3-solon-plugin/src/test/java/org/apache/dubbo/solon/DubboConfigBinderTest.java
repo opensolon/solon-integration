@@ -1,6 +1,8 @@
 package org.apache.dubbo.solon;
 
+import org.apache.dubbo.config.ConsumerConfig;
 import org.apache.dubbo.config.ProtocolConfig;
+import org.apache.dubbo.config.ProviderConfig;
 import org.apache.dubbo.config.RegistryConfig;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -128,5 +130,74 @@ public class DubboConfigBinderTest {
         Assertions.assertEquals(0, DubboConfigBinder.parseIndex("0"));
         Assertions.assertEquals(1, DubboConfigBinder.parseIndex("[1]"));
         Assertions.assertEquals(-1, DubboConfigBinder.parseIndex("reg1"));
+    }
+
+    @Test
+    public void bind_mapStyle_providers_and_consumers() {
+        Properties p = new Properties();
+        p.setProperty("dubbo.providers.p1.group", "g1");
+        p.setProperty("dubbo.providers.p1.timeout", "3000");
+        p.setProperty("dubbo.providers.p2.group", "g2");
+        p.setProperty("dubbo.providers.p2.timeout", "5000");
+        p.setProperty("dubbo.consumers.c1.check", "false");
+        p.setProperty("dubbo.consumers.c1.timeout", "2000");
+        p.setProperty("dubbo.consumers.c2.check", "false");
+        p.setProperty("dubbo.consumers.c2.timeout", "8000");
+        Props cfg = Props.from(p);
+
+        List<ProviderConfig> providers = DubboConfigBinder.bindMulti(cfg, "dubbo.providers", ProviderConfig.class);
+        Assertions.assertEquals(2, providers.size());
+        ProviderConfig p1 = providers.stream().filter(x -> "p1".equals(x.getId())).findFirst().orElse(null);
+        ProviderConfig p2 = providers.stream().filter(x -> "p2".equals(x.getId())).findFirst().orElse(null);
+        Assertions.assertNotNull(p1);
+        Assertions.assertNotNull(p2);
+        Assertions.assertEquals("g1", p1.getGroup());
+        Assertions.assertEquals(Integer.valueOf(3000), p1.getTimeout());
+        Assertions.assertEquals("g2", p2.getGroup());
+        Assertions.assertEquals(Integer.valueOf(5000), p2.getTimeout());
+
+        List<ConsumerConfig> consumers = DubboConfigBinder.bindMulti(cfg, "dubbo.consumers", ConsumerConfig.class);
+        Assertions.assertEquals(2, consumers.size());
+        ConsumerConfig c1 = consumers.stream().filter(x -> "c1".equals(x.getId())).findFirst().orElse(null);
+        ConsumerConfig c2 = consumers.stream().filter(x -> "c2".equals(x.getId())).findFirst().orElse(null);
+        Assertions.assertNotNull(c1);
+        Assertions.assertNotNull(c2);
+        Assertions.assertEquals(Boolean.FALSE, c1.isCheck());
+        Assertions.assertEquals(Integer.valueOf(2000), c1.getTimeout());
+        Assertions.assertEquals(Integer.valueOf(8000), c2.getTimeout());
+    }
+
+    @Test
+    public void bind_single_provider_consumer_fallback() {
+        Properties p = new Properties();
+        p.setProperty("dubbo.provider.group", "demo");
+        p.setProperty("dubbo.consumer.check", "false");
+        p.setProperty("dubbo.consumer.timeout", "3000");
+        Props cfg = Props.from(p);
+
+        List<ProviderConfig> providers = DubboConfigBinder.bindMultiOrSingle(
+                cfg, "dubbo.providers", "dubbo.provider", ProviderConfig.class, false, null);
+        Assertions.assertEquals(1, providers.size());
+        Assertions.assertEquals("demo", providers.get(0).getGroup());
+
+        List<ConsumerConfig> consumers = DubboConfigBinder.bindMultiOrSingle(
+                cfg, "dubbo.consumers", "dubbo.consumer", ConsumerConfig.class, false, null);
+        Assertions.assertEquals(1, consumers.size());
+        Assertions.assertEquals(Boolean.FALSE, consumers.get(0).isCheck());
+        Assertions.assertEquals(Integer.valueOf(3000), consumers.get(0).getTimeout());
+    }
+
+    @Test
+    public void bind_multi_providers_preferred_over_single() {
+        Properties p = new Properties();
+        p.setProperty("dubbo.provider.group", "single-group");
+        p.setProperty("dubbo.providers.p1.group", "multi-group");
+        Props cfg = Props.from(p);
+
+        List<ProviderConfig> providers = DubboConfigBinder.bindMultiOrSingle(
+                cfg, "dubbo.providers", "dubbo.provider", ProviderConfig.class, false, null);
+        Assertions.assertEquals(1, providers.size());
+        Assertions.assertEquals("p1", providers.get(0).getId());
+        Assertions.assertEquals("multi-group", providers.get(0).getGroup());
     }
 }

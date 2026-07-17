@@ -17,6 +17,8 @@ import java.util.function.Consumer;
  * <pre>
  * dubbo.registries.reg1.address=...
  * dubbo.protocols.dubbo.port=20880
+ * dubbo.providers.p1.group=demo
+ * dubbo.consumers.c1.check=false
  * </pre>
  * and list style:
  * <pre>
@@ -26,6 +28,7 @@ import java.util.function.Consumer;
  * as well as single config:
  * <pre>
  * dubbo.registry.address=...
+ * dubbo.provider.group=demo
  * </pre>
  *
  * @author noear
