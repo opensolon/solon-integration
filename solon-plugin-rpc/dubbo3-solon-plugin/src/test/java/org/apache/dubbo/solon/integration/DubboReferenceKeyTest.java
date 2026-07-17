@@ -95,4 +95,19 @@ public class DubboReferenceKeyTest {
                 DubboSolonPlugin.buildReferenceKey(a),
                 DubboSolonPlugin.buildReferenceKey(b));
     }
+
+    @Test
+    public void differentRegistryIds_differentKey() {
+        ReferenceConfig<DemoService> a = new ReferenceConfig<>();
+        a.setInterface(DemoService.class);
+        a.setRegistryIds("reg1");
+
+        ReferenceConfig<DemoService> b = new ReferenceConfig<>();
+        b.setInterface(DemoService.class);
+        b.setRegistryIds("reg2");
+
+        Assertions.assertNotEquals(
+                DubboSolonPlugin.buildReferenceKey(a),
+                DubboSolonPlugin.buildReferenceKey(b));
+    }
 }

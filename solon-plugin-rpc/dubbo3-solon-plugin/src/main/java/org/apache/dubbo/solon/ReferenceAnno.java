@@ -312,7 +312,9 @@ public class ReferenceAnno implements Reference {
 
     @Override
     public String[] registry() {
-        return anno.registry();
+        // Empty here: appendAnnotation has no setRegistry(String[]).
+        // DubboAnnotationSupport.applyRegistries re-applies registryIds after construction.
+        return new String[0];
     }
 
     private String protocol;

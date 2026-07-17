@@ -53,7 +53,9 @@ public class DubboFilterTracing implements Filter {
         if (isConsumerSide == false) {
             //如果是服务端，添加本地地址
             InetSocketAddress address = RpcContext.getServerContext().getLocalAddress();
-            operationName.append(address).append(":");
+            if (address != null) {
+                operationName.append(address.getHostString()).append(":");
+            }
         }
 
         //调用服务名（就是接口名）

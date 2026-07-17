@@ -171,6 +171,11 @@ public class DubboSolonPlugin implements Plugin {
             String providerId = serviceAnno.provider();
             DubboAnnotationSupport.ensureProviderExists(providerId);
             DubboAnnotationSupport.applyProvider(config, providerId);
+            // registry[] / protocol[] → registryIds / protocolIds
+            DubboAnnotationSupport.ensureRegistriesExist(anno.registry());
+            DubboAnnotationSupport.applyRegistries(config, anno.registry());
+            DubboAnnotationSupport.ensureProtocolsExist(anno.protocol());
+            DubboAnnotationSupport.applyProtocols(config, anno.protocol());
             config.setRef(bw.get());
             // do NOT export here; bootstrap.start() will export
             bootstrap.service(config);
@@ -192,6 +197,9 @@ public class DubboSolonPlugin implements Plugin {
                 DubboAnnotationSupport.apply(config, anno.parameters(), anno.methods());
                 // consumer="id" → lookup ConsumerConfig (no setConsumer(String) in Dubbo)
                 DubboAnnotationSupport.applyConsumer(config, referenceAnno.consumer());
+                // registry[] → registryIds
+                DubboAnnotationSupport.ensureRegistriesExist(anno.registry());
+                DubboAnnotationSupport.applyRegistries(config, anno.registry());
                 holder.setValue(refer(config));
             }
         }));
@@ -205,6 +213,10 @@ public class DubboSolonPlugin implements Plugin {
             String providerId = serviceAnno.provider();
             DubboAnnotationSupport.ensureProviderExists(providerId);
             DubboAnnotationSupport.applyProvider(config, providerId);
+            DubboAnnotationSupport.ensureRegistriesExist(anno.registry());
+            DubboAnnotationSupport.applyRegistries(config, anno.registry());
+            DubboAnnotationSupport.ensureProtocolsExist(anno.protocol());
+            DubboAnnotationSupport.applyProtocols(config, anno.protocol());
             config.setRef(bw.get());
             bootstrap.service(config);
         }));
@@ -224,6 +236,8 @@ public class DubboSolonPlugin implements Plugin {
                 config.setInterface(holder.getType());
                 DubboAnnotationSupport.apply(config, anno.parameters(), anno.methods());
                 DubboAnnotationSupport.applyConsumer(config, referenceAnno.consumer());
+                DubboAnnotationSupport.ensureRegistriesExist(anno.registry());
+                DubboAnnotationSupport.applyRegistries(config, anno.registry());
                 holder.setValue(refer(config));
             }
         }));
@@ -266,19 +280,23 @@ public class DubboSolonPlugin implements Plugin {
                 .append(nullToEmpty(config.getStub())).append('|')
                 .append(nullToEmpty(config.getMock())).append('|')
                 .append(config.isCheck()).append('|')
-                .append(config.getTimeout()).append('|')
+                .append(nullToEmpty(config.getTimeout())).append('|')
                 .append(nullToEmpty(config.getRegistryIds())).append('|')
                 .append(nullToEmpty(config.getTag())).append('|')
                 .append(nullToEmpty(config.getFilter())).append('|')
                 .append(nullToEmpty(config.getListener())).append('|')
                 .append(nullToEmpty(config.getLoadbalance())).append('|')
                 .append(nullToEmpty(config.getCluster())).append('|')
-                .append(config.getRetries());
+                .append(nullToEmpty(config.getRetries()));
         return sb.toString();
     }
 
     private static String nullToEmpty(String s) {
         return s == null ? "" : s;
+    }
+
+    private static String nullToEmpty(Integer i) {
+        return i == null ? "" : String.valueOf(i);
     }
 
     @Override

@@ -325,17 +325,21 @@ public class ServiceAnno implements Service {
 
     @Override
     public String[] protocol() {
-        return anno.protocol();
+        // Empty here: appendAnnotation has no setProtocol(String[]).
+        // DubboAnnotationSupport.applyProtocols re-applies protocolIds after construction.
+        return new String[0];
     }
-
+    
     @Override
     public String monitor() {
         return anno.monitor();
     }
-
+    
     @Override
     public String[] registry() {
-        return anno.registry();
+        // Empty here: appendAnnotation has no setRegistry(String[]).
+        // DubboAnnotationSupport.applyRegistries re-applies registryIds after construction.
+        return new String[0];
     }
 
     private String tag;

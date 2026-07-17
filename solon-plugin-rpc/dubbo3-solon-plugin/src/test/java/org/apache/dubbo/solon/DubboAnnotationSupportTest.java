@@ -3,8 +3,10 @@ package org.apache.dubbo.solon;
 import org.apache.dubbo.config.ApplicationConfig;
 import org.apache.dubbo.config.ConsumerConfig;
 import org.apache.dubbo.config.MethodConfig;
+import org.apache.dubbo.config.ProtocolConfig;
 import org.apache.dubbo.config.ProviderConfig;
 import org.apache.dubbo.config.ReferenceConfig;
+import org.apache.dubbo.config.RegistryConfig;
 import org.apache.dubbo.config.ServiceConfig;
 import org.apache.dubbo.config.annotation.Method;
 import org.apache.dubbo.config.bootstrap.DubboBootstrap;
@@ -176,6 +178,62 @@ public class DubboAnnotationSupportTest {
         DubboAnnotationSupport.ensureProviderExists("");
         Assertions.assertThrows(IllegalStateException.class,
                 () -> DubboAnnotationSupport.ensureProviderExists("missing"));
+    }
+    
+    @Test
+    public void joinIds_andApplyRegistryProtocolIds() {
+        Assertions.assertNull(DubboAnnotationSupport.joinIds(null));
+        Assertions.assertNull(DubboAnnotationSupport.joinIds(new String[0]));
+        Assertions.assertNull(DubboAnnotationSupport.joinIds(new String[]{"", "  "}));
+        Assertions.assertEquals("reg1", DubboAnnotationSupport.joinIds(new String[]{"reg1"}));
+        Assertions.assertEquals("reg1,reg2",
+                DubboAnnotationSupport.joinIds(new String[]{" reg1 ", "", "reg2"}));
+    
+        ServiceConfig<?> service = new ServiceConfig<>();
+        DubboAnnotationSupport.applyRegistries(service, new String[]{"reg1", "reg2"});
+        Assertions.assertEquals("reg1,reg2", service.getRegistryIds());
+        // already set should no-op override
+        DubboAnnotationSupport.applyRegistries(service, new String[]{"reg3"});
+        Assertions.assertEquals("reg1,reg2", service.getRegistryIds());
+    
+        DubboAnnotationSupport.applyProtocols(service, new String[]{"dubbo", "tri"});
+        Assertions.assertEquals("dubbo,tri", service.getProtocolIds());
+        DubboAnnotationSupport.applyProtocols(service, new String[]{"rest"});
+        Assertions.assertEquals("dubbo,tri", service.getProtocolIds());
+    
+        ReferenceConfig<?> reference = new ReferenceConfig<>();
+        DubboAnnotationSupport.applyRegistries(reference, new String[]{"reg1"});
+        Assertions.assertEquals("reg1", reference.getRegistryIds());
+    }
+    
+    @Test
+    public void ensureRegistryAndProtocolExist_checksNamedConfig() {
+        DubboBootstrap bootstrap = DubboBootstrap.getInstance();
+        ApplicationConfig application = new ApplicationConfig();
+        application.setName("anno-reg-proto-lookup");
+        bootstrap.application(application);
+    
+        RegistryConfig reg1 = new RegistryConfig();
+        reg1.setId("reg1");
+        reg1.setAddress("N/A");
+        bootstrap.registry(reg1);
+    
+        ProtocolConfig dubbo = new ProtocolConfig();
+        dubbo.setId("dubbo");
+        dubbo.setName("dubbo");
+        dubbo.setPort(20880);
+        bootstrap.protocol(dubbo);
+    
+        DubboAnnotationSupport.ensureRegistriesExist(new String[]{"reg1"});
+        DubboAnnotationSupport.ensureRegistriesExist(null);
+        DubboAnnotationSupport.ensureRegistriesExist(new String[]{"", "  "});
+        Assertions.assertThrows(IllegalStateException.class,
+                () -> DubboAnnotationSupport.ensureRegistriesExist(new String[]{"missing"}));
+    
+        DubboAnnotationSupport.ensureProtocolsExist(new String[]{"dubbo"});
+        DubboAnnotationSupport.ensureProtocolsExist(null);
+        Assertions.assertThrows(IllegalStateException.class,
+                () -> DubboAnnotationSupport.ensureProtocolsExist(new String[]{"missing"}));
     }
 
     @Test

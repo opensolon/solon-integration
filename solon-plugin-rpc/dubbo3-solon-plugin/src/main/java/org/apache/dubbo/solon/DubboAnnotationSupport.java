@@ -3,8 +3,10 @@ package org.apache.dubbo.solon;
 import org.apache.dubbo.config.AbstractInterfaceConfig;
 import org.apache.dubbo.config.ConsumerConfig;
 import org.apache.dubbo.config.MethodConfig;
+import org.apache.dubbo.config.ProtocolConfig;
 import org.apache.dubbo.config.ProviderConfig;
 import org.apache.dubbo.config.ReferenceConfig;
+import org.apache.dubbo.config.RegistryConfig;
 import org.apache.dubbo.config.ServiceConfig;
 import org.apache.dubbo.config.annotation.Method;
 import org.apache.dubbo.config.bootstrap.DubboBootstrap;
@@ -25,6 +27,7 @@ import java.util.Optional;
  *   <li>{@code parameters} string array → {@code Map} (supports key/value pairs and {@code k=v}/{@code k:v})</li>
  *   <li>{@code methods} → {@link MethodConfig} list</li>
  *   <li>{@code provider}/{@code consumer} name → named multi config (appendAnnotation cannot bind these)</li>
+ *   <li>{@code registry[]} → {@code registryIds}; service {@code protocol[]} → {@code protocolIds}</li>
  * </ul>
  * Also resolves Solon config templates ({@code ${...}}) for parameter values and method string fields.
  *
@@ -111,6 +114,117 @@ public final class DubboAnnotationSupport {
         }
     }
 
+    /**
+     * Resolve {@code @DubboService(registry={"reg1","reg2"})} / {@code @DubboReference(registry=...)
+     * like Spring: annotation array → comma-joined {@code registryIds}.
+     * {@code appendAnnotation} cannot bind {@code registry[]} (no {@code setRegistry(String[])}).
+     */
+    public static void applyRegistries(AbstractInterfaceConfig config, String[] registryIds) {
+        if (config == null) {
+            return;
+        }
+        if (Utils.isNotEmpty(config.getRegistryIds())) {
+            return;
+        }
+        String joined = joinIds(registryIds);
+        if (Utils.isEmpty(joined)) {
+            return;
+        }
+        config.setRegistryIds(joined);
+    }
+    
+    /**
+     * Resolve {@code @DubboService(protocol={"dubbo","tri"})} like Spring:
+     * annotation array → comma-joined {@code protocolIds}.
+     * Only service side has {@code protocolIds}; reference uses string {@code protocol} instead.
+     */
+    public static void applyProtocols(ServiceConfig<?> config, String[] protocolIds) {
+        if (config == null) {
+            return;
+        }
+        if (Utils.isNotEmpty(config.getProtocolIds())) {
+            return;
+        }
+        String joined = joinIds(protocolIds);
+        if (Utils.isEmpty(joined)) {
+            return;
+        }
+        config.setProtocolIds(joined);
+    }
+    
+    /**
+     * Fail-fast: each resolved registry id must exist in ConfigManager.
+     */
+    public static void ensureRegistriesExist(String[] registryIds) {
+        if (registryIds == null || registryIds.length == 0) {
+            return;
+        }
+        ModuleConfigManager manager = moduleConfigManager();
+        for (String raw : registryIds) {
+            if (raw == null) {
+                continue;
+            }
+            String id = resolveTmpl(raw.trim());
+            if (Utils.isEmpty(id)) {
+                continue;
+            }
+            Optional<RegistryConfig> found = manager.getRegistry(id);
+            if (!found.isPresent()) {
+                throw new IllegalStateException("Registry config not found: " + id
+                        + " (define dubbo.registries." + id + ".* or dubbo.registry with id)");
+            }
+        }
+    }
+    
+    /**
+     * Fail-fast: each resolved protocol id/name must exist in ConfigManager.
+     */
+    public static void ensureProtocolsExist(String[] protocolIds) {
+        if (protocolIds == null || protocolIds.length == 0) {
+            return;
+        }
+        ModuleConfigManager manager = moduleConfigManager();
+        for (String raw : protocolIds) {
+            if (raw == null) {
+                continue;
+            }
+            String id = resolveTmpl(raw.trim());
+            if (Utils.isEmpty(id)) {
+                continue;
+            }
+            Optional<ProtocolConfig> found = manager.getProtocol(id);
+            if (!found.isPresent()) {
+                throw new IllegalStateException("Protocol config not found: " + id
+                        + " (define dubbo.protocols." + id + ".* or dubbo.protocol with id)");
+            }
+        }
+    }
+    
+    /**
+     * Join annotation id arrays like Spring {@code StringUtils.join(ids, ',')},
+     * resolving each element with Solon templates and skipping blanks.
+     */
+    public static String joinIds(String[] ids) {
+        if (ids == null || ids.length == 0) {
+            return null;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (String raw : ids) {
+            if (raw == null) {
+                continue;
+            }
+            String id = resolveTmpl(raw.trim());
+            if (Utils.isEmpty(id)) {
+                continue;
+            }
+            if (sb.length() > 0) {
+                sb.append(',');
+            }
+            sb.append(id);
+        }
+        return sb.length() == 0 ? null : sb.toString();
+    }
+    
     private static ModuleConfigManager moduleConfigManager() {
         return DubboBootstrap.getInstance()
                 .getApplicationModel()
