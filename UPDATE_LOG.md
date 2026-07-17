@@ -1,4 +1,8 @@
 
+### v4.0.4
+
+* 优化 dubbo3-solon-plugin 适配
+
 ### v3.8.0
 
 * 添加 `hibernate-solon-plugin` EntityManager 注入支持

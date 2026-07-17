@@ -1,0 +1,19 @@
+# Dubbo Provider demo config
+# Loaded by demo.server.DubboProviderApp
+
+solon:
+  app:
+    group: demo
+    name: dubbo-provider
+
+dubbo:
+  application:
+    name: dubbo-provider
+    logger: slf4j
+  registry:
+    address: N/A
+  protocol:
+    name: dubbo
+    port: 20880
+  provider:
+    group: demo

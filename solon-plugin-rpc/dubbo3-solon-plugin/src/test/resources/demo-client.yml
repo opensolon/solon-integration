@@ -1,0 +1,27 @@
+# Dubbo Consumer demo config
+# Loaded by demo.client.DubboConsumeApp
+
+solon:
+  app:
+    group: demo
+    name: dubbo-consumer
+
+dubbo:
+  application:
+    name: dubbo-consumer
+    logger: slf4j
+  registry:
+    address: N/A
+  consumer:
+    check: false
+    scope: remote
+    timeout: 3000
+  solon:
+    # one-shot client: do not keep process after main returns
+    block: false
+
+# Values referenced by @DubboReference templates
+demo:
+  hello:
+    group: demo
+    url: dubbo://127.0.0.1:20880
